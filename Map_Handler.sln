@@ -4,6 +4,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 VisualStudioVersion = 14.0.25420.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Map_Handler", "Map_Handler\Map_Handler.csproj", "{65F30DAF-C050-4303-B077-0961B5C65D79}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E5B9F4E-1067-4470-8AA9-B25BBBEA063A} = {5E5B9F4E-1067-4470-8AA9-B25BBBEA063A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlamLib", "BlamLib\BlamLib\BlamLib.csproj", "{D9931E1A-1A8A-4707-A27C-9AFEFD60D25B}"
 	ProjectSection(ProjectDependencies) = postProject
@@ -11,6 +14,9 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlamLib", "BlamLib\BlamLib\
 	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlamLib.Forms", "BlamLib\BlamLib.Forms\BlamLib.Forms.csproj", "{61EE1295-F2B6-4351-B331-244319600FCE}"
+	ProjectSection(ProjectDependencies) = postProject
+		{5E5B9F4E-1067-4470-8AA9-B25BBBEA063A} = {5E5B9F4E-1067-4470-8AA9-B25BBBEA063A}
+	EndProjectSection
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BlamLib.Test", "BlamLib\BlamLib.Test\BlamLib.Test.csproj", "{2BB37B4C-D7E0-451F-A8C8-997890B98B9F}"
 EndProject

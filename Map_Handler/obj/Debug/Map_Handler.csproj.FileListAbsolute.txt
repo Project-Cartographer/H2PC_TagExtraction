@@ -1,7 +1,0 @@
-C:\Users\Avieritei Cosmin\Desktop\Map_Handler\bin\Debug\Map_Handler.exe.config
-C:\Users\Avieritei Cosmin\Desktop\Map_Handler\Map_Handler\obj\Debug\Map_Handler.csprojResolveAssemblyReference.cache
-C:\Users\Avieritei Cosmin\Desktop\Map_Handler\Map_Handler\obj\Debug\Map_Handler.MainBox.resources
-C:\Users\Avieritei Cosmin\Desktop\Map_Handler\Map_Handler\obj\Debug\Map_Handler.MetaExtractor.resources
-C:\Users\Avieritei Cosmin\Desktop\Map_Handler\Map_Handler\obj\Debug\Map_Handler.LogBox.resources
-C:\Users\Avieritei Cosmin\Desktop\Map_Handler\Map_Handler\obj\Debug\Map_Handler.Properties.Resources.resources
-C:\Users\Avieritei Cosmin\Desktop\Map_Handler\Map_Handler\obj\Debug\Map_Handler.csproj.GenerateResource.Cache

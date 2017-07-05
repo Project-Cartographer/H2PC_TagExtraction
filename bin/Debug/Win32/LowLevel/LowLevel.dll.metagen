@@ -1,0 +1,245 @@
+ImageRuntimeVersion: v4.0.30319
+Assembly LowLevel, Version=1.0.*, Culture=Invariant Language (Invariant Country): 
+	hash=SHA1, flags=PublicKey
+Assembly mscorlib, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089: 
+	hash=None, flags=None
+Assembly System.Drawing, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a: 
+	hash=None, flags=None
+Struct LowLevel.Math.real_point2d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(Single, Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Single X : Public
+    Single Y : Public
+Struct LowLevel.Math.real_point3d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(Single, Single, Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Single X : Public
+    Single Y : Public
+    Single Z : Public
+Struct LowLevel.Math.real_vector2d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(Single, Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Single I : Public
+    Single J : Public
+Struct LowLevel.Math.real_vector3d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(Single, Single, Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Single I : Public
+    Single J : Public
+    Single K : Public
+Struct LowLevel.Math.real_quaternion: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    LowLevel.Math.real_vector3d Vector : Public
+    Single W : Public
+Struct LowLevel.Math.real_euler_angles2d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(Single, Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Single Yaw : Public
+    Single Pitch : Public
+Struct LowLevel.Math.real_euler_angles3d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(Single, Single, Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Single Yaw : Public
+    Single Pitch : Public
+    Single Roll : Public
+Struct LowLevel.Math.real_plane2d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    LowLevel.Math.real_vector2d Normal : Public
+    Single D : Public
+Struct LowLevel.Math.real_plane3d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    LowLevel.Math.real_vector3d Normal : Public
+    Single D : Public
+Struct LowLevel.Math.real_orientation3d: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    LowLevel.Math.real_quaternion Rotation : Public
+    LowLevel.Math.real_point3d Translation : Public
+    Single Scale : Public
+Struct LowLevel.Math.real_matrix3x3: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(LowLevel.Math.real_vector3d, LowLevel.Math.real_vector3d, LowLevel.Math.real_vector3d): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    LowLevel.Math.real_vector3d Forward : Public
+    LowLevel.Math.real_vector3d Left : Public
+    LowLevel.Math.real_vector3d Up : Public
+Struct LowLevel.Math.real_matrix4x3: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+    Void .ctor(Single): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+    Void .ctor(Boolean): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Single Scale : Public
+    LowLevel.Math.real_vector3d Forward : Public
+    LowLevel.Math.real_vector3d Left : Public
+    LowLevel.Math.real_vector3d Up : Public
+    LowLevel.Math.real_point3d Position : Public
+  Methods:
+    FromCppMath(real_matrix4x3*): PrivateScope, Public, HideBySig
+    ToIdentity(): PrivateScope, Public, HideBySig
+Class LowLevel.Math.Util: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    CompressRealToShortN(Single): PrivateScope, Public, Static, HideBySig
+    CompressRealVector3DToHenDN3(real_quaternion): PrivateScope, Public, Static, HideBySig
+Class LowLevel.Xna.Math: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    ConvertHalfToSingle(UInt16): PrivateScope, Public, Static, HideBySig
+    ConvertHalfToSingleStream(UInt16[]): PrivateScope, Public, Static, HideBySig
+    ConvertSingleToHalf(Single): PrivateScope, Public, Static, HideBySig
+    ConvertSingleToHalfStream(Single[]): PrivateScope, Public, Static, HideBySig
+    ConvertSingleToHalfArray(Single[]): PrivateScope, Public, Static, HideBySig
+    ConvertHalfToSingleArray(UInt16[]): PrivateScope, Public, Static, HideBySig
+    ConvertColor(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertColor(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertUByte4(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUByte4(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertShort2(real_quaternion, Int16&(Out), Int16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertShort2(Int16, Int16): PrivateScope, Public, Static, HideBySig
+    ConvertShort4(real_quaternion, Int16&(Out), Int16&(Out), Int16&(Out), Int16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertShort4(Int16, Int16, Int16, Int16): PrivateScope, Public, Static, HideBySig
+    ConvertUByte4N(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUByte4N(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertShort2N(real_quaternion, Int16&(Out), Int16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertShort2N(Int16, Int16): PrivateScope, Public, Static, HideBySig
+    ConvertShort4N(real_quaternion, Int16&(Out), Int16&(Out), Int16&(Out), Int16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertShort4N(Int16, Int16, Int16, Int16): PrivateScope, Public, Static, HideBySig
+    ConvertUShort2N(real_quaternion, UInt16&(Out), UInt16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUShort2N(UInt16, UInt16): PrivateScope, Public, Static, HideBySig
+    ConvertUShort4N(real_quaternion, UInt16&(Out), UInt16&(Out), UInt16&(Out), UInt16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUShort4N(UInt16, UInt16, UInt16, UInt16): PrivateScope, Public, Static, HideBySig
+    ConvertUDec3(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUDec3(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertDec3N(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertDec3N(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertFloat16Two(real_quaternion, UInt16&(Out), UInt16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertFloat16Two(UInt16, UInt16): PrivateScope, Public, Static, HideBySig
+    ConvertFloat16Four(real_quaternion, UInt16&(Out), UInt16&(Out), UInt16&(Out), UInt16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertFloat16Four(UInt16, UInt16, UInt16, UInt16): PrivateScope, Public, Static, HideBySig
+    ConvertUShort2(real_quaternion, UInt16&(Out), UInt16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUShort2(UInt16, UInt16): PrivateScope, Public, Static, HideBySig
+    ConvertUShort4(real_quaternion, UInt16&(Out), UInt16&(Out), UInt16&(Out), UInt16&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUShort4(UInt16, UInt16, UInt16, UInt16): PrivateScope, Public, Static, HideBySig
+    ConvertUDHen3N(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUDHen3N(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertDHen3N(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertDHen3N(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertUHenD3N(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUHenD3N(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertUDec4N(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertUDec4N(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertByte4N(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertByte4N(UInt32): PrivateScope, Public, Static, HideBySig
+    ConvertHenD3N(real_quaternion, UInt32&(Out)): PrivateScope, Public, Static, HideBySig
+    ConvertHenD3N(UInt32): PrivateScope, Public, Static, HideBySig
+Class LowLevel.Compression.LZMA: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Fields:
+    LZMAFormatValue[] LZMAStandardLayout : Public, Static
+  Methods:
+    Decompress(LZMAFormatValue[], Byte[], Byte[]&(Out)): PrivateScope, Public, Static, HideBySig
+    Compress(LZMAFormatValue[], Stream, Stream, UInt32, UInt32, CompressionCallback): PrivateScope, Public, Static, HideBySig
+Class LowLevel.Compression.LZMA+CompressionCallback: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+  :System.MulticastDelegate
+    Void .ctor(System.Object, IntPtr): PrivateScope, Public, SpecialName, RTSpecialName
+  Methods:
+    Invoke(UInt32, UInt32): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+    BeginInvoke(UInt32, UInt32, AsyncCallback, Object): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+    EndInvoke(IAsyncResult): PrivateScope, Public, Final, Virtual, VtableLayoutMask
+Struct LowLevel.Compression.LZMA+LZMAFormatValue: AutoLayout, AnsiClass, Class, NestedPublic, Sealed, BeforeFieldInit
+  :System.Enum
+  Fields:
+    Int32 value__ : Public, SpecialName, RTSpecialName
+    LZMAFormatValue LZMAFormatValue_Head = 0 : Public, Static, Literal, HasDefault
+    LZMAFormatValue LZMAFormatValue_Foot = 1 : Public, Static, Literal, HasDefault
+    LZMAFormatValue LZMAFormatValue_Props = 2 : Public, Static, Literal, HasDefault
+    LZMAFormatValue LZMAFormatValue_UncompressedSize32 = 3 : Public, Static, Literal, HasDefault
+    LZMAFormatValue LZMAFormatValue_UncompressedSize64 = 4 : Public, Static, Literal, HasDefault
+    LZMAFormatValue LZMAFormatValue_CompressedData = 5 : Public, Static, Literal, HasDefault
+    LZMAFormatValue LZMAFormatValue_End = 6 : Public, Static, Literal, HasDefault
+Class LowLevel.Cryptography.XXTEA: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    Encrypt256(Byte[], Int32, Int32, Int32, Int32): PrivateScope, Public, Static, HideBySig
+    Decrypt256(Byte[], Int32, Int32, Int32, Int32): PrivateScope, Public, Static, HideBySig
+Class LowLevel.Intel.x86: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Byte pushad = 96 : Public, Static, Literal, HasDefault
+    Byte popad = 97 : Public, Static, Literal, HasDefault
+    Byte push_prefix_dword = 104 : Public, Static, Literal, HasDefault
+    Byte mov_eax_prefix_dword = 184 : Public, Static, Literal, HasDefault
+    Byte mov_ecx_prefix_dword = 185 : Public, Static, Literal, HasDefault
+    Byte mov_edx_prefix_dword = 186 : Public, Static, Literal, HasDefault
+    Byte mov_ebx_prefix_dword = 187 : Public, Static, Literal, HasDefault
+    Byte mov_esp_prefix_dword = 188 : Public, Static, Literal, HasDefault
+    Byte mov_ebp_prefix_dword = 189 : Public, Static, Literal, HasDefault
+    Byte mov_esi_prefix_dword = 190 : Public, Static, Literal, HasDefault
+    Byte mov_edi_prefix_dword = 191 : Public, Static, Literal, HasDefault
+    UInt16 call_prefix_absolute = 5631 : Public, Static, Literal, HasDefault
+    UInt16 call_eax = 53503 : Public, Static, Literal, HasDefault
+Class LowLevel.Intel.SSE: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    UInt32 movss_xmm0_prefix_addr = 84938739 : Public, Static, Literal, HasDefault
+    UInt32 movss_xmm1_prefix_addr = 219156467 : Public, Static, Literal, HasDefault
+    UInt32 movss_xmm2_prefix_addr = 353374195 : Public, Static, Literal, HasDefault
+    UInt32 movss_xmm3_prefix_addr = 487591923 : Public, Static, Literal, HasDefault
+    UInt32 movss_xmm4_prefix_addr = 621809651 : Public, Static, Literal, HasDefault
+    UInt32 movss_xmm5_prefix_addr = 756027379 : Public, Static, Literal, HasDefault
+    UInt32 movss_xmm6_prefix_addr = 890245107 : Public, Static, Literal, HasDefault
+    UInt32 movss_xmm7_prefix_addr = 1024462835 : Public, Static, Literal, HasDefault
+Class LowLevel.StructBitConverter: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    GetBytes(Byte[], Int32, T&): PrivateScope, Public, Static, HideBySig
+    GetBytes(T&): PrivateScope, Public, Static, HideBySig
+    ToValue(Byte[], Int32, T&(Out)): PrivateScope, Public, Static, HideBySig
+    ToValue(Byte[], Int32): PrivateScope, Public, Static, HideBySig
+Class LowLevel.ByteSwap: AutoLayout, AnsiClass, Class, Public, Abstract, Sealed, BeforeFieldInit
+  Methods:
+    SingleFromUInt32(UInt32): PrivateScope, Public, Static, HideBySig
+    SingleToUInt32(Single): PrivateScope, Public, Static, HideBySig
+    SwapSingle(Single&): PrivateScope, Public, Static, HideBySig
+    SwapSingle(Single): PrivateScope, Public, Static, HideBySig
+Struct LowLevel.HResult: AutoLayout, AnsiClass, Class, Public, Sealed, BeforeFieldInit
+  :System.Enum
+  Fields:
+    UInt32 value__ : Public, SpecialName, RTSpecialName
+    LowLevel.HResult Success = 0 : Public, Static, Literal, HasDefault
+    LowLevel.HResult Unexpected = 2147549183 : Public, Static, Literal, HasDefault
+    LowLevel.HResult NotImplemented = 2147500033 : Public, Static, Literal, HasDefault
+    LowLevel.HResult OutOfMemory = 2147942414 : Public, Static, Literal, HasDefault
+    LowLevel.HResult InvalidArg = 2147942487 : Public, Static, Literal, HasDefault
+    LowLevel.HResult NoInterface = 2147500034 : Public, Static, Literal, HasDefault
+    LowLevel.HResult InvalidPointer = 2147500035 : Public, Static, Literal, HasDefault
+    LowLevel.HResult InvalidHandle = 2147942406 : Public, Static, Literal, HasDefault
+    LowLevel.HResult Abort = 2147500036 : Public, Static, Literal, HasDefault
+    LowLevel.HResult Fail = 2147500037 : Public, Static, Literal, HasDefault
+    LowLevel.HResult AccessDenied = 2147942405 : Public, Static, Literal, HasDefault
+    LowLevel.HResult DataPending = 2147483658 : Public, Static, Literal, HasDefault
+Struct LowLevel.Xma.RebuildParameters: AutoLayout, AnsiClass, Class, Public, SequentialLayout, Sealed, BeforeFieldInit
+  :System.ValueType
+  Fields:
+    UInt32 Offset : Public
+    UInt32 BlockSize : Public
+    Int32 Channels : Public
+    Int32 Version : Public
+    Boolean Strict : Public
+    Boolean IgnorePacketSkip : Public
+Class LowLevel.Xma.Interface: AutoLayout, AnsiClass, Class, Public, BeforeFieldInit
+    Void .ctor(): PrivateScope, Public, HideBySig, SpecialName, RTSpecialName
+  Fields:
+    Byte[] kMonoFooter : Public, Static, InitOnly
+    Byte[] kStereoFooter : Public, Static, InitOnly
+  Methods:
+    SetXma2EncoderExePath(String): PrivateScope, Public, Static, HideBySig
+    Decode(String, String): PrivateScope, Public, Static, HideBySig
+    Rebuild(String, String, String, RebuildParameters): PrivateScope, Public, Static, HideBySig
+    Rebuild(Byte[], RebuildParameters): PrivateScope, Public, Static, HideBySig
