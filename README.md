@@ -19,5 +19,5 @@ If you have more questions about the project, ask me on discord : Himanshu01#326
 3.You can't open shared.map, but you still can extract multiplayer maps.
 4.
 
-##I'd like to thank them for testing:
+## I'd like to thank them for testing:
 Twinreaper,NukeULater and UF Beazt.
