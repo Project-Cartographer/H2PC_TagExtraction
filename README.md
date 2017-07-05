@@ -10,6 +10,11 @@ In order to build the project, you need 2 SDKs, which are boost_1_55_0 and SlimD
 boost_1_55_0 folder needs to be copied in C:\Program Files (x86)\boost\ .
 The application is wrote using C#, and C++ is used for LowLevel project.
 Any contribution is welcome.
+
+If it throws That LowLevel.dll is missing,Hit Compile on LowLevel project 1st Then Build the Solution
+You will also need to use Xbox Chaos Assembly Halo 2 Plugins https://github.com/XboxChaos/Assembly/tree/master/src/Assembly/Plugins/Halo2
+Put all the Halo 2 xml plugins inside Plugins folder and Place it in the Application Directory
+
 For any issue you may find using it, feel free to use "Issues" tab.
 If you have more questions about the project, ask me on discord : Himanshu01#3268 .
 
