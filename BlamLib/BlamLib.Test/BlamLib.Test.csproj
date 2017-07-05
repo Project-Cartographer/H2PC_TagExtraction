@@ -23,10 +23,6 @@
   </PropertyGroup>
   <Import Project="$(OSRootDir)shared\config\msbuild\BlamLib.props" />
   <ItemGroup>
-    <Reference Include="LowLevel, Version=1.0.6394.34801, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Debug\Win32\LowLevel\LowLevel.dll</HintPath>
-    </Reference>
     <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
     <Reference Include="System" />
     <Reference Include="System.Core">
@@ -65,6 +61,10 @@
     <ProjectReference Include="..\BlamLib\BlamLib.csproj">
       <Project>{d9931e1a-1a8a-4707-a27c-9afefd60d25b}</Project>
       <Name>BlamLib</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\LowLevel\LowLevel.vcxproj">
+      <Project>{5e5b9f4e-1067-4470-8aa9-b25bbbea063a}</Project>
+      <Name>LowLevel</Name>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
