@@ -87,7 +87,7 @@
             this.extractTagToolStripMenuItem,
             this.decompileMapToolStripMenuItem});
             this.helpToolStripMenuItem.Name = "helpToolStripMenuItem";
-            this.helpToolStripMenuItem.Size = new System.Drawing.Size(38, 20);
+            this.helpToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.helpToolStripMenuItem.Text = "Tag";
             // 
             // extractTagToolStripMenuItem
@@ -117,21 +117,21 @@
             // extractMetaToolStripMenuItem
             // 
             this.extractMetaToolStripMenuItem.Name = "extractMetaToolStripMenuItem";
-            this.extractMetaToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.extractMetaToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.extractMetaToolStripMenuItem.Text = "Extract meta";
             this.extractMetaToolStripMenuItem.Click += new System.EventHandler(this.extractMetaToolStripMenuItem_Click);
             // 
             // injectMetaToolStripMenuItem
             // 
             this.injectMetaToolStripMenuItem.Name = "injectMetaToolStripMenuItem";
-            this.injectMetaToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.injectMetaToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.injectMetaToolStripMenuItem.Text = "Compile meta";
-            this.injectMetaToolStripMenuItem.Click += new System.EventHandler(this.injectMetaToolStripMenuItem_Click);
+            this.injectMetaToolStripMenuItem.Click += new System.EventHandler(this.CompileMetaToolStripMenuItem_Click);
             // 
             // getTagStructureToolStripMenuItem
             // 
             this.getTagStructureToolStripMenuItem.Name = "getTagStructureToolStripMenuItem";
-            this.getTagStructureToolStripMenuItem.Size = new System.Drawing.Size(165, 22);
+            this.getTagStructureToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.getTagStructureToolStripMenuItem.Text = "Get Tag Structure";
             this.getTagStructureToolStripMenuItem.Click += new System.EventHandler(this.getTagStructureToolStripMenuItem_Click);
             // 
@@ -142,10 +142,6 @@
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(418, 437);
             this.treeView1.TabIndex = 1;
-            // 
-            // timer1
-            // 
-            this.timer1.Tick += new System.EventHandler(this.timer1_Tick);
             // 
             // progressBar1
             // 

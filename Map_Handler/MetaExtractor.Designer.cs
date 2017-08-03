@@ -28,27 +28,29 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.button1 = new System.Windows.Forms.Button();
+            this.extract_button = new System.Windows.Forms.Button();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
             this.button2 = new System.Windows.Forms.Button();
             this.radioButton1 = new System.Windows.Forms.CheckBox();
+            this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.SuspendLayout();
             // 
-            // button1
+            // extract_button
             // 
-            this.button1.Location = new System.Drawing.Point(111, 46);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(218, 40);
-            this.button1.TabIndex = 3;
-            this.button1.Text = "Extract";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
+            this.extract_button.Location = new System.Drawing.Point(216, 46);
+            this.extract_button.Name = "extract_button";
+            this.extract_button.Size = new System.Drawing.Size(218, 40);
+            this.extract_button.TabIndex = 3;
+            this.extract_button.Text = "Extract";
+            this.extract_button.UseVisualStyleBackColor = true;
+            this.extract_button.Click += new System.EventHandler(this.Extract_Click);
             // 
             // textBox1
             // 
             this.textBox1.Location = new System.Drawing.Point(79, 12);
             this.textBox1.Name = "textBox1";
+            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(218, 20);
             this.textBox1.TabIndex = 4;
             // 
@@ -69,7 +71,7 @@
             this.button2.TabIndex = 6;
             this.button2.Text = "Select Directory";
             this.button2.UseVisualStyleBackColor = true;
-            this.button2.Click += new System.EventHandler(this.button2_Click);
+            this.button2.Click += new System.EventHandler(this.Folder_select_Click);
             // 
             // radioButton1
             // 
@@ -81,17 +83,28 @@
             this.radioButton1.Text = "Recursive";
             this.radioButton1.UseVisualStyleBackColor = true;
             // 
-            // Form2
+            // checkBox1
+            // 
+            this.checkBox1.AutoSize = true;
+            this.checkBox1.Location = new System.Drawing.Point(94, 59);
+            this.checkBox1.Name = "checkBox1";
+            this.checkBox1.Size = new System.Drawing.Size(85, 17);
+            this.checkBox1.TabIndex = 8;
+            this.checkBox1.Text = "nullStringIDs";
+            this.checkBox1.UseVisualStyleBackColor = true;
+            // 
+            // MetaExtractor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(454, 110);
+            this.Controls.Add(this.checkBox1);
             this.Controls.Add(this.radioButton1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.button1);
-            this.Name = "Form2";
+            this.Controls.Add(this.extract_button);
+            this.Name = "MetaExtractor";
             this.Text = "Meta Save";
             this.ResumeLayout(false);
             this.PerformLayout();
@@ -99,10 +112,11 @@
         }
 
         #endregion
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button extract_button;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox radioButton1;
+        private System.Windows.Forms.CheckBox checkBox1;
     }
 }

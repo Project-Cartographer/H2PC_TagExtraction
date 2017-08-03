@@ -168,13 +168,13 @@ namespace BlamLib.Test
 
                     // extract with dependents, database and overwrite existing tag files
                     var ex_args = new Blam.CacheExtractionArguments(test_results_tags_path,
-                        false, false, true, kExtractionDontUseTags);                 
-                    if(args.DatumIndex!=0xFFFFFFFF)
-                    {
+                        true, true, true, kExtractionDontUseTags);            
+                         
+
                         var cei = ti.ExtractionBegin(args.DatumIndex, ex_args);
                         ti.Extract(cei);
                         ti.ExtractionEnd();
-                    }
+                    
                 }
                 ti.ExtractionDispose();
             }
