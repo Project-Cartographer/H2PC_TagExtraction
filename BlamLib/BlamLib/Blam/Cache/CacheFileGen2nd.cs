@@ -4,6 +4,7 @@
 	See license\BlamLib\BlamLib for specific license information
 */
 using System.Collections.Generic;
+using TI = BlamLib.TagInterface;
 
 namespace BlamLib.Blam.Cache
 {
@@ -192,5 +193,93 @@ namespace BlamLib.Blam.Cache
 
 	public abstract class CacheFileGen2 : Blam.CacheFile
 	{
+	};
+
+
+	class CacheFileLanguagePackResourceGen2 : CacheFileLanguagePackResource
+	{
+		public const int kSizeOf = (4 * 2) + (4 * 4) + (1 + 3);
+
+		public Blam.ResourcePtr GetOffsetReferences() { return OffsetReferences.Value; }
+		public Blam.ResourcePtr GetOffsetStrings() { return OffsetStrings.Value; }
+
+		/// <summary>
+		/// Initialize the language pack to a tag definition or as a stand-alone
+		/// </summary>
+		/// <param name="parent"></param>
+		public CacheFileLanguagePackResourceGen2(TI.Definition parent)
+		{
+			if (parent != null)
+			{
+				parent.Add(new TI.Pad(4 + 4)); // runtime pointers
+					// s_cache_unicode_string_reference* references_buffer
+					// byte* strings_buffer
+				parent.Add(Count);
+				parent.Add(Size);
+				parent.Add(OffsetReferences);
+				parent.Add(OffsetStrings);
+				parent.Add(new TI.Pad(1 + 3));
+			}
+		}
+
+		#region IStreamable Members
+		public override void Read(BlamLib.IO.EndianReader s)
+		{
+			s.Seek(4 + 4, System.IO.SeekOrigin.Current);
+			Count.Read(s);
+			Size.Read(s);
+			OffsetReferences.Read(s);
+			OffsetStrings.Read(s);
+			s.Seek(1 + 3, System.IO.SeekOrigin.Current);
+		}
+
+		public override void Write(BlamLib.IO.EndianWriter s)
+		{
+			s.Write(ulong.MinValue);
+			Count.Write(s);
+			Size.Write(s);
+			OffsetReferences.Write(s);
+			OffsetStrings.Write(s);
+			s.Write(uint.MinValue);
+		}
+		#endregion
+
+		#region Cache interop
+		public override void ReadFromCache(Blam.CacheFile cf)
+		{
+			int count = this.Count.Value;
+
+			if (count > 0)
+			{
+				var cache = cf as Halo2.CacheFile;
+
+				#region Read the string references
+				var rsrc_offset = GetOffsetReferences();
+				var rsrc_cache = Program.Halo2.FromLocation(cache, rsrc_offset);
+
+				if (rsrc_cache != null)
+				{
+					rsrc_cache.InputStream.Seek(rsrc_offset.Offset);
+					InitializeStringReferences(count, cache.StringIds.Definition);
+					for (int x = 0; x < mStringReferences.Length; x++)
+						mStringReferences[x].Read(cf.InputStream);
+				}
+				#endregion
+
+				#region Read the string data buffer
+				rsrc_offset = GetOffsetStrings();
+				rsrc_cache = Program.Halo2.FromLocation(cache, rsrc_offset);
+
+				if (rsrc_cache != null)
+				{
+					rsrc_cache.InputStream.Seek(rsrc_offset.Offset);
+					mStringData = rsrc_cache.InputStream.ReadBytes(Size.Value);
+				}
+				else // just in case references was valid but somehow the string data buffer wasn't, can't have one without the other
+					mStringReferences = null;
+				#endregion
+			}
+		}
+		#endregion
 	};
 };

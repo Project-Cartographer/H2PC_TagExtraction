@@ -389,6 +389,7 @@ namespace BlamLib.Blam.HaloReach
 				bbcr,//Reach Retail
 				cmoe,//Reach Retail
 				ldsc,//Reach Retail
+				patg,//Reach Retail dlc_defiant
 				pfmc,//Reach Retail
 				sdzg,//Reach Retail
 				sirp,//Reach Retail
@@ -916,6 +917,8 @@ namespace BlamLib.Blam.HaloReach
 			cmoe,
 			/// <summary>load_screen</summary>
 			ldsc,
+			/// <summary>patch_globals</summary>
+			patg,
 			/// <summary>performance_template</summary>
 			pfmc,
 			/// <summary>scenario_required_resource</summary>

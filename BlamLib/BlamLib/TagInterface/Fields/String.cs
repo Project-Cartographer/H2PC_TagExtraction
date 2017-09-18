@@ -47,8 +47,8 @@ namespace BlamLib.TagInterface
 	};
 
 	/// <summary>
-	/// Blam String definition class
-	/// </summary> [
+	/// Blame String definition class
+	/// </summary>
 	public sealed class String : Field
 	{
 		/// <summary>
@@ -61,22 +61,10 @@ namespace BlamLib.TagInterface
 		public short Length = 0;
 
 		#region Value
-		private string mValue = "";
-
 		/// <summary>
 		/// The string
 		/// </summary>
-		public string Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-
-				OnPropertyChanged("Value");
-			}
-		}
-
+		public string Value = "";
 		/// <summary>
 		/// Interfaces with the string value
 		/// </summary>
@@ -331,8 +319,6 @@ namespace BlamLib.TagInterface
 				object[] val = value as object[];
 				Handle = (Blam.StringId)val[0];
 				OwnerId = (Blam.DatumIndex)val[1];
-
-				OnPropertyChanged("FieldValue");
 			}
 		}
 
@@ -543,8 +529,13 @@ namespace BlamLib.TagInterface
 			if (Handle != Blam.StringId.Null && !ts.Flags.Test(IO.ITagStreamFlags.DontStreamStringData))
 			{
 				string value = Program.GetTagIndex(OwnerId).StringIds.GetStringIdValue(Handle);
-				ts.GetOutputStream().Write(value, value.Length);
-			}
+                if (Program.GetTagIndex(OwnerId).Engine == BlamVersion.Halo2_PC)
+                    ts.GetOutputStream().Write_No_Null_terminator(value, value.Length);
+                else
+                    ts.GetOutputStream().Write(value, value.Length);
+                
+
+            }
 		}
 		#endregion
 

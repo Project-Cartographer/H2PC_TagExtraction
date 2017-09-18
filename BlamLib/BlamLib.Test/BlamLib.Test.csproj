@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project ToolsVersion="14.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,20 +10,23 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BlamLib.Test</RootNamespace>
     <AssemblyName>BlamLib.Test</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v2.0</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{3AC096D0-A1C2-E12C-1390-A8335801FDAB};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
     <OldToolsVersion>3.5</OldToolsVersion>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <PropertyGroup>
     <OSRootDir>$(MSBuildProjectDirectory)\..\..\</OSRootDir>
   </PropertyGroup>
   <Import Project="$(OSRootDir)shared\config\msbuild\BlamLib.props" />
   <ItemGroup>
-    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL" />
+    <Reference Include="Microsoft.VisualStudio.QualityTools.UnitTestFramework, Version=10.0.0.0, Culture=neutral, PublicKeyToken=b03f5f7f11d50a3a, processorArchitecture=MSIL">
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -54,16 +57,12 @@
     <Compile Include="_Paths.cs" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlamLib.Forms\BlamLib.Forms.csproj">
-      <Project>{61ee1295-f2b6-4351-b331-244319600fce}</Project>
-      <Name>BlamLib.Forms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BlamLib\BlamLib.csproj">
-      <Project>{d9931e1a-1a8a-4707-a27c-9afefd60d25b}</Project>
+      <Project>{D9931E1A-1A8A-4707-A27C-9AFEFD60D25B}</Project>
       <Name>BlamLib</Name>
     </ProjectReference>
     <ProjectReference Include="..\LowLevel\LowLevel.vcxproj">
-      <Project>{5e5b9f4e-1067-4470-8aa9-b25bbbea063a}</Project>
+      <Project>{5E5B9F4E-1067-4470-8AA9-B25BBBEA063A}</Project>
       <Name>LowLevel</Name>
     </ProjectReference>
   </ItemGroup>

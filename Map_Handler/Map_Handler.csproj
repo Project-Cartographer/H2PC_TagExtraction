@@ -114,6 +114,12 @@
     <Compile Include="Rebase_meta.Designer.cs">
       <DependentUpon>Rebase_meta.cs</DependentUpon>
     </Compile>
+    <Compile Include="TagExtractor.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="TagExtractor.Designer.cs">
+      <DependentUpon>TagExtractor.cs</DependentUpon>
+    </Compile>
     <Compile Include="tag_refs.cs" />
     <EmbeddedResource Include="MainBox.resx">
       <DependentUpon>MainBox.cs</DependentUpon>
@@ -136,6 +142,9 @@
     <EmbeddedResource Include="Rebase_meta.resx">
       <DependentUpon>Rebase_meta.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="TagExtractor.resx">
+      <DependentUpon>TagExtractor.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
@@ -150,10 +159,6 @@
     <None Include="App.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\BlamLib\BlamLib.Forms\BlamLib.Forms.csproj">
-      <Project>{61ee1295-f2b6-4351-b331-244319600fce}</Project>
-      <Name>BlamLib.Forms</Name>
-    </ProjectReference>
     <ProjectReference Include="..\BlamLib\BlamLib.Test\BlamLib.Test.csproj">
       <Project>{2bb37b4c-d7e0-451f-a8c8-997890b98b9f}</Project>
       <Name>BlamLib.Test</Name>

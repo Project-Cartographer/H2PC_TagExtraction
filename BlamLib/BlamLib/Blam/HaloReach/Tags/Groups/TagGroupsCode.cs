@@ -783,6 +783,12 @@ namespace BlamLib.Blam.HaloReach
 		/// </summary>
 		public static TagGroup pach = new TagGroup("pach", "tag_package_manifest");
 
+		//Reach Retail
+		/// <summary>
+		/// patch_globals
+		/// </summary>
+		public static TagGroup patg = new TagGroup("patg", "patch_globals");
+
 		//Reach
 		/// <summary>
 		/// pgcr_enemy_to_category_mapping_definition

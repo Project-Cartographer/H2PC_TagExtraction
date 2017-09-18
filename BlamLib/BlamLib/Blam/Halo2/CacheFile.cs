@@ -822,7 +822,7 @@ namespace BlamLib.Blam.Halo2
 		}
 	};
 
-	internal class InternalCacheTagIndex : Managers.CacheTagIndex, ICacheLanguagePackContainer
+	 class InternalCacheTagIndex : Managers.CacheTagIndex, ICacheLanguagePackContainer
 	{
 		#region ICacheLanguagePackContainer
 		ICacheLanguagePackContainer cacheLanguagePackContainer = null;

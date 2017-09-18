@@ -140,7 +140,7 @@ namespace BlamLib.Managers
 		public Dictionary<int, StringId> SetLookup { get; internal set; }
 
 		/// <summary>Number of string ids in this set</summary>
-		public int Count { get { return Set.Count; } }
+		public int Count { get { return Set.Count-2; } }
 
 		#region Ctor
 		void InitializeSets(int capacity)
@@ -476,9 +476,9 @@ namespace BlamLib.Managers
 	sealed class StringIdDynamicCollection : IStringIdContainer, IEnumerable<KeyValuePair<StringId, string>>
 	{
 		#region HandleMethod
-// 		GenerateIdMethod m_handleMethod;
-// 		/// <summary>Method used which to create new handles</summary>
-// 		public GenerateIdMethod HandleMethod { get { return m_handleMethod; } }
+		GenerateIdMethod m_handleMethod;
+		/// <summary>Method used which to create new handles</summary>
+		public GenerateIdMethod HandleMethod { get { return m_handleMethod; } }
 		#endregion
 
 		StringIdManager mOwner;

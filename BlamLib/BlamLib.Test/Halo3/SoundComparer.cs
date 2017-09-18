@@ -219,7 +219,7 @@ namespace BlamLib.Test
 				args.SignalFinished();
 			});
 
-			CacheFileOutputInfoArgs.TestThreadedMethod(tc, thread_code,
+			CacheFileOutputInfoArgs.TestMethodThreaded(tc, thread_code,
 				game, dir, map_names);
 
 			SndComparer snd_cmp = new SndComparer(map_count);

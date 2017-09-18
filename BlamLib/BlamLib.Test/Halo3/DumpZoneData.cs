@@ -126,13 +126,13 @@ namespace BlamLib.Test
 		[TestMethod]
 		public void Halo3TestDumpZoneDataXbox()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, DumpZoneDataMethod,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext, DumpZoneDataMethod,
 				BlamVersion.Halo3_Xbox, kDirectoryXbox, kMapNames_Retail);
 		}
 		[TestMethod]
 		public void Halo3TestDumpZoneDataXboxEpsilon()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, DumpZoneDataMethod,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext, DumpZoneDataMethod,
 				BlamVersion.Halo3_Epsilon, kDirectoryXbox, kMapNames_Epsilon);
 		}
 	};

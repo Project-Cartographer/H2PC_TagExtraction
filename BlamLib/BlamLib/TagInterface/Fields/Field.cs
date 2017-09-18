@@ -6,7 +6,6 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
-using System.ComponentModel;
 
 namespace BlamLib.TagInterface
 {
@@ -429,13 +428,7 @@ namespace BlamLib.TagInterface
 	/// <summary>
 	/// The starting point for the tag interface system
 	/// </summary>
-	public abstract class Field
-		: Blam.ICacheStreamable
-		, IMemoryStreamable
-		, IO.ITagStreamable
-		, ICloneable
-		, Blam.Cache.ICacheObject
-		, INotifyPropertyChanged
+	public abstract class Field : Blam.ICacheStreamable, IMemoryStreamable, IO.ITagStreamable, ICloneable, Blam.Cache.ICacheObject
 	{
 		#region FieldType
 		protected FieldType fieldType;
@@ -626,20 +619,6 @@ namespace BlamLib.TagInterface
 		/// <param name="fi"></param>
 		/// <returns></returns>
 		public static bool UsesRecursiveIo(Field fi) { return fi.fieldType.UsesRecursiveIo(); }
-		#endregion
-
-		#region INotifyPropertyChanged Members
-		public event PropertyChangedEventHandler PropertyChanged;
-
-		protected void OnPropertyChanged(string propertyName)
-		{
-			var propertyChanged = PropertyChanged;
-
-			if (propertyChanged != null)
-			{
-				propertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
 		#endregion
 	};
 

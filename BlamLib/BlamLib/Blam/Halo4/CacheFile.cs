@@ -18,8 +18,9 @@ namespace BlamLib.Blam.Halo4
 
 		internal System.Runtime.InteropServices.ComTypes.FILETIME Filetime;
 
-		internal int TagNamesUnknownCount; // 0x10 byte structure
-		internal int TagNamesUnknownOffset;
+		internal int TagsUnknown1Count; // 0x10 byte structure
+		internal int TagsUnknown1Offset;
+		internal int TagsUnknown2Count, TagsUnknown2Offset;
 
 		public override void Read(IO.EndianReader s)
 		{
@@ -42,6 +43,7 @@ namespace BlamLib.Blam.Halo4
 			s.ReadBool();
 			s.ReadBool(); // false if it belongs to a untracked build
 			s.ReadBool();
+			// PATCH: this is '3' in main menu patches
 			s.ReadByte(); // appears to be an ODST-only field
 
 			s.ReadInt32(); s.ReadInt32();
@@ -71,6 +73,7 @@ namespace BlamLib.Blam.Halo4
 			name = s.ReadTagString();
 			s.ReadInt32();
 			scenarioPath = s.ReadAsciiString(256);
+			// PATCH: this is -1 in main menu patches
 			s.ReadInt32(); // minor version, normally not used
 
 			#region tag paths
@@ -79,9 +82,11 @@ namespace BlamLib.Blam.Halo4
 			tagNamesBufferSize = s.ReadInt32(); // cstring buffer total size in bytes
 			tagNameIndicesOffset = s.ReadInt32();
 
-			TagNamesUnknownCount = s.ReadInt32();
-			TagNamesUnknownOffset = s.ReadInt32();
-			s.Seek(8, System.IO.SeekOrigin.Current); // only seen as zero
+			TagsUnknown1Count = s.ReadInt32();
+			TagsUnknown1Offset = s.ReadInt32();
+			// PATCH: zero for non-patch data
+			TagsUnknown2Count = s.ReadInt32();
+			TagsUnknown2Offset = s.ReadInt32();
 			#endregion
 
 			checksum = s.ReadUInt32(); // 0x2D4
@@ -126,6 +131,7 @@ namespace BlamLib.Blam.Halo4
 
 			s.Seek(16, System.IO.SeekOrigin.Current); // GUID?, these bytes are always the same. ODST is different from Halo 3
 
+			// PATCH: main menu patches have a single entry (where stock has none)
 			#region blah 1
 			// 0x4AC
 
@@ -147,7 +153,9 @@ namespace BlamLib.Blam.Halo4
 			s.Seek((3600 - count) * 28, System.IO.SeekOrigin.Current); // seek past the unused elements
 			#endregion
 
+			// PATCH: main menu patches have a count of '1' but doesn't appear to have
 			#region blah 2
+			s.Seek(sizeof(uint) + 0x4E9C, System.IO.SeekOrigin.Current);
 #if false
 			{
 				// 0x18E94
@@ -164,13 +172,19 @@ namespace BlamLib.Blam.Halo4
 #endif
 			#endregion
 
-			s.Seek(716 + sizeof(uint), System.IO.SeekOrigin.Current);
+			s.Seek(712 + sizeof(uint), System.IO.SeekOrigin.Current);
 
 
 			ReadPostprocessForInterop();
 
-			if(!cacheInterop.IsNull)
-				TagNamesUnknownOffset -= (int)cacheInterop[CacheSectionType.Debug].AddressMask;
+			if (!cacheInterop.IsNull)
+			{
+				int debug_mask = (int)cacheInterop[CacheSectionType.Debug].AddressMask;
+				if (TagsUnknown1Offset != 0)
+					TagsUnknown1Offset -= debug_mask;
+				if (TagsUnknown2Offset != 0)
+					TagsUnknown2Offset -= debug_mask;
+			}
 
 			ReadPostprocessForBaseAddresses(s);
 		}
@@ -226,7 +240,7 @@ namespace BlamLib.Blam.Halo4
 			#endregion
 
 			#region Load tag names
-			using (var buffer = cache.DecryptCacheSegment(CacheSectionType.Tag, cache.HeaderHalo4.TagNamesBufferOffset, cache.HeaderHalo4.TagNamesBufferSize))
+			using (var buffer = cache.DecryptCacheSegmentStream(CacheSectionType.Tag, cache.HeaderHalo4.TagNamesBufferOffset, cache.HeaderHalo4.TagNamesBufferSize))
 			{
 				string tag_name;
 				foreach (var ci in items)
@@ -293,7 +307,9 @@ namespace BlamLib.Blam.Halo4
 		}
 		#endregion
 
-		internal IO.EndianReader DecryptCacheSegment(CacheSectionType section_type, int segment_offset, int segment_size)
+		public override bool ResourcesUseEncryption { get { return true; } }
+
+		internal override byte[] DecryptCacheSegmentBytes(CacheSectionType section_type, int segment_offset, int segment_size)
 		{
 			InputStream.Seek(segment_offset);
 			uint buffer_size = Util.Align(16, (uint)segment_size);
@@ -302,7 +318,7 @@ namespace BlamLib.Blam.Halo4
 			byte[] decrypted;
 			GameDefinition.SecurityAesDecrypt(engineVersion, section_type, encrypted, out decrypted);
 
-			return decrypted != null ? new IO.EndianReader(decrypted) : null;
+			return decrypted != null ? decrypted : null;
 		}
 
 		#region Header
@@ -311,6 +327,8 @@ namespace BlamLib.Blam.Halo4
 
 		public Halo4.CacheHeader HeaderHalo4 { get { return cacheHeader; } }
 		#endregion
+
+		public bool IsPatchCache { get { return Header.Name.Contains("_patch"); } }
 
 		public override string GetUniqueName()
 		{
@@ -328,7 +346,7 @@ namespace BlamLib.Blam.Halo4
 		#region StringIdManager
 		protected override IO.EndianReader GetStringIdsBuffer(ICacheHeaderStringId sid_header)
 		{
-			return DecryptCacheSegment(CacheSectionType.Debug, sid_header.StringIdsBufferOffset, sid_header.StringIdsBufferSize);
+			return DecryptCacheSegmentStream(CacheSectionType.Debug, sid_header.StringIdsBufferOffset, sid_header.StringIdsBufferSize);
 		}
 		#endregion
 
@@ -373,6 +391,10 @@ namespace BlamLib.Blam.Halo4
 			{
 				case "20810.12.09.22.1647.main":
 				case "21122.12.11.21.0101.main": // dlc_crimson
+				case "21165.12.12.12.0112.main": // TU3 / dlc SPOPS 1.5
+				case "21339.13.02.05.0117.main": // 4
+				case "21391.13.03.13.1711.main": // 5
+				case "21401.13.04.23.1849.main": // 6
 					engineVersion = BlamVersion.Halo4_Xbox;
 					break;
 
@@ -407,6 +429,71 @@ namespace BlamLib.Blam.Halo4
 			TagIndexInitializeAndRead(s);
 
 			isLoaded = true;
+		}
+
+		protected override void OutputExtraHeaderInfo(System.IO.StreamWriter s)
+		{
+			base.OutputExtraHeaderInfo(s);
+
+			s.WriteLine("--TagsUnknown1--");
+			s.WriteLine("{0}\tCount", HeaderHalo4.TagsUnknown1Count.ToString("X8"));
+			s.WriteLine("{0}\tOffset", HeaderHalo4.TagsUnknown1Offset.ToString("X8"));
+			s.WriteLine("--TagsUnknown2--");
+			s.WriteLine("{0}\tCount", HeaderHalo4.TagsUnknown2Count.ToString("X8"));
+			s.WriteLine("{0}\tOffset", HeaderHalo4.TagsUnknown2Offset.ToString("X8"));
+		}
+
+		void OutputTagsUnknownData(System.IO.StreamWriter s, int offset, int count)
+		{
+			if (offset <= 0 || count <= 0) return;
+
+			InputStream.Seek(offset);
+			for (int x = 0; x < count; x++)
+			{
+				ulong value = InputStream.ReadUInt64();
+				var tag_index = DatumIndex.Null; tag_index.Read(InputStream);
+				uint zero = InputStream.ReadUInt32();
+
+				var item = Index.Tags[tag_index.Index];
+
+				s.Write("\t{0}\t{1} @{2}\t{3}",
+					value.ToString("X16"),
+					tag_index.Handle.ToString("X8"),
+					item.Address.ToString("X8"),
+					GetReferenceName(item));
+
+				if (zero != 0)
+					s.WriteLine("\t{0}", zero.ToString("X8"));
+				else
+					s.WriteLine();
+			}
+		}
+		protected override void OutputExtraTagInstanceInfo(System.IO.StreamWriter s)
+		{
+			base.OutputExtraTagInstanceInfo(s);
+
+			bool is_patch = IsPatchCache;
+
+			if (is_patch)
+			{
+				int offset, count;
+
+				offset = HeaderHalo4.TagsUnknown1Offset; count = HeaderHalo4.TagsUnknown1Count;
+				if (offset > 0 && count > 0)
+				{
+					s.WriteLine("--TagsUnknown1--");
+					OutputTagsUnknownData(s, offset, count);
+					s.WriteLine();
+				}
+
+				offset = HeaderHalo4.TagsUnknown2Offset; count = HeaderHalo4.TagsUnknown2Count;
+				if (offset > 0 && count > 0)
+				{
+					s.WriteLine("--TagsUnknown1--");
+					OutputTagsUnknownData(s, offset, count);
+					s.WriteLine();
+				}
+			}
 		}
 	};
 	#endregion

@@ -209,7 +209,7 @@ namespace BlamLib.Test
 		[TestMethod]
 		public void Halo3TestCacheLoadResourceXbox()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext,
 				CacheLoadResourceMethod,
 				BlamVersion.Halo3_Xbox, kDirectoryXbox, kMapNames_Retail[0]);
 		}

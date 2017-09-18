@@ -49,6 +49,20 @@ namespace BlamLib.TagInterface
 		[System.ComponentModel.Browsable(false)]
 		public char[] Tag { get { return tag; } }
 		public string TagToString() { return /*new string(tag)*/tagAsString; }
+		/// <summary>
+		/// Get the tag as a string, using blank spaces where there are null characters
+		/// </summary>
+		/// <returns></returns>
+		public string TagToStringNullSafe()
+		{
+			var sb = new StringBuilder(tagAsString);
+
+			for (int x = 0; x < sb.Length; x++)
+				if(sb[x] == '\0')
+					sb[x] = ' ';
+
+			return sb.ToString();
+		}
 		#endregion
 
 		#region Handle
@@ -273,7 +287,7 @@ namespace BlamLib.TagInterface
 		/// <returns>This object's group tag</returns>
 		public override int GetHashCode()		{ return (int)iD; }
 
-		public override string ToString()		{ return string.Format("['{0,4}'  {1}]", TagToString(), name); }
+		public override string ToString()		{ return string.Format("['{0,4}'  {1}]", TagToStringNullSafe(), name); }
 		#endregion
 
 		#region Operators

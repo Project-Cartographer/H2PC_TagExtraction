@@ -10,11 +10,11 @@ using System.Windows.Forms;
 using System.IO;
 using System.Xml;
 using System.Globalization;
-using BlamLib.Test;
+using BlamLib;
 using DATA_STRUCTURES;
 
 /*
-Created and developed by Himanshu01
+Created and developed by Himanshu01 in H2PC Project Cartographer Team
 Also uses BlamLib by Kornner Studios for tag extraction 
 */
 
@@ -25,22 +25,28 @@ namespace Map_Handler
     public partial class MainBox : Form
     {
         #region EXTRACTION_RELATED_VARS                
-        StreamReader map_stream;//stream reader
+        static StreamReader map_stream;//stream reader
         int table_off;//offset of the table
         int table_start;//start of the Actual Tables
         int table_size;//size of the table
         int file_table_offset;//file table offset from where the strings begin
 
-        bool map_loaded = false;//is the map loaded
+        static bool map_loaded = false;//is the map loaded
         int scnr_memaddr;
         int scnr_off;
-        string map_name;//name of the map along woth destination
+        public static string map_name="";//name of the map along woth destination
 
         List<int> datum_list = new List<int>();
-        Halo2 obj = new Halo2();//Blam Lib onject
-        int index = 0;//progress bar stuff and tag extraction
+
+        public static BlamLib.Test.Halo2 H2Test = new BlamLib.Test.Halo2(); //Blam Lib Tests project
+        public static BlamLib.Blam.Halo2.Converter H2Convert = new BlamLib.Blam.Halo2.Converter();
+
+     
+        
 
         Dictionary<int, string> SID_list;//a list containing string index stuff
+        public static Dictionary<int, string> AllTagslist;
+        public static string H2V_BaseMapsDirectory;
 
         #endregion
 
@@ -48,7 +54,7 @@ namespace Map_Handler
         public MainBox()
         {
             InitializeComponent();
-       
+                
         }
 
         #region NON_BLAM_LIB_EXTRACTION
@@ -66,6 +72,7 @@ namespace Map_Handler
             {
                 map_stream = new StreamReader(map_file.FileName);
                 SID_list = new Dictionary<int, string>();//initialise our SIDs
+                AllTagslist = new Dictionary<int, string>();
 
                 table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
                 table_size = DATA_READ.ReadINT_LE(0x14, map_stream);
@@ -77,9 +84,11 @@ namespace Map_Handler
                 scnr_memaddr = DATA_READ.ReadINT_LE(table_start + 0x8, map_stream);//scnr tag index is 0x0
 
                 map_name =map_file.FileName;
-
+                
                 initialize_treeview();
                 map_loaded = true;
+                TagToolStripMenu.Visible = true;
+                metaToolStripMenuItem.Visible = true;
             }           
 
 
@@ -91,6 +100,7 @@ namespace Map_Handler
         void initialize_treeview()
         {
             treeView1.Nodes.Clear();
+            
 
             int path_start = 0;
 
@@ -111,7 +121,8 @@ namespace Map_Handler
                     int mem_addr = DATA_READ.ReadINT_LE(tag_table_REF + (datum_index & 0xffff) * 0x10 + 8, map_stream);
 
                     if (mem_addr != 0x0)
-                        datum_list.Add(datum_index);//lets add this to the list               
+                        AllTagslist.Add(datum_index, path);//Adding only Map Specific tags with Internal Reference only to list 
+                                 
 
 
                     if (treeView1.Nodes.IndexOfKey(type) == -1)
@@ -213,11 +224,30 @@ namespace Map_Handler
         #region BLAM_LIB_EXTRACTION
 
         //Tag extraction stuff
+        public static void CloseMap()
+        {
+            if (map_loaded)
+            {
+                map_stream.Close();
+                map_loaded = false;
+            }
+
+        }
+        public static void ReOpenMap()
+        {
+            if (!map_loaded)
+            {
+                map_stream = new StreamReader(map_name);
+                map_loaded = true;
+            }
+
+        }
         private void extractTagToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(map_loaded)
-            {                
+            {
 
+                Dictionary<int, string> Extractlist = new Dictionary<int, string>();
                 if (treeView1.SelectedNode!=null)
                 {
                     //Extraction for a single tag
@@ -225,87 +255,165 @@ namespace Map_Handler
                     {
                         
                         int tag_table_ref = Int32.Parse(treeView1.SelectedNode.Name);
-                        int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4, map_stream);
-
-                        map_stream.Close();                       
-                        obj.Halo2_ExtractTagCache(datum_index, DATA_READ.Read_File_from_file_location(map_name));
-                        map_stream = new StreamReader(map_name);
+                        int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4, map_stream);                    
+                        Extractlist.Add(datum_index, treeView1.SelectedNode.Text);
                         
                     }
                     else
                     {
                         //Extraction for a whole same bunch of tags
-                        List<int> DatumsList = new List<int>();
+                        
                         foreach (TreeNode tn in treeView1.SelectedNode.Nodes)
                         {
                             int tag_table_ref = Int32.Parse(tn.Name);
                             int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4,map_stream);
-                            DatumsList.Add(datum_index);
+                            Extractlist.Add(datum_index, tn.Text);
                         }
+                  
+                    }
+                    TagExtractor ob = new TagExtractor(Extractlist,false);
+                    ob.Show();                    
 
-                        map_stream.Close();
-
-                        int index = 1;
-
-                        foreach (int i in DatumsList)
-                        {
-                            obj.Halo2_ExtractTagCache(i, DATA_READ.Read_File_from_file_location(map_name));
-
-                            progressBar1.Value = (index++)*100 / DatumsList.Count;//update the progress bar
-                        }                        
-
-                        map_stream = new StreamReader(map_name);                       
-
-
-                    }                
+                }
+                else
+                {
+                     MessageBox.Show("Select a Tag First!", "CRASHED!!", MessageBoxButtons.OK);                  
+                                          
                 }
 
             }
-            progressBar1.Value = 0;//reset the progress bar
+            else
+            {
+                MessageBox.Show("No Map Loaded ,Reload it", "Error!!", MessageBoxButtons.OK);
+            }
+
+
+
 
         }
 
         private void decompileMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if (map_loaded)
-            {
-
-                map_stream.Close();//has to close BlamLib issues
-                map_loaded = false;//sorry you cannot do any map stuff now
-
-                timer2.Enabled=true;
+            {                            
+                TagExtractor ob = new TagExtractor(AllTagslist,true);        
+                ob.Show();
             }
 
         }
 
-        private void timer2_Tick(object sender, EventArgs e)
+
+        #endregion
+        
+
+ 
+        private void closeMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //i used timer instead of a loop because of the fancy progress bar(IT looks COOL)
+            CloseMap();
+            treeView1.Nodes.Clear();
 
-            if (index < datum_list.Count)
+            TagToolStripMenu.Visible = false;
+            metaToolStripMenuItem.Visible = false;
+
+        }
+
+        private void exitToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            CloseMap();
+            Application.Exit();
+        }
+
+        private void defaultMaToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //ToDO: Complete this UI
+            WIP();
+            /*
+
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.ShowNewFolderButton = false;
+
+
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-              
-                    obj.Halo2_ExtractTagCache(datum_list[index], DATA_READ.Read_File_from_file_location(map_name));
-                    progressBar1.Value = (index + 1) * 100 / datum_list.Count;//update the progress bar             
-
-                    //we have to increment the index
-                    index++;
-                  
+                H2V_BaseMapsDirectory = fbd.SelectedPath;
                 
+            }*/
+            
+        }
+
+        void DumpTagList()
+        {  if (treeView1.SelectedNode.Nodes.Count != 0)
+            {
+                string[] x = new string[treeView1.SelectedNode.Nodes.Count];
+                int i = 0;
+                foreach (TreeNode tn in treeView1.SelectedNode.Nodes)
+                {
+                    int tag_table_ref = Int32.Parse(tn.Name);
+                    int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4, map_stream);
+
+                    string Name = System.IO.Path.GetFileNameWithoutExtension(tn.Text);
+
+                    x[i++] = Name + "," + "0x" + datum_index.ToString("X"); ;
+
+                }
+
+                File.WriteAllLines(Application.StartupPath + @"\TagsList.txt", x);
             }
             else
             {
-                progressBar1.Value = 0;//reset the progres bar
-                map_stream = new StreamReader(map_name);//lets load the map
-                map_loaded = true;//well now u are now free
-                index = 0;//reset the index
-                timer2.Enabled = false;
-                
+                MessageBox.Show("Select Tag Nodes First", "Error", MessageBoxButtons.OK);
             }
+            
+        }
+
+        void WIP()
+        {
+            MessageBox.Show("Work In Progress!!", "WIP", MessageBoxButtons.OK);
+        }
+
+        private void hCEGBXModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //ToDO: Complete this with UI
+            WIP();
 
         }
-        
-        #endregion
 
+        private void hCEToH2VSoundsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //ToDO: Complete this with UI
+            WIP();
+        }
+
+        private void hCECollisionModelToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //ToDO: Complete this with UI
+            WIP();
+        }
+
+        private void ExtractImportlStripMenuItem_Click(object sender, EventArgs e)
+        {
+            String BrowseDirectory = "";
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.ShowNewFolderButton = false;
+
+
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                BrowseDirectory = fbd.SelectedPath;
+                H2Test.Halo2TestImportInfoExtraction(BrowseDirectory,"");
+                MessageBox.Show("Done ", "Progress", MessageBoxButtons.OK);
+            }
+        }
+
+        private void dumpSelectedTagsListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            DumpTagList();
+            MessageBox.Show("Done ", "Progress", MessageBoxButtons.OK);
+        }
+
+        private void tests1ToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            //H2Test.Halo2TestCacheOutputPc();
+        }
     }
 }

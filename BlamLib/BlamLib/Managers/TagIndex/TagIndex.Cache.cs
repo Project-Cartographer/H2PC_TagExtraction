@@ -117,28 +117,28 @@ namespace BlamLib.Managers
 				group_tag_hack = true;
 			} else
 #endif
-#if NO_HALO3
+#if !NO_HALO3
 			if (build == BlamBuild.Halo3 && i.GroupTag == Blam.Halo3.TagGroups.snd_)
 			{
 				tm.Manage(Blam.Halo3.TagGroups.shit);
 				group_tag_hack = true;
 			} else
 #endif
-#if NO_HALO_ODST
+#if !NO_HALO_ODST
 			if (build == BlamBuild.HaloOdst && i.GroupTag == Blam.Halo3.TagGroups.snd_)
 			{
 				tm.Manage(Blam.Halo3.TagGroups.shit);
 				group_tag_hack = true;
 			} else
 #endif
-#if NO_HALO_REACH
+#if !NO_HALO_REACH
 			if (build == BlamBuild.HaloReach && i.GroupTag == Blam.HaloReach.TagGroups.snd_)
 			{
 				tm.Manage(Blam.HaloReach.TagGroups.shit);
 				group_tag_hack = true;
 			} else
 #endif
-#if NO_HALO4
+#if !NO_HALO4
 			if (build == BlamBuild.Halo4 && i.GroupTag == Blam.Halo4.TagGroups.snd_)
 			{
 				tm.Manage(Blam.Halo4.TagGroups.shit);

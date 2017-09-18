@@ -2,8 +2,6 @@
 	BlamLib: .NET SDK for the Blam Engine
 
 	See license\BlamLib\BlamLib for specific license information
-
-    slighly modified by Himanshu01
 */
 using System;
 using System.Collections.Generic;
@@ -982,17 +980,12 @@ namespace BlamLib.Managers
 				// Id is built from the a salt value, and placed in the datum's index field, 
 				// then the engine version is placed in the salt field. Yes, I realize I should 
 				// call it something else besides salt since it's not placed in the salt field...
-				cache_id = new BlamLib.Blam.DatumIndex((ushort)(kCacheFileSaltBase | CacheFileSalt), (short)game);
-                
-                cacheFiles.Add(cache_id, cf);
+				cache_id = new BlamLib.Blam.DatumIndex((ushort)(kCacheFileSaltBase | CacheFileSalt++), (short)game);
 
+				cacheFiles.Add(cache_id, cf);
+			}
 
-                //Modified by Himanshu01
-                CacheFileSalt = (byte)cacheFiles.Count;
-                //my stuff ends
-            }
-
-            return cf.CacheId = cache_id;
+			return cf.CacheId = cache_id;
 		}
 
 		/// <summary>
@@ -1100,16 +1093,11 @@ namespace BlamLib.Managers
 		{
 			lock (tagIndexes)
 			{
-				Blam.DatumIndex index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | TagIndexSalt), (short)cf.EngineVersion);
-                
-                tagIndexes.Add(cache_index.IndexId = index_id, cache_index);
+				Blam.DatumIndex index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | TagIndexSalt++), (short)cf.EngineVersion);
 
-                //Added by Himanshu01
-                TagIndexSalt = (byte)tagIndexes.Count;
-                //my stuff ends
-
-            }
-        }
+				tagIndexes.Add(cache_index.IndexId = index_id, cache_index);
+			}
+		}
 
 		/// <summary>
 		/// Close an open tag index manager
@@ -1148,54 +1136,29 @@ namespace BlamLib.Managers
 				}
 
 			return ti;
-        }
-
-        /// <summary>
-        /// Open a tag index
-        /// </summary>
-        /// <param name="game">Engine the tag index is for</param>
-        /// <param name="base_directory">Base directory on disk for the index</param>
-        /// <returns>Identifier that can be used in tag index management</returns>
-        public Blam.DatumIndex OpenTagIndex(BlamVersion game, string base_directory)
-        {
-            return OpenTagIndex(game, base_directory, "tags", false);
-        }
-
-        /// <summary>
-        /// Open a tag index
-        /// </summary>
-        /// <param name="game">Engine the tag index is for</param>
-        /// <param name="base_directory">Base directory on disk for the index</param>
-        /// <param name="tags_dir">Tags folder name</param>
-        /// <returns>Identifier that can be used in tag index management</returns>
-        public Blam.DatumIndex OpenTagIndex(BlamVersion game, string base_directory, string tags_dir)
-        {
-            return OpenTagIndex(game, base_directory, tags_dir, false);
-        }
-
-        /// <summary>
-        /// Open a tag index
-        /// </summary>
-        /// <param name="game">Engine the tag index is for</param>
-        /// <param name="base_directory">Base directory on disk for the index</param>
-        /// <param name="create">Create the directory if it doesn't exist on disk</param>
-        /// <returns>Identifier that can be used in tag index management</returns>
-        public Blam.DatumIndex OpenTagIndex(BlamVersion game, string base_directory, bool create)
-        {
-            return OpenTagIndex(game, base_directory, "tags", create);
-        }
+		}
 
 		/// <summary>
 		/// Open a tag index
 		/// </summary>
-        /// <param name="game">Engine the tag index is for</param>
-        /// <param name="base_directory">Base directory on disk for the index</param>
-        /// <param name="tags_dir">Tags folder name</param>
+		/// <param name="game">Engine the tag index is for</param>
+		/// <param name="base_directory">Base directory on disk for the index</param>
+		/// <returns>Identifier that can be used in tag index management</returns>
+		public Blam.DatumIndex OpenTagIndex(BlamVersion game, string base_directory)
+		{
+			return OpenTagIndex(game, base_directory, false);
+		}
+
+		/// <summary>
+		/// Open a tag index
+		/// </summary>
+		/// <param name="game">Engine the tag index is for</param>
+		/// <param name="base_directory">Base directory on disk for the index</param>
 		/// <param name="create">Create the directory if it doesn't exist on disk</param>
 		/// <returns>Identifier that can be used in tag index management</returns>
-		public Blam.DatumIndex OpenTagIndex(BlamVersion game, string base_directory, string tags_dir, bool create)
+		public Blam.DatumIndex OpenTagIndex(BlamVersion game, string base_directory, bool create)
 		{
-            Managers.TagIndex ti = new Managers.TagIndex(game, base_directory, tags_dir, create);
+			Managers.TagIndex ti = new Managers.TagIndex(game, base_directory, create);
 			Debug.Assert.If(ti != null, "[{0}] Failed to open a tag index: [{1}] '{2}'.", this.name, game, base_directory);
 
 			Blam.DatumIndex index_id;
@@ -1204,16 +1167,12 @@ namespace BlamLib.Managers
 				// Id is built from the a salt value, and placed in the datum's index field, 
 				// then the engine version is placed in the salt field. Yes, I realize I should 
 				// call it something else besides salt since it's not placed in the salt field...
-				index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | TagIndexSalt), (short)game);
+				index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | TagIndexSalt++), (short)game);
 
 				tagIndexes.Add(index_id, ti);
+			}
 
-                //Added by Himanshu01
-                TagIndexSalt = (byte)tagIndexes.Count;
-                //my stuff ends
-            }
-
-            return ti.IndexId = index_id;
+			return ti.IndexId = index_id;
 		}
 
 		/// <summary>

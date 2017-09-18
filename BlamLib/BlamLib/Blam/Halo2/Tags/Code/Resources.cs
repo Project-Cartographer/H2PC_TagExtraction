@@ -5,6 +5,7 @@
 */
 ﻿#pragma warning disable 1591 // "Missing XML comment for publicly visible type or member"
 using System;
+using System.Collections.Generic;
 using TI = BlamLib.TagInterface;
 
 namespace BlamLib.Blam.Halo2.Tags
@@ -164,6 +165,40 @@ namespace BlamLib.Blam.Halo2.Tags
 	#region multilingual_unicode_string_list
 	partial class multilingual_unicode_string_list_group
 	{
+		#region multilingual_unicode_string_reference_block
+		partial class multilingual_unicode_string_reference_block
+		{
+			#region IMultilingualUnicodeStringReference Members
+			TI.StringId Cache.IMultilingualUnicodeStringReference.Name
+			{ get { return StringId; } }
+			TI.LongInteger[] Cache.IMultilingualUnicodeStringReference.LanguageOffsets
+			{ get { return LanguageOffsets; } }
+			#endregion
+		};
+		#endregion
+
+		#region IMultilingualUnicodeStringList Members
+		Cache.IMultilingualUnicodeStringReference Cache.IMultilingualUnicodeStringList.NewReference()
+		{
+			multilingual_unicode_string_reference_block sr;
+			StringRefs.Add(out sr);
+
+			return sr;
+		}
+
+		Cache.IMultilingualUnicodeStringReference Cache.IMultilingualUnicodeStringList.GetReference(int element_index)
+		{
+			return StringRefs[element_index];
+		}
+
+		IEnumerable<Cache.IMultilingualUnicodeStringReference> Cache.IMultilingualUnicodeStringList.StringRefs
+		{ get { foreach(var sr in StringRefs) yield return sr; } }
+		TI.Data Cache.IMultilingualUnicodeStringList.StringData
+		{ get { return StringData; } }
+		TI.LongInteger[] Cache.IMultilingualUnicodeStringList.LanguageHandles
+		{ get { return LanguageHandles; } }
+		#endregion
+
 		static int LanguageIdGetReferenceIndex(int id)
 		{
 			return id & 0xFFFF;

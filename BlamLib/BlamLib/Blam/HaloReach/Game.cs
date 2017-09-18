@@ -9,6 +9,30 @@ using TI = BlamLib.TagInterface;
 
 namespace BlamLib.Blam.HaloReach
 {
+#pragma warning disable 1591 // "Missing XML comment for publicly visible type or member"
+	/// <summary>
+	/// Supported languages
+	/// </summary>
+	public enum LanguageType
+	{
+		English,
+		Japanese,
+		German,
+		French,
+		Spanish,
+		Italian,
+		Korean,
+		/// <summary>
+		/// Traditional
+		/// </summary>
+		Chinese,
+		Portuguese,
+		Polish,
+
+		kMax
+	};
+#pragma warning restore 1591 // "Missing XML comment for publicly visible type or member"
+
 	/// <summary>
 	/// Halo Reach game definition implementation
 	/// </summary>

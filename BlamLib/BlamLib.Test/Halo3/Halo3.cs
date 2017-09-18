@@ -151,14 +151,14 @@ namespace BlamLib.Test
 		[TestMethod]
 		public void Halo3TestCacheOutputXbox()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext,
 				CacheOutputInformationMethod,
 				BlamVersion.Halo3_Xbox, kDirectoryXbox, kMapNames_Retail);
 		}
 		[TestMethod]
 		public void Halo3TestCacheOutputXboxEpsilon()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext,
 				CacheOutputInformationMethod,
 				BlamVersion.Halo3_Epsilon, kDirectoryXbox, kMapNames_Epsilon);
 		}

@@ -195,11 +195,11 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region multilingual_unicode_string_list
 	[TI.TagGroup((int)TagGroups.Enumerated.unic, 2, 68)]
-	public partial class multilingual_unicode_string_list_group : TI.Definition
+	public partial class multilingual_unicode_string_list_group : TI.Definition, Cache.IMultilingualUnicodeStringList
 	{
 		#region multilingual_unicode_string_reference_block
 		[TI.Definition(1, 40)]
-		public class multilingual_unicode_string_reference_block : TI.Definition
+		public partial class multilingual_unicode_string_reference_block : TI.Definition, Cache.IMultilingualUnicodeStringReference
 		{
 			#region Fields
 			public TI.StringId StringId;

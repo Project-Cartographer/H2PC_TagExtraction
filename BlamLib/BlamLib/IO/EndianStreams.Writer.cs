@@ -486,22 +486,37 @@ namespace BlamLib.IO
 		public void Write(string value, int length)
 		{
 			if (length == 0) return;
-
+            
 			length--; // adjust for the null terminator
 			for (int x = 0; x < length; x++)
 				file.Write(x < value.Length ? value[x] : '\0');
 
 			file.Write(byte.MinValue); // write the null terminator
 
-            if (autoFlush) file.Flush();
+			if (autoFlush) file.Flush();
 		}
-
-		/// <summary>
-		/// Writes a Unicode string with a certain length
+        /// <summary>
+		/// Write an ASCII string with a certain length without null terminator
 		/// </summary>
 		/// <param name="value"></param>
-		/// <param name="length">Length of the string, including the null terminator</param>
-		public void WriteUnicodeString(string value, int length)
+		/// <param name="length">Length of the string without null terminator</param>
+		public void Write_No_Null_terminator(string value, int length)
+        {
+            if (length == 0) return;
+            
+            for (int x = 0; x < length; x++)
+                file.Write(value[x]);            
+
+            if (autoFlush) file.Flush();
+        }
+
+
+        /// <summary>
+        /// Writes a Unicode string with a certain length
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="length">Length of the string, including the null terminator</param>
+        public void WriteUnicodeString(string value, int length)
 		{
 			if (length == 0) return;
 

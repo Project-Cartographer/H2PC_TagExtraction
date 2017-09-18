@@ -34,13 +34,15 @@
             this.button2 = new System.Windows.Forms.Button();
             this.radioButton1 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // extract_button
             // 
-            this.extract_button.Location = new System.Drawing.Point(216, 46);
+            this.extract_button.Location = new System.Drawing.Point(266, 54);
             this.extract_button.Name = "extract_button";
-            this.extract_button.Size = new System.Drawing.Size(218, 40);
+            this.extract_button.Size = new System.Drawing.Size(176, 40);
             this.extract_button.TabIndex = 3;
             this.extract_button.Text = "Extract";
             this.extract_button.UseVisualStyleBackColor = true;
@@ -76,7 +78,7 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(13, 59);
+            this.radioButton1.Location = new System.Drawing.Point(15, 21);
             this.radioButton1.Name = "radioButton1";
             this.radioButton1.Size = new System.Drawing.Size(74, 17);
             this.radioButton1.TabIndex = 7;
@@ -86,26 +88,41 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(94, 59);
+            this.checkBox1.Location = new System.Drawing.Point(109, 21);
             this.checkBox1.Name = "checkBox1";
             this.checkBox1.Size = new System.Drawing.Size(85, 17);
             this.checkBox1.TabIndex = 8;
             this.checkBox1.Text = "nullStringIDs";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.checkBox1);
+            this.groupBox1.Controls.Add(this.radioButton1);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.groupBox1.Location = new System.Drawing.Point(12, 46);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(200, 58);
+            this.groupBox1.TabIndex = 20;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Flags :";
+            // 
             // MetaExtractor
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(454, 110);
-            this.Controls.Add(this.checkBox1);
-            this.Controls.Add(this.radioButton1);
+            this.BackColor = System.Drawing.Color.RosyBrown;
+            this.ClientSize = new System.Drawing.Size(454, 124);
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.extract_button);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.Name = "MetaExtractor";
-            this.Text = "Meta Save";
+            this.Text = "Meta Extractor";
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -118,5 +135,6 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.CheckBox radioButton1;
         private System.Windows.Forms.CheckBox checkBox1;
+        private System.Windows.Forms.GroupBox groupBox1;
     }
 }

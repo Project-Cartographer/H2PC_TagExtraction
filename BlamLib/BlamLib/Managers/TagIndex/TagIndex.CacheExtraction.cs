@@ -41,7 +41,7 @@ namespace BlamLib.Managers
 			var ignore_groups = cei.Arguments.DontExtractGroups;
 			if (ignore_groups != null)
 			{
-				 var item = cacheFile.Index.Tags[tag_datum.Index];
+				var item = cacheFile.Index.Tags[tag_datum.Index];
 
 				dont_extract = ignore_groups.Contains(item.GroupTag);
 			}

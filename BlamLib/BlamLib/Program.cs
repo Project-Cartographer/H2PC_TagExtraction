@@ -100,16 +100,16 @@ namespace BlamLib
 #if !NO_HALO2
 			else if ((engine & BlamVersion.Halo2) != 0)		return Halo2.Manager;
 #endif
-#if NO_HALO3
+#if !NO_HALO3
 			else if ((engine & BlamVersion.Halo3) != 0)		return Halo3.Manager;
 #endif
-#if NO_HALO_ODST
+#if !NO_HALO_ODST
 			else if ((engine & BlamVersion.HaloOdst) != 0)	return HaloOdst.Manager;
 #endif
-#if NO_HALO_REACH
+#if !NO_HALO_REACH
 			else if ((engine & BlamVersion.HaloReach) != 0)	return HaloReach.Manager;
 #endif
-#if NO_HALO4
+#if !NO_HALO4
 			else if ((engine & BlamVersion.Halo4) != 0)		return Halo4.Manager;
 #endif
 			else if ((engine & BlamVersion.Stubbs) != 0)	return Stubbs.Manager;
@@ -232,16 +232,16 @@ namespace BlamLib
 #if !NO_HALO2
 				Halo2.Initialize();
 #endif
-#if NO_HALO3
+#if !NO_HALO3
 				Halo3.Initialize();
 #endif
-#if NO_HALO_ODST
+#if !NO_HALO_ODST
 				HaloOdst.Initialize();
 #endif
-#if NO_HALO_REACH
+#if !NO_HALO_REACH
 				HaloReach.Initialize();
 #endif
-#if NO_HALO4
+#if !NO_HALO4
 				Halo4.Initialize();
 #endif
 				Stubbs.Initialize();
@@ -258,16 +258,16 @@ namespace BlamLib
 			if (isInitialized)
 			{
 				Stubbs.Close();
-#if NO_HALO4
+#if !NO_HALO4
 				Halo4.Close();
 #endif
-#if NO_HALO_REACH
+#if !NO_HALO_REACH
 				HaloReach.Close();
 #endif
-#if NO_HALO_ODST
+#if !NO_HALO_ODST
 				HaloOdst.Close();
 #endif
-#if NO_HALO3
+#if !NO_HALO3
 				Halo3.Close();
 #endif
 #if !NO_HALO2

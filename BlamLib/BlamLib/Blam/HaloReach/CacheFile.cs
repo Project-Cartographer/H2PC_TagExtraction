@@ -222,7 +222,7 @@ namespace BlamLib.Blam.HaloReach
 			#endregion
 
 			#region Load tag names
-			using (var buffer = cache.DecryptCacheSegment(CacheSectionType.Tag, cache.HeaderHaloReach.TagNamesBufferOffset, cache.HeaderHaloReach.TagNamesBufferSize))
+			using (var buffer = cache.DecryptCacheSegmentStream(CacheSectionType.Tag, cache.HeaderHaloReach.TagNamesBufferOffset, cache.HeaderHaloReach.TagNamesBufferSize))
 			{
 				string tag_name;
 				foreach (var ci in items)
@@ -289,7 +289,9 @@ namespace BlamLib.Blam.HaloReach
 		}
 		#endregion
 
-		internal IO.EndianReader DecryptCacheSegment(CacheSectionType section_type, int segment_offset, int segment_size)
+		public override bool ResourcesUseEncryption { get { return true; } }
+
+		internal override byte[] DecryptCacheSegmentBytes(CacheSectionType section_type, int segment_offset, int segment_size)
 		{
 			InputStream.Seek(segment_offset);
 			uint buffer_size = Util.Align(16, (uint)segment_size);
@@ -298,7 +300,7 @@ namespace BlamLib.Blam.HaloReach
 			byte[] decrypted;
 			GameDefinition.SecurityAesDecrypt(engineVersion, section_type, encrypted, out decrypted);
 
-			return decrypted != null ? new IO.EndianReader(decrypted) : null;
+			return decrypted != null ? decrypted : null;
 		}
 
 		#region Header
@@ -324,7 +326,7 @@ namespace BlamLib.Blam.HaloReach
 		#region StringIdManager
 		protected override IO.EndianReader GetStringIdsBuffer(ICacheHeaderStringId sid_header)
 		{
-			return DecryptCacheSegment(CacheSectionType.Debug, sid_header.StringIdsBufferOffset, sid_header.StringIdsBufferSize);
+			return DecryptCacheSegmentStream(CacheSectionType.Debug, sid_header.StringIdsBufferOffset, sid_header.StringIdsBufferSize);
 		}
 		#endregion
 

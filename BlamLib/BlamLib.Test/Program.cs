@@ -45,7 +45,7 @@ namespace BlamLib.Test
 
 			// Can't use WaitAll in STA
 			// See the following for a work around: http://blogs.msdn.com/b/ploeh/archive/2007/10/21/runningmstestinanmta.aspx
-		    //Assert.IsFalse(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA);
+			//Assert.IsFalse(Thread.CurrentThread.GetApartmentState() == ApartmentState.STA);
 
 			var waiters = ThreadedTaskArgsBase.InitializeArgWaiters(args);
 
@@ -87,11 +87,14 @@ namespace BlamLib.Test
 		public readonly BlamVersion Game;
 		public readonly string Directory;
 		public readonly string MapName;
-        public Blam.DatumIndex DatumIndex;
 		readonly string mapPath;
-       
+        public Blam.DatumIndex DatumIndex;
+        public bool Recursive = false;
+        public string ExtractDirectory="";
+        public bool Output_DB;
+        public bool Overrite;
 
-		public CacheFileOutputInfoArgs(TestContext tc, BlamVersion g, string d, string m)
+        public CacheFileOutputInfoArgs(TestContext tc, BlamVersion g, string d, string m)
 		{
 			TestContext = tc;
 			Game = g;
@@ -99,14 +102,18 @@ namespace BlamLib.Test
 			MapName = m;
 			mapPath = System.IO.Path.Combine(Directory, MapName);
 		}
-        public CacheFileOutputInfoArgs(TestContext tc, BlamVersion g, string d, Blam.DatumIndex D,string m)
+        public CacheFileOutputInfoArgs(TestContext tc, BlamVersion g, string d, Blam.DatumIndex D,bool R, bool DB, bool Ov,string Ex,string m)
         {
             TestContext = tc;
             Game = g;
             Directory = d;
             MapName = m;
             DatumIndex = D;
+            Recursive = R;
+            Output_DB = DB;
+            Overrite = Ov;
             mapPath = System.IO.Path.Combine(Directory, MapName);
+            ExtractDirectory = Ex;
         }
 
         public string MapPath { get { return mapPath; } }
@@ -153,12 +160,12 @@ namespace BlamLib.Test
 			return args;
 		}
         static List<CacheFileOutputInfoArgs> TestMethodBuildArgs(TestContext tc,
-        BlamVersion game, string dir, Blam.DatumIndex DatumIndex, params string[] map_names)
+         BlamVersion game, string dir, Blam.DatumIndex DatumIndex,bool Recursive, bool OutputDB, bool Overrite,string Ext_Dir , params string[] map_names)
         {
             var args = new List<CacheFileOutputInfoArgs>(map_names.Length);
             for (int x = 0; x < map_names.Length; x++)
             {
-                var arg = new CacheFileOutputInfoArgs(tc, game, dir,DatumIndex, map_names[x]);
+                var arg = new CacheFileOutputInfoArgs(tc, game, dir, DatumIndex,Recursive, OutputDB,Overrite,Ext_Dir, map_names[x]);
 
                 if (arg.ValidateReadyStatus())
                     args.Add(arg);
@@ -166,17 +173,17 @@ namespace BlamLib.Test
 
             return args;
         }
-        public static void TestThreadedMethod(TestContext tc, WaitCallback method,
-            BlamVersion game, string dir, params string[] map_names)
-        {
-            var args = TestMethodBuildArgs(tc, game, dir, map_names);
+        public static void TestMethodThreaded(TestContext tc, WaitCallback method,
+			BlamVersion game, string dir, params string[] map_names)
+		{
+			var args = TestMethodBuildArgs(tc, game, dir, map_names);
 
-            TestLibrary.TestMethodThreaded(method, args.ToArray());
-        }
+			TestLibrary.TestMethodThreaded(method, args.ToArray());
+		}
         public static void TestThreadedMethod(TestContext tc, WaitCallback method,
-            BlamVersion game, string dir, Blam.DatumIndex Datum, params string[] map_names)
+             BlamVersion game, string dir, Blam.DatumIndex Datum,bool Recursive ,bool OutputDB, bool Overrite ,string Ext_Dir, params string[] map_names)
         {
-            var args = TestMethodBuildArgs(tc, game, dir,Datum, map_names);
+            var args = TestMethodBuildArgs(tc, game, dir, Datum,Recursive,OutputDB,Overrite, Ext_Dir, map_names);
 
             TestLibrary.TestMethodThreaded(method, args.ToArray());
         }
@@ -188,6 +195,7 @@ namespace BlamLib.Test
 
 			TestLibrary.TestMethodSerial(method, args.ToArray());
 		}
+
 	};
 
 
@@ -305,9 +313,9 @@ namespace BlamLib.Test
 			return indexInterface;
 		} }
 
-		public TagIndexHandler(BlamVersion game, string root, string tagsDir)
+		public TagIndexHandler(BlamVersion game, string path)
 		{
-            indexHandle = Program.GetManager(game).OpenTagIndex(game, root, tagsDir);
+			indexHandle = Program.GetManager(game).OpenTagIndex(game, path);
 			indexInterface = Program.GetTagIndex(indexHandle) as T;
 		}
 
@@ -345,7 +353,7 @@ namespace BlamLib.Test
 		public void Open(Managers.TagIndex tag_index)
 		{
 			TagIndex = tag_index.Open(Name, Group, IO.ITagStreamFlags.LoadDependents);
-			Assert.IsTrue(BlamLib.Managers.TagIndex.IsValid(TagIndex));
+			Assert.IsFalse(TagIndex.IsNull);
 		}
 		public void Close(Managers.TagIndex tag_index)
 		{

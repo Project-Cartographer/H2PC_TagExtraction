@@ -337,7 +337,7 @@ namespace BlamLib.Blam.Halo1.Tags
 
 		#region scenario_child_scenario_block
 		[TI.Definition(-1, 32)]
-		public class scenario_child_scenario_block : TI.Definition
+		public class scenario_child_scenario_block : scenario_object_block
 		{
 			#region Fields
 			public TI.TagReference Child;
@@ -978,21 +978,7 @@ namespace BlamLib.Blam.Halo1.Tags
 
 		// scenario_decal_palette_block, field_block<TI.TagReference>
 
-		#region scenario_detail_object_collection_palette_block
-		[TI.Definition(-1, 48)]
-		public class scenario_detail_object_collection_palette_block : TI.Definition
-		{
-			#region Fields
-			public TI.TagReference Name;
-			#endregion
-
-			public scenario_detail_object_collection_palette_block() : base(2)
-			{
-				Add(Name = new TI.TagReference());
-				Add(new TI.Pad(32));
-			}
-		}
-		#endregion
+		// scenario_detail_object_collection_palette_block, 
 
 		// actor_palette_block, field_block<TI.TagReference>
 
@@ -1574,91 +1560,6 @@ namespace BlamLib.Blam.Halo1.Tags
 		};
 		#endregion
 
-		#region scenario_bsp_lightmap_set_block
-		[TI.Definition(-1, 124)]
-		public class scenario_bsp_lightmap_set_block : TI.Definition
-		{
-			#region Fields
-			public TI.String Name;
-			public TI.TagReference StandardLightmap;
-			public TI.TagReference DirectionalLightmap1;
-			public TI.TagReference DirectionalLightmap2;
-			public TI.TagReference DirectionalLightmap3;
-			#endregion
-
-			public scenario_bsp_lightmap_set_block()
-				: base(7)
-			{
-				Add(Name = new TI.String());
-				Add(new TI.Pad(4));
-				Add(StandardLightmap = new TI.TagReference(this, TagGroups.bitm));
-				Add(DirectionalLightmap1 = new TI.TagReference(this, TagGroups.bitm));
-				Add(DirectionalLightmap2 = new TI.TagReference(this, TagGroups.bitm));
-				Add(DirectionalLightmap3 = new TI.TagReference(this, TagGroups.bitm));
-				Add(new TI.Pad(4 * 6));
-			}
-		}
-		#endregion
-
-		#region scenario_bsp_sky_set_sky_block
-		[TI.Definition(-1, 20)]
-		public class scenario_bsp_sky_set_sky_block : TI.Definition
-		{
-			#region Fields
-			public TI.BlockIndex SkyIndex;
-			public TI.TagReference Sky;
-			#endregion
-
-			public scenario_bsp_sky_set_sky_block()
-				: base(3)
-			{
-				Add(new TI.Pad(2));
-				Add(SkyIndex = new TI.BlockIndex(TI.FieldType.ShortBlockIndex));
-				Add(Sky = new TI.TagReference(this, TagGroups.sky_));
-			}
-		}
-		#endregion
-
-		#region scenario_bsp_sky_set_block
-		[TI.Definition(-1, 44)]
-		public class scenario_bsp_sky_set_block : TI.Definition
-		{
-			#region Fields
-			public TI.String Name;
-			public TI.Block<scenario_bsp_sky_set_sky_block> Skies;
-			#endregion
-
-			public scenario_bsp_sky_set_block()
-				: base(2)
-			{
-				Add(Name = new TI.String());
-				Add(Skies = new TI.Block<scenario_bsp_sky_set_sky_block>(this, 8));
-			}
-		}
-		#endregion
-
-		#region scenario_bsp_sky_set_block
-		[TI.Definition(-1, 64)]
-		public class scenario_bsp_modifier_block : TI.Definition
-		{
-			#region Fields
-			public TI.BlockIndex BSPIndex;
-			public TI.Block<scenario_bsp_lightmap_set_block> LightmapSets;
-			public TI.Block<scenario_bsp_sky_set_block> SkySets;
-			#endregion
-
-			public scenario_bsp_modifier_block()
-				: base(5)
-			{
-				Add(new TI.Pad(2));
-				Add(BSPIndex = new TI.BlockIndex(TI.FieldType.ShortBlockIndex));
-				Add(LightmapSets = new TI.Block<scenario_bsp_lightmap_set_block>(this, 64));
-				Add(SkySets = new TI.Block<scenario_bsp_sky_set_block>(this, 64));
-				Add(new TI.Pad(4 * 9));
-			}
-		}
-		#endregion
-
 		#region Fields
 		private TI.TagReference DontUse;
 		private TI.TagReference WontUse;
@@ -1666,7 +1567,6 @@ namespace BlamLib.Blam.Halo1.Tags
 		public TI.Block<field_block<TI.TagReference>> Skies;
 		public TI.Enum Type;
 		public TI.Flags Flags;
-		public TI.Block<scenario_child_scenario_block> ChildScenarios;
 		public TI.Real LocalNorth;
 		public TI.Block<predicted_resource_block> PredictedResources;
 		public TI.Block<scenario_function_block> Functions;
@@ -1704,7 +1604,7 @@ namespace BlamLib.Blam.Halo1.Tags
 		public TI.Block<scenario_bsp_switch_trigger_volume_block> BspSwitchTriggerVolumes;
 		public TI.Block<scenario_decals_block> Decals;
 		public TI.Block<field_block<TI.TagReference>> DecalPalette;
-		public TI.Block<scenario_detail_object_collection_palette_block> DetailObjectCollectionPalette;
+		public TI.Block<field_block<TI.TagReference>> DetailObjectCollectionPalette;
 
 		public TI.Block<field_block<TI.TagReference>> ActorPalette;
 		public TI.Block<encounter_block> Encounters;
@@ -1725,8 +1625,6 @@ namespace BlamLib.Blam.Halo1.Tags
 		public TI.Block<scenario_cutscene_camera_point_block> CutsceneCameraPoints;
 		public TI.Block<scenario_cutscene_title_block> CutsceneTitles;
 
-		public TI.Block<scenario_bsp_modifier_block> BSPModifiers;
-
 		public TI.TagReference CustomObjectNames;
 		public TI.TagReference IngameHelpText;
 		public TI.TagReference HudMessages;
@@ -1735,13 +1633,13 @@ namespace BlamLib.Blam.Halo1.Tags
 
 		public scenario_group() : base(69)
 		{
-			Add(DontUse = new TI.TagReference(this, TagGroups.yelo));
+			Add(DontUse = new TI.TagReference(this, TagGroups.sbsp));
 			Add(WontUse = new TI.TagReference(this, TagGroups.sbsp));
 			Add(CantUse = new TI.TagReference(this, TagGroups.sky_));
 			Add(Skies = new TI.Block<field_block<TI.TagReference>>(this, 8));
 			Add(Type = new TI.Enum());
 			Add(Flags = new TI.Flags(BlamLib.TagInterface.FieldType.WordFlags));
-			Add(ChildScenarios = new TI.Block<scenario_child_scenario_block>(this, 32)); // child scenarios, tag block data wasn't removed in stubbs for some reason
+			Add(TI.Pad.BlockHalo1); // child scenarios, tag block data wasn't removed in stubbs for some reason
 			Add(LocalNorth = new TI.Real(BlamLib.TagInterface.FieldType.Angle));
 			Add(new TI.Pad(20 + 136));
 			Add(PredictedResources = new TI.Block<predicted_resource_block>(this, 1024));
@@ -1782,7 +1680,7 @@ namespace BlamLib.Blam.Halo1.Tags
 			Add(BspSwitchTriggerVolumes = new TI.Block<scenario_bsp_switch_trigger_volume_block>(this, 256));
 			Add(Decals = new TI.Block<scenario_decals_block>(this, 65536));
 			Add(DecalPalette = new TI.Block<field_block<TI.TagReference>>(this, 128));
-			Add(DetailObjectCollectionPalette = new TI.Block<scenario_detail_object_collection_palette_block>(this, 32));
+			Add(DetailObjectCollectionPalette = new TI.Block<field_block<TI.TagReference>>(this, 32));
 			Add(new TI.Pad(84));
 
 			Add(ActorPalette = new TI.Block<field_block<TI.TagReference>>(this, 64));
@@ -1804,10 +1702,7 @@ namespace BlamLib.Blam.Halo1.Tags
 			Add(CutsceneFlags = new TI.Block<scenario_cutscene_flag_block>(this, 512));
 			Add(CutsceneCameraPoints = new TI.Block<scenario_cutscene_camera_point_block>(this, 512));
 			Add(CutsceneTitles = new TI.Block<scenario_cutscene_title_block>(this, 64));
-
-			Add(BSPModifiers = new TI.Block<scenario_bsp_modifier_block>(this, 32));
-
-			Add(new TI.Pad(96));
+			Add(new TI.Pad(108));
 
 			Add(CustomObjectNames = new TI.TagReference(this, TagGroups.ustr));
 			Add(IngameHelpText = new TI.TagReference(this, TagGroups.ustr));

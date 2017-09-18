@@ -171,16 +171,16 @@ namespace BlamLib
 #if !NO_HALO2
 			else if ((v & BlamVersion.Halo2) != 0)		return Blam.Halo2.TagGroups.Groups;
 #endif
-#if NO_HALO3
+#if !NO_HALO3
 			else if ((v & BlamVersion.Halo3) != 0)		return Blam.Halo3.TagGroups.Groups;
 #endif
-#if NO_HALO_ODST
+#if !NO_HALO_ODST
 			else if ((v & BlamVersion.HaloOdst) != 0)	return Blam.HaloOdst.TagGroups.Groups;
 #endif
-#if NO_HALO_REACH
+#if !NO_HALO_REACH
 			else if ((v & BlamVersion.HaloReach) != 0)	return Blam.HaloReach.TagGroups.Groups;
 #endif
-#if NO_HALO4
+#if !NO_HALO4
 			else if ((v & BlamVersion.Halo4) != 0)		return Blam.Halo4.TagGroups.Groups;
 #endif
 			else if ((v & BlamVersion.Stubbs) != 0)		return Blam.Stubbs.TagGroups.Groups;
@@ -198,19 +198,19 @@ namespace BlamLib
 			if ((version & BlamVersion.Halo2) != 0)		return Blam.Halo2.StructGroups.Groups;
 			else
 #endif
-#if NO_HALO3
+#if !NO_HALO3
 			if ((version & BlamVersion.Halo3) != 0)		return Blam.Halo3.StructGroups.Groups;
 			else
 #endif
-#if NO_HALO_ODST
+#if !NO_HALO_ODST
 			if ((version & BlamVersion.HaloOdst) != 0)	return Blam.Halo3.StructGroups.Groups; // TODO: make ODST group
 			else
 #endif
-#if NO_HALO_REACH
+#if !NO_HALO_REACH
 			if ((version & BlamVersion.HaloReach) != 0)	return Blam.HaloReach.StructGroups.Groups;
 			else
 #endif
-#if NO_HALO4
+#if !NO_HALO4
 			if ((version & BlamVersion.Halo4) != 0)		return Blam.Halo4.StructGroups.Groups;
 			else
 #endif

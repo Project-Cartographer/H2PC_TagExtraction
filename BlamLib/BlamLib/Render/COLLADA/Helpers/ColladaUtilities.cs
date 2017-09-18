@@ -6,8 +6,6 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using System.Text;
 
 namespace BlamLib.Render
@@ -16,29 +14,12 @@ namespace BlamLib.Render
 	{
 		public static class ColladaUtilities
 		{
-			public enum ColladaRotationOrder
-			{
-				XYZ,
-				YZX,
-				ZXY,
-				XZY,
-				ZYX,
-				YXZ,
-				ZXZ,
-				XYX,
-				YZY,
-				ZYZ,
-				XZX,
-				YXY
-			}
-
-			///-------------------------------------------------------------------------------------------------
-			/// <summary>	Replace characters in a string according to string find-replace pairs. </summary>
-			/// <exception cref="ColladaException">	Thrown when a Collada error condition occurs. </exception>
-			/// <param name="name">		   	String to format. </param>
-			/// <param name="replacements">	find-replace string pairs. </param>
-			/// <returns>	String with unwanted characters replaced. </returns>
-			///-------------------------------------------------------------------------------------------------
+			/// <summary>
+			/// Replace characters in a string according to string find-replace pairs
+			/// </summary>
+			/// <param name="name">String to format</param>
+			/// <param name="replacements">find-replace string pairs</param>
+			/// <returns>String with unwanted characters replaced</returns>
 			public static string FormatName(string name, params string[] replacements)
 			{
 				// the replacements array must be a multiple of two
@@ -51,12 +32,12 @@ namespace BlamLib.Render
 				return name;
 			}
 
-			///-------------------------------------------------------------------------------------------------
-			/// <summary>	Creates a string containing the values of a list. </summary>
-			/// <typeparam name="T">	The value type of the source list. </typeparam>
-			/// <param name="array">	The sources list. </param>
-			/// <returns>	. </returns>
-			///-------------------------------------------------------------------------------------------------
+			/// <summary>
+			/// Creates a string containing the values of a list
+			/// </summary>
+			/// <typeparam name="T">The value type of the source list</typeparam>
+			/// <param name="array">The sources list</param>
+			/// <returns></returns>
 			public static string ListToString<T>(List<T> array)
 			{
 				if (array == null) return "";
@@ -69,13 +50,12 @@ namespace BlamLib.Render
 				}
 				return string_builder.ToString();
 			}
-
-			///-------------------------------------------------------------------------------------------------
-			/// <summary>	Parses a string of values into a list. </summary>
-			/// <typeparam name="T">	The type of the values in the string. </typeparam>
-			/// <param name="value">	The string to parse. </param>
-			/// <returns>	A List containing the parsed values from the string. </returns>
-			///-------------------------------------------------------------------------------------------------
+			/// <summary>
+			/// Parses a string of values into a list
+			/// </summary>
+			/// <typeparam name="T">The type of the values in the string</typeparam>
+			/// <param name="value">The string to parse</param>
+			/// <returns>A List containing the parsed values from the string</returns>
 			public static List<T> StringToList<T>(string value)
 			{
 				if (value == null) return null;
@@ -174,22 +154,21 @@ namespace BlamLib.Render
 				return return_array;
 			}
 
-			///-------------------------------------------------------------------------------------------------
-			/// <summary>	Generates a Uri containing just a fragment. </summary>
-			/// <param name="fragment">	. </param>
-			/// <returns>	. </returns>
-			///-------------------------------------------------------------------------------------------------
+			/// <summary>
+			/// Generates a Uri containing just a fragment
+			/// </summary>
+			/// <param name="fragment"></param>
+			/// <returns></returns>
 			public static string BuildUri(string fragment)
 			{
 				return String.Concat("#", fragment);
 			}
-
-			///-------------------------------------------------------------------------------------------------
-			/// <summary>	Generates a Uri for a path using a specific scheme. </summary>
-			/// <param name="scheme">	. </param>
-			/// <param name="path">  	. </param>
-			/// <returns>	. </returns>
-			///-------------------------------------------------------------------------------------------------
+			/// <summary>
+			/// Generates a Uri for a path using a specific scheme
+			/// </summary>
+			/// <param name="scheme"></param>
+			/// <param name="path"></param>
+			/// <returns></returns>
 			public static string BuildUri(string scheme, string path)
 			{
 				UriBuilder uri_builder = new UriBuilder();
@@ -198,14 +177,13 @@ namespace BlamLib.Render
 				uri_builder.Host = "/";
 				return uri_builder.Uri.AbsoluteUri;
 			}
-
-			///-------------------------------------------------------------------------------------------------
-			/// <summary>	Generates a Uri for a path and fragment using a specific scheme. </summary>
-			/// <param name="scheme">  	. </param>
-			/// <param name="path">	   	. </param>
-			/// <param name="fragment">	. </param>
-			/// <returns>	. </returns>
-			///-------------------------------------------------------------------------------------------------
+			/// <summary>
+			/// Generates a Uri for a path and fragment using a specific scheme
+			/// </summary>
+			/// <param name="scheme"></param>
+			/// <param name="path"></param>
+			/// <param name="fragment"></param>
+			/// <returns></returns>
 			public static string BuildUri(string scheme, string path, string fragment)
 			{
 				UriBuilder uri_builder = new UriBuilder();
@@ -216,75 +194,36 @@ namespace BlamLib.Render
 				return uri_builder.Uri.AbsoluteUri;
 			}
 
-			///-------------------------------------------------------------------------------------------------
-			/// <summary>	Builds external reference URI. </summary>
-			/// <param name="externalReference">	The external reference source. </param>
-			/// <param name="rootDirectory">		Pathname of the root directory. </param>
-			/// <param name="id">					The identifier of the element to referenec. </param>
-			/// <returns>	The absolute URI of the external element reference. </returns>
-			///-------------------------------------------------------------------------------------------------
-			public static string BuildExternalReference(IColladaExternalReference externalReference, string rootDirectory, string id)
-			{
-				return ColladaUtilities.BuildUri("file://", Path.Combine(rootDirectory, externalReference.GetRelativeURL()) + ".dae", id);
-			}
-
-			////////////////////////////////////////////////////////////////////////////////////////////////////
 			/// <summary>
-			/// 	Creates a list of ColladaRotate elements describing a rotation defined by three floats
-			/// 	(XYZ)
+			/// Creates a list of ColladaRotate elements describing a rotation defined by three floats (YPR)
 			/// </summary>
-			///
-			/// <param name="x">				The x angle. </param>
-			/// <param name="y">				The y angle. </param>
-			/// <param name="z">				The z angle. </param>
-			/// <param name="xColumnVector">	The x column vector. </param>
-			/// <param name="yColumnVector">	The y column vector. </param>
-			/// <param name="zColumnVector">	The z column vector. </param>
-			/// <param name="order">			The rotation order. </param>
-			///
-			/// <returns>	The new rotation set. </returns>
-			public static List<ColladaElement> CreateRotationSet(float x,
-				float y,
-				float z,
-				LowLevel.Math.real_vector3d xColumnVector,
-				LowLevel.Math.real_vector3d yColumnVector,
-				LowLevel.Math.real_vector3d zColumnVector,
-				ColladaRotationOrder order)
+			/// <param name="y">Yaw</param>
+			/// <param name="p">Pitch</param>
+			/// <param name="r">Roll</param>
+			/// <returns></returns>
+			public static List<ColladaElement> CreateRotationSet(float y, float p, float r, LowLevel.Math.real_vector3d vector_y,
+				LowLevel.Math.real_vector3d vector_p, LowLevel.Math.real_vector3d vector_r)
 			{
 				List<ColladaElement> return_array = new List<ColladaElement>();
+				return_array.Add(new Core.ColladaRotate(vector_y.I, vector_y.J, vector_y.K, y));
+				return_array.Add(new Core.ColladaRotate(vector_p.I, vector_p.J, vector_p.K, p));
+				return_array.Add(new Core.ColladaRotate(vector_r.I, vector_r.J, vector_r.K, r));
 
-				Dictionary<ColladaRotationOrder, byte[]> rotation_indices = new Dictionary<ColladaRotationOrder,byte[]>()
-				{
-					{ ColladaRotationOrder.XYZ, new byte[]{ 0, 1, 2 }},
-					{ ColladaRotationOrder.YZX, new byte[]{ 1, 2, 0 }},
-					{ ColladaRotationOrder.ZXY, new byte[]{ 2, 0, 1 }},
-					{ ColladaRotationOrder.XZY, new byte[]{ 0, 2, 1 }},
-					{ ColladaRotationOrder.ZYX, new byte[]{ 2, 1, 0 }},
-					{ ColladaRotationOrder.YXZ, new byte[]{ 1, 0, 2 }},
-					{ ColladaRotationOrder.ZXZ, new byte[]{ 2, 0, 2 }},
-					{ ColladaRotationOrder.XYX, new byte[]{ 0, 1, 0 }},
-					{ ColladaRotationOrder.YZY, new byte[]{ 1, 2, 1 }},
-					{ ColladaRotationOrder.ZYZ, new byte[]{ 2, 1, 2 }},
-					{ ColladaRotationOrder.XZX, new byte[]{ 0, 2, 0 }},
-					{ ColladaRotationOrder.YXY, new byte[]{ 1, 0, 1 }}
-				};
-
-				var values = new[] {
-					new { SID = "rotateX", Column = xColumnVector, Value = x },
-					new { SID = "rotateY", Column = yColumnVector, Value = y },
-					new { SID = "rotateZ", Column = zColumnVector, Value = z }
-				};
-
-				foreach(var index in rotation_indices[order])
-				{
-					var axis = values[index];
-
-					return_array.Add(
-						new Core.ColladaRotate(axis.Column.I, axis.Column.J, axis.Column.K, axis.Value) { sID = axis.SID }
-					);
-				}
+				(return_array[0] as Core.ColladaRotate).sID = "rotateY";
+				(return_array[1] as Core.ColladaRotate).sID = "rotateP";
+				(return_array[2] as Core.ColladaRotate).sID = "rotateR";
 
 				return return_array;
+			}
+			/// <summary>
+			/// Creates a list of ColladaRotate elements describing a rotation defined a RealEulerAngles3D field
+			/// </summary>
+			/// <param name="rotation">A RealEulerAngles3D field</param>
+			/// <returns></returns>
+			public static List<ColladaElement> CreateRotationSet(LowLevel.Math.real_euler_angles3d rotation, LowLevel.Math.real_vector3d vector_y,
+				LowLevel.Math.real_vector3d vector_p, LowLevel.Math.real_vector3d vector_r)
+			{
+				return CreateRotationSet(rotation.Yaw, rotation.Pitch, rotation.Roll, vector_y, vector_p, vector_r);
 			}
 		}
 	}

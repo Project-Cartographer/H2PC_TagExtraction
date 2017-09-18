@@ -197,7 +197,7 @@ namespace BlamLib.Test
 		[TestMethod]
 		public void Halo3TestCacheExtractSoundXbox()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext,
 				CacheExtractSoundMethod,
 				BlamVersion.Halo3_Xbox, kDirectoryXbox, kMapNames_Retail[0]);
 		}

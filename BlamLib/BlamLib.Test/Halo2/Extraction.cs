@@ -7,6 +7,7 @@
 using System.IO;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
+
 namespace BlamLib.Test
 {
 	partial class Halo2
@@ -16,7 +17,8 @@ namespace BlamLib.Test
 		{
 			if (tii != null) foreach (var b in tii.Files)
 			{
-				var path = Path.Combine(out_path, b.Path.Value);
+                var k = b.Path.Value.Substring(b.Path.Value.IndexOf("data"));
+				var path = Path.Combine(out_path, k);
 
 				var dir = Path.GetDirectoryName(path);
 				if (!Directory.Exists(dir)) Directory.CreateDirectory(dir);
@@ -56,15 +58,15 @@ namespace BlamLib.Test
 		{
 			string test_results_path = EngineGetTestResultsPath(BlamVersion.Halo2_PC);
 
-            string[] coll = Directory.GetFiles(kTestInstallationRootPath + kTestTagsDir, 
+			string[] coll = Directory.GetFiles(kTestTagIndexTagsPath + @"tags\", 
 				Blam.Halo2.TagGroups.coll.ToFileSearchPattern(), SearchOption.AllDirectories);
-			string[] phmo = Directory.GetFiles(kTestInstallationRootPath + kTestTagsDir,
+			string[] phmo = Directory.GetFiles(kTestTagIndexTagsPath + @"tags\",
 				Blam.Halo2.TagGroups.phmo.ToFileSearchPattern(), SearchOption.AllDirectories);
-			string[] mode = Directory.GetFiles(kTestInstallationRootPath + kTestTagsDir,
+			string[] mode = Directory.GetFiles(kTestTagIndexTagsPath + @"tags\",
 				Blam.Halo2.TagGroups.mode.ToFileSearchPattern(), SearchOption.AllDirectories);
 
 			var bd = Program.Halo2.Manager;
-            var datum_tagindex = bd.OpenTagIndex(BlamVersion.Halo2_PC, kTestInstallationRootPath, kTestTagsDir);
+			var datum_tagindex = bd.OpenTagIndex(BlamVersion.Halo2_PC, kTestTagIndexTagsPath);
 			var tagindex = bd.GetTagIndex(datum_tagindex) as Managers.TagIndex;
 
 			ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.coll, coll);
@@ -74,10 +76,38 @@ namespace BlamLib.Test
 			tagindex = null;
 			bd.CloseTagIndex(datum_tagindex);
 		}
-		#endregion
+        public void Halo2TestImportInfoExtraction(String SelectedFolder,String OutPath)
+        {
+            string test_results_path = Path.Combine(OutPath, EngineGetTestResultsPath(BlamVersion.Halo2_PC));
 
-		static readonly TagInterface.TagGroupCollection kExtractionDontUseTags = new TagInterface.TagGroupCollection(true,
-			Blam.Halo2.TagGroups.ugh_,
+            string[] coll = Directory.GetFiles(SelectedFolder,
+                Blam.Halo2.TagGroups.coll.ToFileSearchPattern(), SearchOption.AllDirectories);
+            string[] phmo = Directory.GetFiles(SelectedFolder,
+                Blam.Halo2.TagGroups.phmo.ToFileSearchPattern(), SearchOption.AllDirectories);
+            string[] mode = Directory.GetFiles(SelectedFolder,
+                Blam.Halo2.TagGroups.mode.ToFileSearchPattern(), SearchOption.AllDirectories);
+            string[] sbsp = Directory.GetFiles(SelectedFolder,
+                Blam.Halo2.TagGroups.sbsp.ToFileSearchPattern(), SearchOption.AllDirectories);
+            string[] hlmt = Directory.GetFiles(SelectedFolder,
+                Blam.Halo2.TagGroups.hlmt.ToFileSearchPattern(), SearchOption.AllDirectories);
+
+            var bd = Program.Halo2.Manager;
+            var datum_tagindex = bd.OpenTagIndex(BlamVersion.Halo2_PC, kTestTagIndexTagsPath);
+            var tagindex = bd.GetTagIndex(datum_tagindex) as Managers.TagIndex;
+
+            ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.coll, coll);
+            ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.phmo, phmo);
+            ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.mode, mode);
+            ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.sbsp, sbsp);
+            //ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.hlmt, hlmt);
+
+            tagindex = null;
+            bd.CloseTagIndex(datum_tagindex);
+        }
+        #endregion
+
+        static readonly TagInterface.TagGroupCollection kExtractionDontUseTags = new TagInterface.TagGroupCollection(true,
+			Blam.Halo2.TagGroups.ugh_
 		#region These will never appear in a cache file anyway
 // 			Blam.Halo2.TagGroups.srscen,
 // 			Blam.Halo2.TagGroups.srbipd,
@@ -101,9 +131,9 @@ namespace BlamLib.Test
 
 // 			Blam.Halo2.TagGroups.ltmp,
 // 			Blam.Halo2.TagGroups.sbsp,
-			Blam.Halo2.TagGroups.spas,
+	//		Blam.Halo2.TagGroups.spas,
 
-			Blam.Halo2.TagGroups.snd_  // TODO: reconstruction
+//			Blam.Halo2.TagGroups.snd_  // TODO: reconstruction
 		);
 
 		static void CacheExtractionMethod(object param)
@@ -125,22 +155,13 @@ namespace BlamLib.Test
 					var ex_args = new Blam.CacheExtractionArguments(test_results_tags_path,
 						true, true, true, kExtractionDontUseTags);
 					Blam.CacheIndex.Item tag_item;
-
-
-                    Assert.IsTrue(cache.TryAndFind(@"scenarios\objects\nature\trees\tree_ancient\bitmaps\detail_ancient_bark", Blam.Halo2.TagGroups.bitm, out tag_item));
-
-                    // Assert.IsTrue(cache.TryAndFind(@"objects\characters\bugger\bugger", Blam.Halo2.TagGroups.hlmt, out tag_item));
-                    // Assert.IsTrue(cache.TryAndFind(@"objects\characters\bugger\bugger", Blam.Halo2.TagGroups.mode, out tag_item));
-                    //  Assert.IsTrue(cache.TryAndFind(@"objects\characters\bugger\bugger", Blam.Halo2.TagGroups.jmad, out tag_item));
-                    //  Assert.IsTrue(cache.TryAndFind(@"objects\characters\bugger\bugger", Blam.Halo2.TagGroups.phmo, out tag_item));
-
-                    //Assert.IsTrue(cache.TryAndFind(@"scenarios\solo\07a_highcharity\07a_highcharity_high_0_lightmap", Blam.Halo2.TagGroups.ltmp, out tag_item));
-                    //Assert.IsTrue(cache.TryAndFind(@"scenarios\multi\example\example_example_lightmap", Blam.Halo2.TagGroups.ltmp, out tag_item));
-                    //Assert.IsTrue(cache.TryAndFind(@"scenarios\objects\covenant\military\scarab\scarab", Blam.Halo2.TagGroups.mode, out tag_item));
-                    //Assert.IsTrue(cache.TryAndFind(@"scenarios\solo\03b_newmombasa\earthcity_4", Blam.Halo2.TagGroups.sbsp, out tag_item));
-                    //Assert.IsTrue(cache.TryAndFind(@"ui\hud\hud_messages", Blam.Halo2.TagGroups.unic, out tag_item));//
-
-                    {
+					//Assert.IsTrue(cache.TryAndFind(@"objects\characters\masterchief\masterchief", Blam.Halo2.TagGroups.hlmt, out tag_item));
+					//Assert.IsTrue(cache.TryAndFind(@"scenarios\solo\07a_highcharity\07a_highcharity_high_0_lightmap", Blam.Halo2.TagGroups.ltmp, out tag_item));
+					//Assert.IsTrue(cache.TryAndFind(@"scenarios\multi\example\example_example_lightmap", Blam.Halo2.TagGroups.ltmp, out tag_item));
+					//Assert.IsTrue(cache.TryAndFind(@"scenarios\objects\covenant\military\scarab\scarab", Blam.Halo2.TagGroups.mode, out tag_item));
+					Assert.IsTrue(cache.TryAndFind(@"scenarios\solo\03b_newmombasa\earthcity_4", Blam.Halo2.TagGroups.sbsp, out tag_item));
+					//Assert.IsTrue(cache.TryAndFind(@"ui\hud\hud_messages", Blam.Halo2.TagGroups.unic, out tag_item));
+					{
 						var cei = ti.ExtractionBegin(tag_item.Datum, ex_args);
 						Assert.IsTrue(ti.Extract(cei));
 						ti.ExtractionEnd();
@@ -151,6 +172,7 @@ namespace BlamLib.Test
 
 			args.SignalFinished();
 		}
+
         static void H2CacheExtractionMethod(object param)
         {
             var args = param as CacheFileOutputInfoArgs;
@@ -161,36 +183,42 @@ namespace BlamLib.Test
                 var cache = handler.CacheInterface;
 
                 var ti = cache.TagIndexManager as Blam.Halo2.InternalCacheTagIndex;
+
                 ti.ExtractionInitialize();
                 Assert.IsNotNull(ti.kVertexBuffers);
                 {
-                    string test_results_tags_path = EngineGetTestResultsPath(args.Game) + @"tags\";
+                    string test_results_tags_path = Path.Combine(args.ExtractDirectory ,EngineGetTestResultsPath(args.Game) , @"tags");
 
                     // extract with dependents, database and overwrite existing tag files
                     var ex_args = new Blam.CacheExtractionArguments(test_results_tags_path,
-                        true, true, true, kExtractionDontUseTags);            
-                         
+                        args.Output_DB, args.Recursive, args.Overrite, kExtractionDontUseTags);
 
-                        var cei = ti.ExtractionBegin(args.DatumIndex, ex_args);
-                        ti.Extract(cei);
-                        ti.ExtractionEnd();
                     
+                    var cei = ti.ExtractionBegin(args.DatumIndex, ex_args);
+                    ti.Extract(cei);
+                    ti.ExtractionEnd();
+
                 }
                 ti.ExtractionDispose();
             }
 
             args.SignalFinished();
         }
-
         void Halo2TestCacheExtraction(BlamVersion game, string dir, params string[] map_names)
 		{
-			(Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
-			(Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheOpen(game);
+			(Program.GetManager(game) as Managers.IStringIdController)
+				.StringIdCacheOpen(game);
+			(Program.GetManager(game) as Managers.IVertexBufferController)
+				.VertexBufferCacheOpen(game);
 
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext,CacheExtractionMethod,game, dir, map_names);
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext,
+				CacheExtractionMethod,
+				game, dir, map_names);
 
-			(Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheClose(game);
-			(Program.GetManager(game) as Managers.IStringIdController).StringIdCacheClose(game);
+			(Program.GetManager(game) as Managers.IVertexBufferController)
+				.VertexBufferCacheClose(game);
+			(Program.GetManager(game) as Managers.IStringIdController)
+				.StringIdCacheClose(game);
 		}
 
 		[TestMethod]
@@ -206,37 +234,39 @@ namespace BlamLib.Test
 			Assert.IsNotNull(Program.Halo2.PcCampaign);
 
 			StartSubStopwatch();
-			Halo2TestCacheExtraction(BlamVersion.Halo2_PC, kMapsDirectoryPc,
-                //"00a_introduction.map"
-                //"example.map"
-                "beavercreek.map"
-                );
+			Halo2TestCacheExtraction(BlamVersion.Halo2_PC, kMapsDirectoryPc, 
+				//"00a_introduction.map"
+				//"example.map"
+				"03b_newmombasa.map"
+				);
 			Console.WriteLine("Halo2TestCacheExtractionPc: Extract time: {0}", StopSubStopwatch());
 
 			Console.WriteLine("Halo2TestCacheExtractionPc: Overall time: {0}", StopStopwatch());
 		}
-        public void Halo2_ExtractTagCacheBegin()
+        public void Halo2_ExtractTagCache(Blam.DatumIndex DatumIndex,bool Recursive, bool OutputDB, bool Override,string DestinationPath,params string[] map_names)
         {
+            BlamVersion game = BlamVersion.Halo2_PC;
             
             Program.Halo2.LoadPc(
-               kMapsDirectoryPc + @"mainmenu.map",
-               kMapsDirectoryPc + @"shared.map",
-               kMapsDirectoryPc + @"single_player_shared.map");
-            Assert.IsNotNull(Program.Halo2.PcMainmenu);
-            Assert.IsNotNull(Program.Halo2.PcShared);
-            Assert.IsNotNull(Program.Halo2.PcCampaign);
+                kMapsDirectoryPc + @"mainmenu.map",
+                kMapsDirectoryPc + @"shared.map",
+                kMapsDirectoryPc + @"single_player_shared.map");
             
 
+            (Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
+            (Program.GetManager(game) as Managers.IVertexBufferController)
+                .VertexBufferCacheOpen(game);
+
+            CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, kMapsDirectoryPc, DatumIndex, Recursive, OutputDB, Override, DestinationPath, map_names);
+
+
+
+            (Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheClose(game);
+            (Program.GetManager(game) as Managers.IStringIdController)
+                .StringIdCacheClose(game);
+
         }
-
-        public void Halo2_ExtractTagCache(Blam.DatumIndex DatumIndex,params string[] map_names)
-        {
-           
-            CacheFileOutputInfoArgs.TestThreadedMethod(TestContext,H2CacheExtractionMethod,BlamVersion.Halo2_PC, kMapsDirectoryPc,DatumIndex, map_names);
-
-        }
-
-		[TestMethod]
+        [TestMethod]
 		public void Halo2TestCacheExtractionXbox()
 		{
 			StartStopwatch();

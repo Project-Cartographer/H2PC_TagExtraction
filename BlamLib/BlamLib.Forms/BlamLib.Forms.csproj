@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="12.0">
+<Project DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003" ToolsVersion="14.0">
   <PropertyGroup>
     <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
     <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
@@ -10,13 +10,15 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>BlamLib.Forms</RootNamespace>
     <AssemblyName>BlamLib.Forms</AssemblyName>
+    <FileUpgradeFlags>
+    </FileUpgradeFlags>
+    <OldToolsVersion>3.5</OldToolsVersion>
+    <UpgradeBackupLocation>
+    </UpgradeBackupLocation>
     <TargetFrameworkVersion>v3.5</TargetFrameworkVersion>
   </PropertyGroup>
   <PropertyGroup>
     <OSRootDir>$(MSBuildProjectDirectory)\..\..\</OSRootDir>
-  </PropertyGroup>
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|AnyCPU'">
-    <CodeAnalysisRuleSet>AllRules.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
   <Import Project="$(OSRootDir)shared\config\msbuild\BlamLib.props" />
   <ItemGroup>
@@ -175,16 +177,16 @@
     <Service Include="{94E38DFF-614B-4cbd-B67C-F211BB35CE8B}" />
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\BlamLib\BlamLib.csproj">
+      <Project>{D9931E1A-1A8A-4707-A27C-9AFEFD60D25B}</Project>
+      <Name>BlamLib</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Blam\Halo1\" />
     <Folder Include="Blam\Halo2\" />
     <Folder Include="Blam\Halo3\BLF\" />
     <Folder Include="Blam\Stubbs\" />
-  </ItemGroup>
-  <ItemGroup>
-    <ProjectReference Include="..\BlamLib\BlamLib.csproj">
-      <Project>{d9931e1a-1a8a-4707-a27c-9afefd60d25b}</Project>
-      <Name>BlamLib</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildBinPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

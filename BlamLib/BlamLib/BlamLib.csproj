@@ -20,13 +20,7 @@
   </PropertyGroup>
   <Import Project="$(OSRootDir)shared\config\msbuild\BlamLib.props" />
   <ItemGroup>
-    <Reference Include="LowLevel, Version=1.0.6394.34801, Culture=neutral, processorArchitecture=x86">
-      <SpecificVersion>False</SpecificVersion>
-      <HintPath>..\..\bin\Debug\Win32\LowLevel\LowLevel.dll</HintPath>
-    </Reference>
-    <Reference Include="SlimDX">
-      <Private>True</Private>
-    </Reference>
+    <Reference Include="SlimDX" />
     <Reference Include="System" />
     <Reference Include="System.Core">
       <RequiredTargetFramework>3.5</RequiredTargetFramework>
@@ -36,6 +30,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blam\Cache\CacheFileLanguagePack.cs" />
     <Compile Include="Blam\Cache\Tags\CacheTagsGen2nd.cs" />
     <Compile Include="Blam\Cache\Tags\CacheTagsGen3rd.cs" />
     <Compile Include="Blam\Cache\Tags\Code\CacheTagsGen3rd.cs" />
@@ -45,18 +40,24 @@
     <Compile Include="Blam\DataHandles\MapId.cs" />
     <Compile Include="Blam\DataHandles\ResourcePtr.cs" />
     <Compile Include="Blam\DataHandles\StringId.cs" />
-    <Compile Include="Blam\Halo1\CheApe\Compiler_Scripts.cs" />
-    <Compile Include="Blam\Halo1\CheApe\Compiler_Tags.cs" />
-    <Compile Include="Blam\Halo1\CheApe\Import_Tags.cs" />
-    <Compile Include="Blam\Halo1\Tags\Definitions\Yelo.cs" />
-    <Compile Include="Blam\Halo1\TypeEnums.cs" />
-    <Compile Include="CheApe\Compiler_CacheFile.cs" />
-    <Compile Include="CheApe\Compiler_Fixups.cs" />
-    <Compile Include="CheApe\Compiler_Tags.cs" />
-    <Compile Include="CheApe\Import_Fixups.cs" />
-    <Compile Include="CheApe\Import_Scripts.cs" />
-    <Compile Include="CheApe\Import_Tags.cs" />
-    <Compile Include="CheApe\ProjectState.cs" />
+    <Compile Include="Blam\Halo4\Tags\Code\Interface.cs" />
+    <Compile Include="Blam\Halo4\Tags\Code\Multiplayer.cs" />
+    <Compile Include="Blam\Halo4\Tags\Code\Resources.cs" />
+    <Compile Include="Blam\Halo4\Tags\Definitions\Interface.cs" />
+    <Compile Include="Blam\Halo4\Tags\Definitions\Multiplayer.cs" />
+    <Compile Include="Blam\Halo4\Tags\Definitions\Resources.cs" />
+    <Compile Include="Blam\Halo4\Tags\Layout\Interface.cs" />
+    <Compile Include="Blam\Halo4\Tags\Layout\Multiplayer.cs" />
+    <Compile Include="Blam\Halo4\Tags\Layout\Resources.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Code\Interface.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Code\Multiplayer.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Code\Resources.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Definitions\Interface.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Definitions\Multiplayer.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Definitions\Resources.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Layout\Interface.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Layout\Multiplayer.cs" />
+    <Compile Include="Blam\HaloReach\Tags\Layout\Resources.cs" />
     <Compile Include="Compression\LZMA.cs" />
     <Compile Include="Cryptography\MD5.cs" />
     <Compile Include="Cryptography\XXTEA.cs" />
@@ -70,9 +71,6 @@
     <Compile Include="Managers\BlamDefinition\GameGen3.cs" />
     <Compile Include="Managers\StringIdCollections.cs" />
     <Compile Include="Managers\TagIndex\TagIndex.Base.cs" />
-    <Compile Include="Managers\TagIndex\TagIndexHandler.cs" />
-    <Compile Include="Messaging\IMessageHandler.cs" />
-    <Compile Include="Messaging\MessageHandler.cs" />
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -164,9 +162,18 @@
     <Compile Include="Managers\TagIndex\TagIndex.CacheExtraction.cs" />
     <Compile Include="Managers\TagManager.cs" />
     <Compile Include="Reflection\Util.Enum.cs" />
-    <Compile Include="Render\COLLADA\ColladaElement.cs" />
-    <Compile Include="Render\COLLADA\ColladaFile.cs" />
+    <Compile Include="Render\COLLADA\Export\ColladaExporter.cs" />
     <Compile Include="Render\COLLADA\ColladaInterface.cs" />
+    <Compile Include="Render\COLLADA\ErrorReporting\ColladaExceptionStrings.cs" />
+    <Compile Include="Render\COLLADA\Export\Halo1\Base.cs" />
+    <Compile Include="Render\COLLADA\Export\Halo1\ExporterBSP.cs" />
+    <Compile Include="Render\COLLADA\Export\Halo1\ColladaHalo1.cs" />
+    <Compile Include="Render\COLLADA\Export\Halo1\Interfaces.cs" />
+    <Compile Include="Render\COLLADA\Export\Halo1\ExporterModel.cs" />
+    <Compile Include="Render\COLLADA\ColladaElement.cs" />
+    <Compile Include="Render\COLLADA\ErrorReporting\ColladaException.cs" />
+    <Compile Include="Render\COLLADA\ColladaFile.cs" />
+    <Compile Include="Render\COLLADA\ErrorReporting\ColladaValidationException.cs" />
     <Compile Include="Render\COLLADA\Core\Animation\ColladaAnimation.cs" />
     <Compile Include="Render\COLLADA\Core\Animation\ColladaAnimationClip.cs" />
     <Compile Include="Render\COLLADA\Core\Animation\ColladaChannel.cs" />
@@ -251,15 +258,6 @@
     <Compile Include="Render\COLLADA\Enums\ColladaMorphMethodType.cs" />
     <Compile Include="Render\COLLADA\Enums\ColladaNodeType.cs" />
     <Compile Include="Render\COLLADA\Enums\ColladaUpAxisEnum.cs" />
-    <Compile Include="Render\COLLADA\ErrorReporting\ColladaException.cs" />
-    <Compile Include="Render\COLLADA\ErrorReporting\ColladaExceptionStrings.cs" />
-    <Compile Include="Render\COLLADA\ErrorReporting\ColladaValidationException.cs" />
-    <Compile Include="Render\COLLADA\Export\ColladaExporter.cs" />
-    <Compile Include="Render\COLLADA\Export\Halo1\Base.cs" />
-    <Compile Include="Render\COLLADA\Export\Halo1\ColladaHalo1.cs" />
-    <Compile Include="Render\COLLADA\Export\Halo1\ExporterBSP.cs" />
-    <Compile Include="Render\COLLADA\Export\Halo1\ExporterModel.cs" />
-    <Compile Include="Render\COLLADA\Export\Halo1\ExporterScenario.cs" />
     <Compile Include="Render\COLLADA\Export\Halo2\Base.cs" />
     <Compile Include="Render\COLLADA\Export\Halo2\ColladaHalo2.cs" />
     <Compile Include="Render\COLLADA\Export\Halo2\ExporterBSP.cs" />
@@ -301,7 +299,6 @@
     <Compile Include="Render\COLLADA\FX\Texturing\ColladaSurface.cs" />
     <Compile Include="Render\COLLADA\Helpers\ColladaBoneMatrix.cs" />
     <Compile Include="Render\COLLADA\Helpers\ColladaIDAttribute.cs" />
-    <Compile Include="Render\COLLADA\Helpers\ColladaName.cs" />
     <Compile Include="Render\COLLADA\Helpers\ColladaObject.cs" />
     <Compile Include="Render\COLLADA\Helpers\ColladaObjectAttribute.cs" />
     <Compile Include="Render\COLLADA\Helpers\ColladaObjectElement.cs" />
@@ -335,7 +332,6 @@
     <Compile Include="Scripting\Compiler\Stream.cs" />
     <Compile Include="Scripting\Decompiler\Decompiler.cs" />
     <Compile Include="TagInterface\Attributes.cs" />
-    <Compile Include="TagInterface\BlamPath.cs" />
     <Compile Include="TagInterface\Definition.cs" />
     <Compile Include="TagInterface\Editor.cs" />
     <Compile Include="TagInterface\Exceptions.cs" />
@@ -406,6 +402,7 @@
     <Compile Include="Blam\Halo2\Tags\Layout\Shaders.cs" />
   </ItemGroup>
   <ItemGroup Condition=" '$(Configuration)' != 'DebugPublic' ">
+    <Compile Include="Blam\Halo3\BLF.cs" />
     <Compile Include="Blam\Halo3\Builder.cs" />
     <Compile Include="Blam\Halo3\CacheFile.cs" />
     <Compile Include="Blam\Halo3\Game.cs" />
@@ -576,14 +573,14 @@
     <EmbeddedResource Include="Games\Halo4\Xbox\Definitions\Halo4_Xbox_StringId.xml" />
   </ItemGroup>
   <ItemGroup>
-    <Folder Include="Blam\Halo4\Tags\Code\" />
-    <Folder Include="Blam\Halo4\Tags\Definitions\" />
-    <Folder Include="Blam\Halo4\Tags\Layout\" />
+    <ProjectReference Include="..\LowLevel\LowLevel.vcxproj">
+      <Project>{5E5B9F4E-1067-4470-8AA9-B25BBBEA063A}</Project>
+      <Name>LowLevel</Name>
+    </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
     <Folder Include="Blam\HaloOdst\Tags\Code\" />
     <Folder Include="Blam\HaloOdst\Tags\Trace\" />
-    <Folder Include="Blam\HaloReach\Tags\Code\" />
-    <Folder Include="Blam\HaloReach\Tags\Definitions\" />
-    <Folder Include="Blam\HaloReach\Tags\Layout\" />
     <Folder Include="Blam\HaloReach\Tags\Trace\" />
     <Folder Include="Blam\Stubbs\Tags\Code\" />
     <Folder Include="Blam\Stubbs\Tags\Definitions\" />

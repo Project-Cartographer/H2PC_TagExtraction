@@ -4,6 +4,7 @@
 	See license\BlamLib\BlamLib for specific license information
 */
 using System.Collections.Generic;
+using TI = BlamLib.TagInterface;
 
 namespace BlamLib.Blam.Cache
 {
@@ -430,7 +431,8 @@ namespace BlamLib.Blam.Cache
 			GroupIndex = (short)(datum.Index = s.ReadUInt16());
 			datum.Salt = (short)s.ReadUInt16();
 			address = s.ReadUInt32();
-			offset = (int)(address - s.BaseAddress);
+			if(address != 0)
+				offset = (int)(address - s.BaseAddress);
 			size = 0;
 		}
 
@@ -462,6 +464,24 @@ namespace BlamLib.Blam.Cache
 
 	public abstract class CacheFileGen3 : CacheFileGen2
 	{
+		public virtual bool ResourcesUseEncryption { get { return false; } }
+
+		internal virtual byte[] DecryptCacheSegmentBytes(CacheSectionType section_type, int segment_offset, int segment_size)
+		{
+			InputStream.Seek(segment_offset);
+			uint buffer_size = Util.Align(16, (uint)segment_size);
+
+			byte[] bytes = InputStream.ReadBytes(buffer_size);
+
+			return bytes;
+		}
+		internal IO.EndianReader DecryptCacheSegmentStream(CacheSectionType section_type, int segment_offset, int segment_size)
+		{
+			byte[] bytes = DecryptCacheSegmentBytes(section_type, segment_offset, segment_size);
+
+			return bytes != null ? new IO.EndianReader(bytes) : null;
+		}
+
 		Tags.CacheFileResourceDefinitionFactory cacheFileResourceDefinitionFactory;
 		/// <summary>
 		/// Get the factory for generating cache file resource definitions
@@ -479,6 +499,17 @@ namespace BlamLib.Blam.Cache
 				cacheFileResourceDefinitionFactory = new Tags.CacheFileResourceDefinitionFactory();
 
 			return cacheFileResourceDefinitionFactory;
+		}
+
+		protected override void OutputExtraHeaderInfo(System.IO.StreamWriter s)
+		{
+			base.OutputExtraHeaderInfo(s);
+
+			var header = Header as CacheHeaderGen3;
+
+			s.WriteLine("--MemoryBuffer--");
+			s.WriteLine("{0}\tSize", header.MemoryBufferSize.ToString("X8"));
+			s.WriteLine("{0}\tOffset", header.MemoryBufferOffset.ToString("X8"));
 		}
 
 		protected override void OutputExtraTagIndexInfo(System.IO.StreamWriter s)
@@ -543,6 +574,121 @@ namespace BlamLib.Blam.Cache
 				}
 				x++;
 			}
+			s.WriteLine();
 		}
+	};
+
+
+	class CacheFileLanguagePackResourceGen3 : CacheFileLanguagePackResource
+	{
+		internal const int kGlobalsOffsetHaloReach = 0x288;
+		internal const int kGlobalsOffsetHalo4 = 0x2B4;
+
+		TI.Skip ReferencesHash, StringsHash;
+		protected CacheFileLanguagePackResourceGen3()
+		{
+			ReferencesHash = new TI.Skip(20);
+			StringsHash = new TI.Skip(20);
+		}
+		public CacheFileLanguagePackResourceGen3(TI.Definition parent) : this()
+		{
+			if (parent == null) return;
+
+			parent.Add(new TI.Pad(
+				4 // Index runtime hashing handle 
+				+
+				4 // Table runtime hashing handle 
+				));
+			parent.Add(Count);
+			parent.Add(Size);
+			parent.Add(OffsetReferences);
+			parent.Add(OffsetStrings);
+			parent.Add(ReferencesHash); // index SHA1 hash
+			parent.Add(StringsHash); // strings SHA1 hash
+			parent.Add(new TI.Pad(1 + 3));
+		}
+
+		#region IStreamable Members
+		public override void Read(BlamLib.IO.EndianReader s)
+		{
+			s.Seek(4 + 4, System.IO.SeekOrigin.Current);
+			Count.Read(s);
+			Size.Read(s);
+			OffsetReferences.Read(s);
+			OffsetStrings.Read(s);
+			ReferencesHash.Read(s);
+			StringsHash.Read(s);
+			s.Seek(1 + 3, System.IO.SeekOrigin.Current);
+		}
+
+		public override void Write(BlamLib.IO.EndianWriter s)
+		{
+			s.Write(ulong.MinValue);
+			Count.Write(s);
+			Size.Write(s);
+			OffsetReferences.Write(s);
+			OffsetStrings.Write(s);
+			ReferencesHash.Write(s);
+			StringsHash.Write(s);
+			s.Write(uint.MinValue);
+		}
+		#endregion
+
+		#region Cache interop
+		internal override int LanguageHandleGetReferenceIndex(int id)
+		{
+			return (id >> 16) & 0xFFFF;
+		}
+		internal override int LanguageHandleGetCount(int id)
+		{
+			return id & 0xFFFF;
+		}
+
+		uint GetOffsetReferences(CacheHeaderGen3.CacheInterop ci)
+		{
+			uint offset = (uint)OffsetReferences.Value;
+
+			if (!ci.IsNull)
+				offset -= ci[CacheSectionType.Localization].AddressMask;
+
+			return offset;
+		}
+		uint GetOffsetStrings(CacheHeaderGen3.CacheInterop ci)
+		{
+			uint offset = (uint)OffsetStrings.Value;
+
+			if (!ci.IsNull)
+				offset -= ci[CacheSectionType.Localization].AddressMask;
+
+			return offset;
+		}
+		public override void ReadFromCache(Blam.CacheFile cf)
+		{
+			int count = this.Count.Value;
+
+			if (count > 0)
+			{
+				var cache = cf as Cache.CacheFileGen3;
+				var cache_interop = (cache.Header as Cache.CacheHeaderGen3).Interop;
+				uint offset;
+
+				#region Read the string references
+				offset = GetOffsetReferences(cache_interop);
+
+				cache.InputStream.Seek(offset);
+				InitializeStringReferences(count, cache.StringIds.Definition);
+				for (int x = 0; x < mStringReferences.Length; x++)
+					mStringReferences[x].Read(cf.InputStream);
+				#endregion
+
+				#region Read the string data buffer
+				offset = GetOffsetStrings(cache_interop);
+
+				cache.InputStream.Seek(offset);
+				mStringData = cache.DecryptCacheSegmentBytes(CacheSectionType.Localization, (int)offset, Size.Value);
+				#endregion
+			}
+		}
+		#endregion
 	};
 }

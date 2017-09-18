@@ -16,20 +16,10 @@ namespace BlamLib.TagInterface
 	public sealed class ByteInteger : Field
 	{
 		#region Value
-		private byte mValue = 0;
-
 		/// <summary>
 		/// The value of this char integer (in a byte)
 		/// </summary>
-		public byte Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public byte Value = 0;
 
 		/// <summary>
 		/// Interfaces with the byte value
@@ -239,20 +229,10 @@ namespace BlamLib.TagInterface
 	public sealed class ShortInteger : Field
 	{
 		#region Value
-		private short mValue = 0;
-
 		/// <summary>
 		/// The value of this short integer
 		/// </summary>
-		public short Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public short Value = 0;
 
 		/// <summary>
 		/// Interfaces with the short value
@@ -462,20 +442,10 @@ namespace BlamLib.TagInterface
 	public sealed class LongInteger : Field
 	{
 		#region Value
-		private int mValue = 0;
-
 		/// <summary>
 		/// The value of this long integer (in a int value)
 		/// </summary>
-		public int Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public int Value = 0;
 
 		/// <summary>
 		/// Interfaces with the int value
@@ -685,20 +655,10 @@ namespace BlamLib.TagInterface
 	public sealed class Tag : Field
 	{
 		#region Value
-		private char[] mValue = new char[4];
-
 		/// <summary>
 		/// The value of this tag field (in a four character array)
 		/// </summary>
-		public char[] Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public char[] Value = new char[4];
 
 		/// <summary>
 		/// Interfaces with the group tag value
@@ -785,20 +745,10 @@ namespace BlamLib.TagInterface
 	public sealed class Enum : Field
 	{
 		#region Value
-		private int mValue = 0;
-
 		/// <summary>
 		/// The value of this enumeration value (in int form)
 		/// </summary>
-		public int Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public int Value = 0;
 
 		/// <summary>
 		/// Interfaces with the int value
@@ -1005,20 +955,10 @@ namespace BlamLib.TagInterface
 	public sealed class Flags : Field
 	{
 		#region Value
-		private uint mValue = 0;
-
 		/// <summary>
 		/// The value of this flags field (in unsigned integer form)
 		/// </summary>
-		public uint Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public uint Value = 0;
 
 		/// <summary>
 		/// Interfaces with the unsigned integer value
@@ -1234,34 +1174,14 @@ namespace BlamLib.TagInterface
 	public sealed class Point2D : Field
 	{
 		#region Value
-		private short mX = 0;
-		private short mY = 0;
-
 		/// <summary>
 		/// X value of this point
 		/// </summary>
-		public short X
-		{
-			get { return mX; }
-			set
-			{
-				mX = value;
-				OnPropertyChanged("X");
-			}
-		}
-
+		public short X = 0;
 		/// <summary>
 		/// Y value of this point
 		/// </summary>
-		public short Y
-		{
-			get { return mY; }
-			set
-			{
-				mY = value;
-				OnPropertyChanged("Y");
-			}
-		}
+		public short Y = 0;
 
 		/// <summary>
 		/// short x, y
@@ -1456,62 +1376,22 @@ namespace BlamLib.TagInterface
 	public sealed class Rectangle2D : Field
 	{
 		#region Value
-		private short mT = 0;
-		private short mL = 0;
-		private short mB = 0;
-		private short mR = 0;
-
 		/// <summary>
 		/// Top value
 		/// </summary>
-		public short T
-		{
-			get { return mT; }
-			set
-			{
-				mT = value;
-				OnPropertyChanged("T");
-			}
-		}
-
+		public short T = 0;
 		/// <summary>
 		/// Left value
 		/// </summary>
-		public short L
-		{
-			get { return mL; }
-			set
-			{
-				mL = value;
-				OnPropertyChanged("L");
-			}
-		}
-
+		public short L = 0;
 		/// <summary>
 		/// Bottom value
 		/// </summary>
-		public short B
-		{
-			get { return mB; }
-			set
-			{
-				mB = value;
-				OnPropertyChanged("B");
-			}
-		}
-
+		public short B = 0;
 		/// <summary>
 		/// Right value
 		/// </summary>
-		public short R
-		{
-			get { return mR; }
-			set
-			{
-				mR = value;
-				OnPropertyChanged("R");
-			}
-		}
+		public short R = 0;
 
 		/// <summary>
 		/// short t, l, b, r
@@ -1619,62 +1499,22 @@ namespace BlamLib.TagInterface
 	public sealed class Color : Field
 	{
 		#region Value
-		private byte mA = 0;
-		private byte mR = 0;
-		private byte mG = 0;
-		private byte mB = 0;
-
 		/// <summary>
 		/// Alpha value of this field
 		/// </summary>
-		public byte A
-		{
-			get { return mA; }
-			set
-			{
-				mA = value;
-				OnPropertyChanged("A");
-			}
-		}
-
+		public byte A = 0;
 		/// <summary>
 		/// Red value of this field
 		/// </summary>
-		public byte R
-		{
-			get { return mR; }
-			set
-			{
-				mR = value;
-				OnPropertyChanged("R");
-			}
-		}
-
+		public byte R = 0;
 		/// <summary>
 		/// Green value of this field
 		/// </summary>
-		public byte G
-		{
-			get { return mG; }
-			set
-			{
-				mG = value;
-				OnPropertyChanged("G");
-			}
-		}
-
+		public byte G = 0;
 		/// <summary>
 		/// Blue value of this field
 		/// </summary>
-		public byte B
-		{
-			get { return mB; }
-			set
-			{
-				mB = value;
-				OnPropertyChanged("B");
-			}
-		}
+		public byte B = 0;
 
 		/// <summary>
 		/// byte a, r, g, b
@@ -1852,34 +1692,14 @@ namespace BlamLib.TagInterface
 	public sealed class ShortIntegerBounds : Field
 	{
 		#region Value
-		private short mLower = 0;
-		private short mUpper = 0;
-
 		/// <summary>
 		/// Lower bound of this field
 		/// </summary>
-		public short Lower
-		{
-			get { return mLower; }
-			set
-			{
-				mLower = value;
-				OnPropertyChanged("Lower");
-			}
-		}
-
+		public short Lower = 0;
 		/// <summary>
 		/// Upper bound of this field
 		/// </summary>
-		public short Upper
-		{
-			get { return mUpper; }
-			set
-			{
-				mUpper = value;
-				OnPropertyChanged("Upper");
-			}
-		}
+		public short Upper = 0;
 
 		/// <summary>
 		/// short lower, upper
@@ -1984,20 +1804,10 @@ namespace BlamLib.TagInterface
 	public sealed class BlockIndex : Field
 	{
 		#region Value
-		private int mValue = -1;
-
 		/// <summary>
 		/// Indexer value of this field
 		/// </summary>
-		public int Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public int Value = -1;
 
 		/// <summary>
 		/// Interfaces with the signed integer value

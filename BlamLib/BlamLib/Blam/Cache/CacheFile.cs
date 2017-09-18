@@ -736,11 +736,6 @@ namespace BlamLib.Blam
 		/// <remarks>If this cache doesn't support string ids, this does nothing</remarks>
 		protected void StringIdManagerInitializeAndRead()
 		{
-			// HACK:
-			// TODO: We can't decrypt these yet!
-			if (engineVersion == BlamVersion.HaloReach_Xbox)
-				return;
-
 			var sid_header = Header as ICacheHeaderStringId;
 			if (sid_header == null) return; // This cache doesn't use string_ids, do nothing
 

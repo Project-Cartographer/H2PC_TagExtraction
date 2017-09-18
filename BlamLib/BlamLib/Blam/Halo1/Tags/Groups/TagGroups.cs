@@ -271,10 +271,7 @@ namespace BlamLib.Blam.Halo1
 				srclut,
 				srhscf,
 				srai,
-				srcmmt,
-
-				gelo,
-				yelo
+				srcmmt
 			);
 		}
 

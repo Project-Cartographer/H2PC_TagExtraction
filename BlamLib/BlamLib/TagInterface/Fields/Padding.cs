@@ -50,20 +50,10 @@ namespace BlamLib.TagInterface
 		#endregion
 
 		#region Value
-		private int mValue = 0;
-
 		/// <summary>
 		/// The size of the padding in bytes
 		/// </summary>
-		public int Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public int Value = 0;
 
 		/// <summary>
 		/// Interfaces with this Pad's length
@@ -266,20 +256,10 @@ namespace BlamLib.TagInterface
 		#endregion
 
 		#region Value
-		private int mValue = 0;
-
 		/// <summary>
-		/// The size of the padding
+		/// The size of the padding in bytes
 		/// </summary>
-		public int Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public int Value = 0;
 
 		/// <summary>
 		/// Interfaces with this Pad's length
@@ -438,20 +418,10 @@ namespace BlamLib.TagInterface
 	public sealed class UselessPad : Field
 	{
 		#region Value
-		private int mValue = 0;
-
 		/// <summary>
 		/// The size of the padding
 		/// </summary>
-		public int Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
+		public int Value = 0;
 
 		/// <summary>
 		/// Interfaces with this Pad's length
@@ -559,34 +529,11 @@ namespace BlamLib.TagInterface
 	public sealed class Skip : Field
 	{
 		#region Value
-		private int mValue = 0;
-		private byte[] mData;
-
 		/// <summary>
 		/// The # of bytes to skip
 		/// </summary>
-		public int Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-				OnPropertyChanged("Value");
-			}
-		}
-
-		/// <summary>
-		/// The skip data
-		/// </summary>
-		public byte[] Data
-		{
-			get { return mData; }
-			set
-			{
-				mData = value;
-				OnPropertyChanged("Data");
-			}
-		}
+		public int Value = 0;
+		public byte[] Data;
 
 		/// <summary>
 		/// Interfaces with a object[] built of: Value, and Data

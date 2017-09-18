@@ -20,21 +20,7 @@ namespace BlamLib.TagInterface
 		/// <summary>
 		/// The value of this real (in a float)
 		/// </summary>
-		public float mValue = 0.0f;
-
-		/// <summary>
-		/// The value of this real (in a float)
-		/// </summary>
-		public float Value
-		{
-			get { return mValue; }
-			set
-			{
-				mValue = value;
-
-				OnPropertyChanged("Value");
-			}
-		}
+		public float Value = 0.0f;
 
 		/// <summary>
 		/// Interfaces with the real value
@@ -276,37 +262,14 @@ namespace BlamLib.TagInterface
 	public sealed class RealPoint2D : Field
 	{
 		#region Value
-		private float mX = 0.0f;
-
 		/// <summary>
 		/// X value of this field
 		/// </summary>
-		public float X
-		{
-			get { return mX; }
-			set
-			{
-				mX = value;
-
-				OnPropertyChanged("X");
-			}
-		}
-
-		private float mY = 0.0f;
-
+		public float X = 0.0f;
 		/// <summary>
 		/// Y value of this field
 		/// </summary>
-		public float Y
-		{
-			get { return mY; }
-			set
-			{
-				mY = value;
-
-				OnPropertyChanged("Y");
-			}
-		}			
+		public float Y = 0.0f;
 
 		/// <summary>
 		/// float x, y
@@ -424,51 +387,18 @@ namespace BlamLib.TagInterface
 	public sealed class RealPoint3D : Field
 	{
 		#region Value
-		private float mX = 0.0f;
-		private float mY = 0.0f;
-		private float mZ = 0.0f;
-
 		/// <summary>
 		/// X value of this field
 		/// </summary>
-		public float X
-		{
-			get { return mX; }
-			set
-			{
-				mX = value;
-
-				OnPropertyChanged("X");
-			}
-		}
-
+		public float X = 0.0f;
 		/// <summary>
 		/// Y value of this field
 		/// </summary>
-		public float Y
-		{
-			get { return mY; }
-			set
-			{
-				mY = value;
-
-				OnPropertyChanged("Y");
-			}
-		}
-
+		public float Y = 0.0f;
 		/// <summary>
 		/// Z value of this field
 		/// </summary>
-		public float Z
-		{
-			get { return mZ; }
-			set
-			{
-				mZ = value;
-
-				OnPropertyChanged("Z");
-			}
-		}
+		public float Z = 0.0f;
 
 		/// <summary>
 		/// float x, y, z
@@ -592,36 +522,14 @@ namespace BlamLib.TagInterface
 	public sealed class RealVector2D : Field
 	{
 		#region Value
-		private float mI = 0.0f;
-		private float mJ = 0.0f;
-
 		/// <summary>
 		/// I value of this field
 		/// </summary>
-		public float I
-		{
-			get { return mI; }
-			set
-			{
-				mI = value;
-
-				OnPropertyChanged("I");
-			}
-		}
-
+		public float I = 0.0f;
 		/// <summary>
 		/// J value of this field
 		/// </summary>
-		public float J
-		{
-			get { return mJ; }
-			set
-			{
-				mJ = value;
-
-				OnPropertyChanged("J");
-			}
-		}
+		public float J = 0.0f;
 
 		/// <summary>
 		/// float i, j
@@ -743,51 +651,18 @@ namespace BlamLib.TagInterface
 	public sealed class RealVector3D : Field
 	{
 		#region Value
-		private float mI = 0.0f;
-		private float mJ = 0.0f;
-		private float mK = 0.0f;
-
 		/// <summary>
 		/// I value of this field
 		/// </summary>
-		public float I
-		{
-			get { return mI; }
-			set
-			{
-				mI = value;
-
-				OnPropertyChanged("I");
-			}
-		}
-
+		public float I = 0.0f;
 		/// <summary>
 		/// J value of this field
 		/// </summary>
-		public float J
-		{
-			get { return mJ; }
-			set
-			{
-				mJ = value;
-
-				OnPropertyChanged("J");
-			}
-		}
-
+		public float J = 0.0f;
 		/// <summary>
 		/// K value of this field
 		/// </summary>
-		public float K
-		{
-			get { return mK; }
-			set
-			{
-				mK = value;
-
-				OnPropertyChanged("K");
-			}
-		}
+		public float K = 0.0f;
 
 		/// <summary>
 		/// float i, j, k
@@ -916,66 +791,22 @@ namespace BlamLib.TagInterface
 	public sealed class RealQuaternion : Field
 	{
 		#region Value
-		private float mI = 0.0f;
-		private float mJ = 0.0f;
-		private float mK = 0.0f;
-		private float mW = 0.0f;
-
 		/// <summary>
 		/// I value of this field
 		/// </summary>
-		public float I
-		{
-			get { return mI; }
-			set
-			{
-				mI = value;
-
-				OnPropertyChanged("I");
-			}
-		}
-
+		public float I = 0.0f;
 		/// <summary>
 		/// J value of this field
 		/// </summary>
-		public float J
-		{
-			get { return mJ; }
-			set
-			{
-				mJ = value;
-
-				OnPropertyChanged("J");
-			}
-		}
-
+		public float J = 0.0f;
 		/// <summary>
 		/// K value of this field
 		/// </summary>
-		public float K
-		{
-			get { return mK; }
-			set
-			{
-				mK = value;
-
-				OnPropertyChanged("K");
-			}
-		}
-
+		public float K = 0.0f;
 		/// <summary>
 		/// W value of this field
 		/// </summary>
-		public float W
-		{
-			get { return mW; }
-			set
-			{
-				mW = value;
-
-				OnPropertyChanged("W");
-			}
-		}
+		public float W = 0.0f;
 
 		/// <summary>
 		/// float i, j, k, w
@@ -1201,36 +1032,14 @@ namespace BlamLib.TagInterface
 	public sealed class RealEulerAngles2D : Field
 	{
 		#region Value
-		private float mY = 0.0f;
-		private float mP = 0.0f;
-
 		/// <summary>
 		/// Yaw value of this field
 		/// </summary>
-		public float Y
-		{
-			get { return mY; }
-			set
-			{
-				mY = value;
-
-				OnPropertyChanged("Y");
-			}
-		}
-
+		public float Y = 0.0f;
 		/// <summary>
 		/// Pitch value of this field
 		/// </summary>
-		public float P
-		{
-			get { return mP; }
-			set
-			{
-				mP = value;
-
-				OnPropertyChanged("P");
-			}
-		}
+		public float P = 0.0f;
 
 		/// <summary>
 		/// float y, p
@@ -1329,51 +1138,18 @@ namespace BlamLib.TagInterface
 	public sealed class RealEulerAngles3D : Field
 	{
 		#region Value
-		private float mY = 0.0f;
-		private float mP = 0.0f;
-		private float mR = 0.0f;
-
 		/// <summary>
 		/// Yaw value of this field
 		/// </summary>
-		public float Y
-		{
-			get { return mY; }
-			set
-			{
-				mY = value;
-
-				OnPropertyChanged("Y");
-			}
-		}
-
+		public float Y = 0.0f;
 		/// <summary>
 		/// Pitch value of this field
 		/// </summary>
-		public float P
-		{
-			get { return mP; }
-			set
-			{
-				mP = value;
-
-				OnPropertyChanged("P");
-			}
-		}
-
+		public float P = 0.0f;
 		/// <summary>
 		/// Roll value of this field
 		/// </summary>
-		public float R
-		{
-			get { return mR; }
-			set
-			{
-				mR = value;
-
-				OnPropertyChanged("R");
-			}
-		}
+		public float R = 0.0f;
 
 		/// <summary>
 		/// float y, p, r
@@ -1476,51 +1252,18 @@ namespace BlamLib.TagInterface
 	public sealed class RealPlane2D : Field
 	{
 		#region Value
-		private float mI = 0.0f;
-		private float mJ = 0.0f;
-		private float mD = 0.0f;
-
 		/// <summary>
 		/// I value of this field
 		/// </summary>
-		public float I
-		{
-			get { return mI; }
-			set
-			{
-				mI = value;
-
-				OnPropertyChanged("I");
-			}
-		}
-
+		public float I = 0.0f;
 		/// <summary>
 		/// J value of this field
 		/// </summary>
-		public float J
-		{
-			get { return mJ; }
-			set
-			{
-				mJ = value;
-
-				OnPropertyChanged("J");
-			}
-		}
-
+		public float J = 0.0f;
 		/// <summary>
 		/// D value of this field
 		/// </summary>
-		public float D
-		{
-			get { return mD; }
-			set
-			{
-				mD = value;
-
-				OnPropertyChanged("D");
-			}
-		}
+		public float D = 0.0f;
 
 		/// <summary>
 		/// float i, j, d
@@ -1623,66 +1366,22 @@ namespace BlamLib.TagInterface
 	public sealed class RealPlane3D : Field
 	{
 		#region Value
-		private float mI = 0.0f;
-		private float mJ = 0.0f;
-		private float mD = 0.0f;
-		private float mK = 0.0f;
-
 		/// <summary>
 		/// I value of this field
 		/// </summary>
-		public float I
-		{
-			get { return mI; }
-			set
-			{
-				mI = value;
-
-				OnPropertyChanged("I");
-			}
-		}
-
+		public float I = 0.0f;
 		/// <summary>
 		/// J value of this field
 		/// </summary>
-		public float J
-		{
-			get { return mJ; }
-			set
-			{
-				mJ = value;
-
-				OnPropertyChanged("J");
-			}
-		}
-
+		public float J = 0.0f;
 		/// <summary>
 		/// D value of this field
 		/// </summary>
-		public float D
-		{
-			get { return mD; }
-			set
-			{
-				mD = value;
-
-				OnPropertyChanged("D");
-			}
-		}
-
+		public float D = 0.0f;
 		/// <summary>
 		/// K value of this field
 		/// </summary>
-		public float K
-		{
-			get { return mK; }
-			set
-			{
-				mK = value;
-
-				OnPropertyChanged("K");
-			}
-		}
+		public float K = 0.0f;
 
 		/// <summary>
 		/// float i, j, d, k
@@ -1727,7 +1426,7 @@ namespace BlamLib.TagInterface
 		/// <param name="j">field value (J)</param>
 		/// <param name="d">field value (D)</param>
 		/// <param name="k">field value (K)</param>
-		public RealPlane3D(float i, float j, float d, float k) :	this()						{ I = i; J = j; D = d; K = k; }
+		public RealPlane3D(float i, float j, float d, float k) :	this()						{ I = i; J = j; D = d; K = d; }
 
 		/// <summary>
 		/// Creates a object that inherits from Field, using <paramref name="from"/> to pull any needed extra data.
@@ -1789,66 +1488,22 @@ namespace BlamLib.TagInterface
 	public sealed class RealColor : Field
 	{
 		#region Value
-		private float mA = 0.0f;
-		private float mR = 0.0f;
-		private float mG = 0.0f;
-		private float mB = 0.0f;
-
 		/// <summary>
 		/// Alpha value of this field
 		/// </summary>
-		public float A
-		{
-			get { return mA; }
-			set
-			{
-				mA = value;
-
-				OnPropertyChanged("A");
-			}
-		}
-
+		public float A = 0.0f;
 		/// <summary>
 		/// Red value of this field
 		/// </summary>
-		public float R
-		{
-			get { return mR; }
-			set
-			{
-				mR = value;
-
-				OnPropertyChanged("R");
-			}
-		}
-
+		public float R = 0.0f;
 		/// <summary>
 		/// Green value of this field
 		/// </summary>
-		public float G
-		{
-			get { return mG; }
-			set
-			{
-				mG = value;
-
-				OnPropertyChanged("G");
-			}
-		}
-
+		public float G = 0.0f;
 		/// <summary>
 		/// Blue value of this field
 		/// </summary>
-		public float B
-		{
-			get { return mB; }
-			set
-			{
-				mB = value;
-
-				OnPropertyChanged("B");
-			}
-		}
+		public float B = 0.0f;
 
 		/// <summary>
 		/// float a, r, g, b
@@ -1885,17 +1540,12 @@ namespace BlamLib.TagInterface
 		/// Construct a real color field
 		/// </summary>
 		/// <param name="t">specific real color type</param>
-		public RealColor(FieldType t) : base(t) { }
+		public RealColor(FieldType t) :							base(t)							{}
 		/// <summary>
 		/// Copy constructor
 		/// </summary>
 		/// <param name="value">field to copy</param>
-		public RealColor(RealColor value) : this() { A = value.A; R = value.R; G = value.G; B = value.B; }
-		/// <summary>
-		/// RGB copy constructor
-		/// </summary>
-		/// <param name="value">field to copy</param>
-		public RealColor(RealColor value, float a) : this() { A = a; R = value.R; G = value.G; B = value.B; }
+		public RealColor(RealColor value) :						this()							{ A = value.A; R = value.R; G = value.G; B = value.B; }
 		/// <summary>
 		/// Construct a real argb color field
 		/// </summary>
@@ -2015,36 +1665,14 @@ namespace BlamLib.TagInterface
 	public sealed class RealBounds : Field
 	{
 		#region Value
-		private float mLower = 0.0f;
-		private float mUpper = 0.0f;
-
 		/// <summary>
-		/// Lower value of this field
+		/// Lower bound of this field
 		/// </summary>
-		public float Lower
-		{
-			get { return mLower; }
-			set
-			{
-				mLower = value;
-
-				OnPropertyChanged("Lower");
-			}
-		}
-
+		public float Lower = 0.0f;
 		/// <summary>
-		/// Upper value of this field
+		/// Upper bound of this field
 		/// </summary>
-		public float Upper
-		{
-			get { return mUpper; }
-			set
-			{
-				mUpper = value;
-
-				OnPropertyChanged("Upper");
-			}
-		}
+		public float Upper = 0.0f;
 
 		/// <summary>
 		/// float lower, upper

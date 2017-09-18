@@ -1,7 +1,6 @@
 ﻿using System;
 using System.IO;
 
-
 namespace BlamLib.Compression
 {
 	static public class LZMA

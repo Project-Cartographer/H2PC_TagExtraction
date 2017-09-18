@@ -60,7 +60,7 @@ namespace BlamLib.Test
 		[TestMethod]
 		public void HaloOdstTestCacheOutputXbox()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext,
 				Halo3.CacheOutputInformationMethod,
 				BlamVersion.HaloOdst_Xbox, kMapsDirectoryXbox, kMapNames);
 		}
@@ -68,7 +68,7 @@ namespace BlamLib.Test
 		[TestMethod]
 		public void HaloOdstTestCacheLoadResourceXbox()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext,
 				Halo3.CacheLoadResourceMethod,
 				BlamVersion.HaloOdst_Xbox, kMapsDirectoryXbox, kMapNames);
 		}
@@ -77,7 +77,7 @@ namespace BlamLib.Test
 		[TestMethod]
 		public void HaloOdstTestDumpZoneDataXbox()
 		{
-			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, Halo3.DumpZoneDataMethod,
+			CacheFileOutputInfoArgs.TestMethodThreaded(TestContext, Halo3.DumpZoneDataMethod,
 				BlamVersion.HaloOdst_Xbox, kMapsDirectoryXbox, kMapNames);
 		}
 		#endregion
