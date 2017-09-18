@@ -3,21 +3,57 @@ A application made to extract assets from cache files of H2v using BlamLib by Ko
 UI and small modifications to BlamLib by Himanshu-01.
 The state of the project right now is pre-alpha so there are alot of issues/bugs that need addressing.
 
-## COMPILATION / CONTRIBUTE
 
-In order to build the project, you need 2 SDKs, which are boost_1_55_0 and SlimDX.
-- [Link:](https://drive.google.com/file/d/0B2ezZImuw5cpMGQwcmpLeE53Rlk/view?usp=sharing)
-boost_1_55_0 folder needs to be copied in C:\Program Files (x86)\boost\ .
-The application is wrote using C#, and C++ is used for LowLevel project.
-Any contribution is welcome.
+## KornnerStudios ##
+You can go to this link
+
+https://bitbucket.org/KornnerStudios/opensauce-release/wiki/Home
+
+### REQUIREMENTS ###
+- __BoostSDK Libraries (boost_1_55_0)__
+- __SlimDX. __
+- __[Link:](https://drive.google.com/file/d/0B2ezZImuw5cpMGQwcmpLeE53Rlk/view?usp=sharing) __
+* __Copy the boost_1_55_0 folder to C:\Program Files (x86)\boost\ __
+
+## COMPILATION / CONTRIBUTE ##
+
+* __Contributors are Welcome :)__
+* __Get the Requirements__
+* __Hit Clone and Start Building__
+
+## ChangeLog ##
+### V1.7 ###
+Features::
+* __Updated BlamLib version(With Fixed Depencies) __
+* __Fixed the long awaited Last Character Bug __
+* __Improved UI Systems(Still need to be better) __
+* __Improved Meta Extraction and Injection UI __
+* __Included a Tag Extractor UI __
+* __Added Test Functions(Extract Import Info) __
+* __Added a Dump Selected Tags Option __
+* __Bitmaps Extraction Fix __
+* __Sound Extraction (!snd) Added __
+
+### V1.0 ###
+Features::
+* __Tag Extration__
+* __Meta Extraction and Rebasing__
+* __Simple Cache Viewer and UI__
+* __And some Known Bugs like the dependencies and last character bug__
+
+
 For any issue you may find using it, feel free to use "Issues" tab.
+
 If you have more questions about the project, ask me on discord : Himanshu01#3268 .
 
-## Known issues:
-1.After extract, references need to be set manually in the tags.
-2.Shaders don't extract properly.
-3.You can't open shared.map, but you stil can extract multiplayer maps.
-4.Seems The Animation Graph of models is incomplete
+### Huge Thanks to Kornmann for BlamLib ###
+## Some Honourable Mentions to these people too :) ##
 
-## I'd like to thank them for testing:
-Twinreaper,NukeULater and UF Beazt.
+*__ General_101 __
+*__ Twinreaper __
+*__ NukeULater __
+*__ UF Beazt __
+
+
+## H2PC Project Cartographer Team ##
+### visit www.halo2.online ###
