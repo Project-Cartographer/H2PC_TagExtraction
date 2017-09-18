@@ -10,10 +10,10 @@ You can go to this link
 https://bitbucket.org/KornnerStudios/opensauce-release/wiki/Home
 
 ### REQUIREMENTS ###
-- __BoostSDK Libraries (boost_1_55_0)__
-- __SlimDX. __
-- __[Link:](https://drive.google.com/file/d/0B2ezZImuw5cpMGQwcmpLeE53Rlk/view?usp=sharing) __
-* __Copy the boost_1_55_0 folder to C:\Program Files (x86)\boost\ __
+* __BoostSDK Libraries (boost_1_55_0)__
+* __SlimDX__
+* __[Link:](https://drive.google.com/file/d/0B2ezZImuw5cpMGQwcmpLeE53Rlk/view?usp=sharing)__
+* __Copy the boost_1_55_0 folder to C:\Program Files (x86)\boost\__
 
 ## COMPILATION / CONTRIBUTE ##
 
@@ -24,15 +24,15 @@ https://bitbucket.org/KornnerStudios/opensauce-release/wiki/Home
 ## ChangeLog ##
 ### V1.7 ###
 Features::
-* __Updated BlamLib version(With Fixed Depencies) __
-* __Fixed the long awaited Last Character Bug __
-* __Improved UI Systems(Still need to be better) __
-* __Improved Meta Extraction and Injection UI __
-* __Included a Tag Extractor UI __
-* __Added Test Functions(Extract Import Info) __
-* __Added a Dump Selected Tags Option __
-* __Bitmaps Extraction Fix __
-* __Sound Extraction (!snd) Added __
+* __Updated BlamLib version(With Fixed Depencies)__
+* __Fixed the long awaited Last Character Bug__
+* __Improved UI Systems(Still need to be better)__
+* __Improved Meta Extraction and Injection UI__
+* __Included a Tag Extractor UI__
+* __Added Test Functions(Extract Import Info)__
+* __Added a Dump Selected Tags Option__
+* __Bitmaps Extraction Fix__
+* __Sound Extraction (!snd) Added__
 
 ### V1.0 ###
 Features::
@@ -49,10 +49,10 @@ If you have more questions about the project, ask me on discord : Himanshu01#326
 ### Huge Thanks to Kornmann for BlamLib ###
 ## Some Honourable Mentions to these people too :) ##
 
-*__ General_101 __
-*__ Twinreaper __
-*__ NukeULater __
-*__ UF Beazt __
+*__General_101__
+*__Twinreaper__
+*__NukeULater__
+*__UF Beazt__
 
 
 ## H2PC Project Cartographer Team ##
