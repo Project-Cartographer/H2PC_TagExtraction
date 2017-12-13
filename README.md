@@ -22,6 +22,15 @@ https://bitbucket.org/KornnerStudios/opensauce-release/wiki/Home
 * __Hit Clone and Start Building__
 
 ## ChangeLog ##
+### V2.0 ###
+Features::
+* __Added extended meta logic for dataRefs__
+* __Can Now successfully extract most tags and rebase them__
+* __Added Resyncer Dialog for Relinking and fixing specific tags,class Resyncer__
+* __Added StringID refixer class Resync_SID__
+* __Updated Write_Int_LE method__
+* __DataStructures Updated(new classes tag_info,StringID_info)__
+
 ### V1.7 ###
 Features::
 * __Updated BlamLib version(With Fixed Depencies)__
