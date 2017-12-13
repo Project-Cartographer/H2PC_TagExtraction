@@ -114,6 +114,13 @@
     <Compile Include="Rebase_meta.Designer.cs">
       <DependentUpon>Rebase_meta.cs</DependentUpon>
     </Compile>
+    <Compile Include="Resyncer.cs" />
+    <Compile Include="Resyncer_Dialog_Box.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Resyncer_Dialog_Box.Designer.cs">
+      <DependentUpon>Resyncer_Dialog_Box.cs</DependentUpon>
+    </Compile>
     <Compile Include="TagExtractor.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -141,6 +148,9 @@
     </Compile>
     <EmbeddedResource Include="Rebase_meta.resx">
       <DependentUpon>Rebase_meta.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Resyncer_Dialog_Box.resx">
+      <DependentUpon>Resyncer_Dialog_Box.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="TagExtractor.resx">
       <DependentUpon>TagExtractor.cs</DependentUpon>

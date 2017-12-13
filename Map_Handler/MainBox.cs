@@ -374,8 +374,8 @@ namespace Map_Handler
         private void hCEGBXModelToolStripMenuItem_Click(object sender, EventArgs e)
         {
             //ToDO: Complete this with UI
-            WIP();
-
+           // WIP();         
+           
         }
 
         private void hCEToH2VSoundsToolStripMenuItem_Click(object sender, EventArgs e)
@@ -413,7 +413,26 @@ namespace Map_Handler
 
         private void tests1ToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            
             //H2Test.Halo2TestCacheOutputPc();
+        }
+
+        private void resyncshadToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            Resyncer_Dialog_Box RDB = new Resyncer_Dialog_Box();
+            RDB.Show();
+        }
+
+        private void resyncStringIDsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "config files(*.xml)|*.xml";
+
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                Resync_SID RSID = new Resync_SID(ofd.FileName);
+            }
+
         }
     }
 }

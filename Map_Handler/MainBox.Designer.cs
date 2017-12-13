@@ -48,6 +48,8 @@
             this.extractMetaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.injectMetaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.getTagStructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resyncshadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.resyncStringIDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultMaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -193,11 +195,12 @@
             this.metaToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.extractMetaToolStripMenuItem,
             this.injectMetaToolStripMenuItem,
-            this.getTagStructureToolStripMenuItem});
+            this.getTagStructureToolStripMenuItem,
+            this.resyncshadToolStripMenuItem,
+            this.resyncStringIDsToolStripMenuItem});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.metaToolStripMenuItem.Text = "Meta";
-            this.metaToolStripMenuItem.Visible = false;
             // 
             // extractMetaToolStripMenuItem
             // 
@@ -219,6 +222,20 @@
             this.getTagStructureToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
             this.getTagStructureToolStripMenuItem.Text = "Get Tag Structure";
             this.getTagStructureToolStripMenuItem.Click += new System.EventHandler(this.getTagStructureToolStripMenuItem_Click);
+            // 
+            // resyncshadToolStripMenuItem
+            // 
+            this.resyncshadToolStripMenuItem.Name = "resyncshadToolStripMenuItem";
+            this.resyncshadToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.resyncshadToolStripMenuItem.Text = "Resync tagRefs";
+            this.resyncshadToolStripMenuItem.Click += new System.EventHandler(this.resyncshadToolStripMenuItem_Click);
+            // 
+            // resyncStringIDsToolStripMenuItem
+            // 
+            this.resyncStringIDsToolStripMenuItem.Name = "resyncStringIDsToolStripMenuItem";
+            this.resyncStringIDsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.resyncStringIDsToolStripMenuItem.Text = "Resync StringIDs";
+            this.resyncStringIDsToolStripMenuItem.Click += new System.EventHandler(this.resyncStringIDsToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -286,6 +303,8 @@
         private System.Windows.Forms.ToolStripMenuItem hCECollisionModelToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dumpSelectedTagsListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem tests1ToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resyncshadToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem resyncStringIDsToolStripMenuItem;
     }
 }
 

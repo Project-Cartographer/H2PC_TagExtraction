@@ -20,6 +20,8 @@ namespace Map_Handler
         //list of meta which are gonna be compiled
         List<injectRefs> compile_list;
         string directory;
+        List<string> tag_scenarios;
+        List<UnisonRefs> type_ref_list;//they are used to universally reference a tag depending on the type of tagRef
 
 
         public Rebase_meta(string file)
@@ -29,6 +31,8 @@ namespace Map_Handler
             XmlDocument xd = new XmlDocument();
             xd.Load(file);
             compile_list = new List<injectRefs>();
+            tag_scenarios = new List<string>();
+            type_ref_list = new List<UnisonRefs>();
 
             directory = DATA_READ.ReadDirectory_from_file_location(file);
             int new_index = 0x3BA4;//new datum_indexes starting from 0x3BA4
@@ -42,8 +46,39 @@ namespace Map_Handler
                 temp.file_name = Xn.SelectSingleNode("name").InnerText;
                 temp.type = DATA_READ.ReadTAG_TYPE_form_name(temp.file_name);
 
+                tag_scenarios.Add(Xn.SelectSingleNode("scenario").InnerText);
+
                 //lets add the tag to the list
                 compile_list.Add(temp);
+            }
+            //now lets fill the unison List
+            List<string> blacklisted_type = new List<string>();
+
+            foreach(injectRefs inj_temp in compile_list)
+            {
+                if (!blacklisted_type.Contains(inj_temp.type))
+                {
+                    bool any_occurence = false;
+                    for (int i = 0; i < type_ref_list.Count(); i++)
+                    {
+                        UnisonRefs uni_temp = type_ref_list[i];
+                        if (uni_temp.type == inj_temp.type)
+                        {
+                            any_occurence = true;
+                            blacklisted_type.Add(inj_temp.type);
+                            type_ref_list.Remove(uni_temp);
+                        }
+                    }
+                    if (!any_occurence)
+                    {
+                        UnisonRefs my_temp_ref = new UnisonRefs();
+                        my_temp_ref.type = inj_temp.type;
+                        my_temp_ref.new_datum = inj_temp.new_datum;
+                        my_temp_ref.file_name = inj_temp.file_name;
+
+                        type_ref_list.Add(my_temp_ref);
+                    }
+                }
             }
 
         }
@@ -82,7 +117,7 @@ namespace Map_Handler
                     sr.Dispose();
 
                     meta obj = new meta(meta, temp_ref.type, (int)size, temp_ref.file_name);
-                    log += obj.Update_datum_indexes(compile_list);
+                    log += obj.Update_datum_indexes(compile_list, type_ref_list);
                     obj.Rebase_meta(new_base);
 
 
@@ -103,7 +138,19 @@ namespace Map_Handler
                 else log += "\nFile doesnt exists : " + temp_ref.file_name;
                 custom_table_index++;
             }
+            //atleast mention the universally acclaimed tag
+            log += "\ntype referenced tags are :";
+            foreach (UnisonRefs uni_temp in type_ref_list)
+                log += "\nReffered " + uni_temp.type + " to " + uni_temp.new_datum.ToString("X") + " file : " + uni_temp.file_name;
+
             sw_t.BaseStream.Write(tables, 0, 0x10 * compile_list.Count());
+            //add the scenarios to which the tags are linked
+            foreach (string st in tag_scenarios)
+            {
+                byte[] lol = {0};
+                sw.BaseStream.Write(Encoding.ASCII.GetBytes(st), 0, st.Length);
+                sw.BaseStream.Write(lol, 0, 1);
+            }
 
             sw.Dispose();
             sw_t.Dispose();

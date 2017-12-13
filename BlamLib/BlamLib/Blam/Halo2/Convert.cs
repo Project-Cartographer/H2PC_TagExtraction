@@ -38,7 +38,7 @@ namespace BlamLib.Blam.Halo2
 			Tags.render_model_group halo2
 			)
 		{
-			return true;
+            return halo2.Convert(halo1);
 		}
 		/// <summary>
 		/// Convert a halo 1 collision model to the halo 2 version

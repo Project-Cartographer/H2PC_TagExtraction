@@ -73,6 +73,35 @@ class DATA_READ
         return text;
     }
     /// <summary>
+    /// return the the string at the specified position in form of path
+    /// </summary>
+    /// <param name="position"></param>
+    /// <param name="map_stream"></param>
+    /// <returns></returns>
+    public static string ReadSTRINGPATH(int position, StreamReader map_stream)
+    {
+        map_stream.DiscardBufferedData();
+        map_stream.BaseStream.Position = position;
+
+        string text = "";
+
+        while (true)
+        {
+            char c = (char)map_stream.Read();
+
+            if(c=='\\')
+                text+='\\';
+
+            if (c == '\0')
+                break;
+
+            text += c;
+        }
+
+        text.Trim();
+        return text;
+    }
+    /// <summary>
     /// Return the little endian char[4] at the specified position
     /// </summary>
     /// <param name="position">the Ofset from the file start</param>
@@ -306,7 +335,7 @@ class DATA_READ
         {
             int r = S % 0x100;
             meta[offset + i] = (byte)r;
-            S = S / 0x100;
+            S = S>>8;
         }
     }
     /// <summary>
@@ -345,5 +374,29 @@ class DATA_READ
         string map_name = ReadSTRING(0x1A4, map_stream);
         return map_name.Contains("shared");
     }
+    /// <summary>
+    /// Returns map name from scenario name
+    /// </summary>
+    /// <param name="scenario">scenario name</param>
+    /// <returns>map name</returns>
+    public static string Get_map_from_scenario(string scenario)
+    {
+        string map_name;
+        map_name=scenario.Substring(scenario.LastIndexOf('\\') + 1)+".map";
+        return map_name;
+    }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="table_index"></param>
+    /// <param name="STRING"></param>
+    /// <returns></returns>
+    public static int Generate_SID(int table_index,int set,string STRING)
+    {
+        int l = (STRING.Length & 0xFF) << 24;
+        int s = (set & 0xFF) << 16;
+        int t = table_index & 0xFFFF;
 
+        return (l | s | table_index);
+    }
 }

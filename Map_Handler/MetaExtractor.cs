@@ -20,6 +20,8 @@ namespace Map_Handler
         List<tagRef> extraction_list;//a list containing the datum indexes waiting for extraction
         List<int> extracted_list;//a list containing the datum indexes already extracted
 
+        string[] non_extractable = {"stem"};//list of tags that arent to be extracted
+
 
         public MetaExtractor(int datum,string type,Dictionary<int,string> SID_list,StreamReader sr)
         {
@@ -69,9 +71,23 @@ namespace Map_Handler
                     int datum = temp_tagref.datum_index;
                     string type = temp_tagref.type;
 
-                    if (datum != -1)
+                    if (datum!=-1 && datum!=0)
                     {
-                        if (!extracted_list.Contains(datum))
+                        //few check for non_extractable types
+                        bool isnon_extractable = false;
+
+                   /*     foreach(string tempNE in non_extractable)
+                        {
+                            if(type.CompareTo(tempNE)==0)
+                            {
+                                isnon_extractable = true;
+                                break;
+                            }
+                        }
+                        */
+
+
+                        if (!extracted_list.Contains(datum)&&!isnon_extractable)
                         {
                             if (File.Exists(Application.StartupPath + "\\plugins\\" + type + ".xml"))
                             {
@@ -87,8 +103,16 @@ namespace Map_Handler
 
                                     if (radioButton1.Checked == true)
                                     {
+                                        List<tagRef> refs_temp = obj.Get_all_tag_refs();
                                         //add recursivity
-                                        extraction_list.AddRange(obj.Get_all_tag_refs());
+                                        foreach (tagRef my_tempy in extraction_list)
+                                        {
+                                            refs_temp.Remove(my_tempy);
+                                        }
+
+                                        extraction_list.AddRange(refs_temp);
+                                        //to remove redundancy                              
+
                                     }
 
                                     byte[] data = obj.Generate_meta_file();
@@ -111,6 +135,9 @@ namespace Map_Handler
                                     xw.WriteStartElement("datum");
                                     xw.WriteString(datum.ToString("X"));//writing in the inner most level ie here,datum
                                     xw.WriteEndElement();//datum level
+                                    xw.WriteStartElement("scenario");
+                                    xw.WriteString(DATA_READ.ReadSTRINGPATH(0x1C8, map_stream));
+                                    xw.WriteEndElement();//scenario level                        
                                     xw.WriteEndElement();//tag level
 
                                     //at least mention this in the logs

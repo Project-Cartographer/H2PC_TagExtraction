@@ -10,6 +10,34 @@ using System.IO;
 namespace DATA_STRUCTURES
 {
     /// <summary>
+    /// A struct to contain some info on various SID in the map file
+    /// </summary>
+    struct StringID_info
+    {
+        public int  string_index_table_index;
+        public int string_table_offset;
+        public int StringID;
+        public string STRING;
+    }
+    /// <summary>
+    /// contains information that is required to update the StringIDs to match the newer map
+    /// </summary>
+    struct StringIDRef
+    {
+        public int old_SID;
+        public int new_SID;
+        public string STRING;
+    }
+    /// <summary>
+    /// contains some info on the tag loaded from the map
+    /// </summary>
+    struct tag_info
+    {
+        public int datum_index;
+        public string type;
+        public string file_loc;
+    }
+    /// <summary>
     /// just a struct to contain values about the tagRefs in the meta data
     /// </summary>
     struct tagRef
@@ -26,6 +54,16 @@ namespace DATA_STRUCTURES
         public int new_datum;
         public string file_name;
         public string type;
+    };
+    /// <summary>
+    /// a struct containing data about some crap
+    /// </summary>
+    struct UnisonRefs
+    {
+        public string type;
+        public int new_datum;
+        public string file_name;
+
     };
     /// <summary>
     /// A class representing the structure halo2 plugins
@@ -234,9 +272,13 @@ namespace DATA_STRUCTURES
             ref_WCtags = new List<int>();
 
             //we we have loop through the extended meta stuff
-            for (int i=0;i< count;i++)
+            //but first make sure is a reflexive field or not
+            if (plugin != null)
             {
-                List_deps(i * entry_size, plugin);
+                for (int i = 0; i < count; i++)
+                {
+                    List_deps(i * entry_size, plugin);
+                }
             }
         }
 
@@ -349,49 +391,53 @@ namespace DATA_STRUCTURES
         /// <param name="new_base">the new memory address to which the meta has to rebased</param>
         public void Rebase_meta(int new_base)
         {
-            //first rebase reflexive fields
-            foreach (int off in ref_reflexive)
+            //plugin_ref is not present only in the case of extended dataref
+            if (plugin != null)
             {
-                int old_mem_addr = DATA_READ.ReadINT_LE(off + 4, data);
-                int new_mem_addr = new_base + (old_mem_addr - mem_off);
+                //first rebase reflexive fields
+                foreach (int off in ref_reflexive)
+                {
+                    int old_mem_addr = DATA_READ.ReadINT_LE(off + 4, data);
+                    int new_mem_addr = new_base + (old_mem_addr - mem_off);
 
-                DATA_READ.WriteINT_LE(new_mem_addr, off + 4, data);
+                    DATA_READ.WriteINT_LE(new_mem_addr, off + 4, data);
+                }
+                //then we rebase all the dataref fields
+                foreach (int off in ref_data)
+                {
+                    int old_mem_addr = DATA_READ.ReadINT_LE(off + 4, data);
+                    int new_mem_addr = new_base + (old_mem_addr - mem_off);
+
+                    DATA_READ.WriteINT_LE(new_mem_addr, off + 4, data);
+                }
+                //for extended meta stuff we are gonna first rebase the extended meta(s) first and set the offsets accordingly
+                //well extende meta are gonna follow meta one by one
+                int extended_new_base = new_base + size;
+
+                List<int> key_mems = list_extended.Keys.ToList<int>();
+                //Rebase extended meta
+                foreach (int temp_key in key_mems)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    temp_meta.Rebase_meta(extended_new_base);
+
+                    extended_new_base += temp_meta.Get_Total_size();
+                }
+                //now lets update the offsets with the newer values
+                List<int> extend_off = ref_extended.Keys.ToList<int>();
+                foreach (int temp_off in extend_off)
+                {
+                    int extend_mem_addr = ref_extended[temp_off];
+                    extended_meta temp_ext = list_extended[extend_mem_addr];
+
+                    int new_mem_addr = temp_ext.Get_mem_addr();
+
+                    DATA_READ.WriteINT_LE(new_mem_addr, temp_off + 4, data);
+                }
             }
-            //then we rebase all the dataref fields
-            foreach (int off in ref_data)
-            {
-                int old_mem_addr = DATA_READ.ReadINT_LE(off + 4, data);
-                int new_mem_addr = new_base + (old_mem_addr - mem_off);
-
-                DATA_READ.WriteINT_LE(new_mem_addr, off + 4, data);
-            }
-            //for extended meta stuff we are gonna first rebase the extended meta(s) first and set the offsets accordingly
-            //well extende meta are gonna follow meta one by one
-            int extended_new_base = new_base + size;
-
-            List<int> key_mems = list_extended.Keys.ToList<int>();
-            //Rebase extended meta
-            foreach (int temp_key in key_mems)
-            {
-                extended_meta temp_meta = list_extended[temp_key];
-                temp_meta.Rebase_meta(extended_new_base);
-
-                extended_new_base += temp_meta.Get_Total_size();
-            }
-            //now lets update the offsets with the newer values
-            List<int> extend_off = ref_extended.Keys.ToList<int>();
-            foreach (int temp_off in extend_off)
-            {
-                int extend_mem_addr = ref_extended[temp_off];
-                extended_meta temp_ext = list_extended[extend_mem_addr];
-
-                int new_mem_addr = temp_ext.Get_mem_addr();
-
-                DATA_READ.WriteINT_LE(new_mem_addr, temp_off + 4, data);
-            }
-
             //update the base to which meta has been compiled
             mem_off = new_base;
+                
         }
         /// <summary>
         /// returns the total size of the meta along with all extended meta sizes
@@ -400,13 +446,17 @@ namespace DATA_STRUCTURES
         public int Get_Total_size()
         {
             int Tsize = size;
-            //lets add the extended meta sizes
-            List<int> key_mems = list_extended.Keys.ToList<int>();
 
-            foreach (int temp_key in key_mems)
+            if (plugin != null)
             {
-                extended_meta temp_meta = list_extended[temp_key];
-                Tsize += temp_meta.Get_Total_size();
+                //lets add the extended meta sizes
+                List<int> key_mems = list_extended.Keys.ToList<int>();
+
+                foreach (int temp_key in key_mems)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    Tsize += temp_meta.Get_Total_size();
+                }
             }
 
             return Tsize;
@@ -430,14 +480,17 @@ namespace DATA_STRUCTURES
             //we first copy the root meta data into it
             DATA_READ.ArrayCpy(ret, data, 0x0, size);
 
-            //now we go for extended meta
-            List<int> extend_keys = list_extended.Keys.ToList<int>();
-            //here we go
-            foreach (int temp_key in extend_keys)
+            if (plugin != null)
             {
-                extended_meta temp_meta = list_extended[temp_key];
-                int start_off = temp_meta.Get_mem_addr() - mem_off;
-                DATA_READ.ArrayCpy(ret, temp_meta.Generate_meta_file(), start_off, temp_meta.Get_Total_size());
+                //now we go for extended meta
+                List<int> extend_keys = list_extended.Keys.ToList<int>();
+                //here we go
+                foreach (int temp_key in extend_keys)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    int start_off = temp_meta.Get_mem_addr() - mem_off;
+                    DATA_READ.ArrayCpy(ret, temp_meta.Generate_meta_file(), start_off, temp_meta.Get_Total_size());
+                }
             }
 
             return ret;
@@ -447,17 +500,20 @@ namespace DATA_STRUCTURES
         /// </summary>
         public void Null_StringID()
         {
-            //first null all my string ids
-            foreach (int temp_off in ref_stringID)
+            if (plugin != null)
             {
-                DATA_READ.WriteINT_LE(0x0, temp_off, data);
-            }
-            //we then proceed for extended meta
-            List<int> keys = list_extended.Keys.ToList<int>();
-            foreach (int temp_key in keys)
-            {
-                extended_meta temp_meta = list_extended[temp_key];
-                temp_meta.Null_StringID();
+                //first null all my string ids
+                foreach (int temp_off in ref_stringID)
+                {
+                    DATA_READ.WriteINT_LE(0x0, temp_off, data);
+                }
+                //we then proceed for extended meta
+                List<int> keys = list_extended.Keys.ToList<int>();
+                foreach (int temp_key in keys)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    temp_meta.Null_StringID();
+                }
             }
         }
         /// <summary>
@@ -468,43 +524,46 @@ namespace DATA_STRUCTURES
         {
             List<tagRef> ret = new List<tagRef>();
 
-            //first i add all my the tagRefs in the concerned meta
-            foreach(int temp_off in ref_tags)
+            if (plugin != null)
             {
-                string type = DATA_READ.ReadTAG_TYPE(temp_off, data);
-                int temp_datum = DATA_READ.ReadINT_LE(temp_off + 4, data);
-
-                tagRef temp_tagref = new tagRef();
-                temp_tagref.type = type;
-                temp_tagref.datum_index = temp_datum;
-
-                ret.Add(temp_tagref);
-            }
-            //then we add the extended_meta dependencies
-            List<int> key_list = list_extended.Keys.ToList<int>();
-            foreach(int temp_key in key_list)
-            {
-                extended_meta temp_meta = list_extended[temp_key];
-                ret.AddRange(temp_meta.Get_all_tag_refs());
-            }
-            //listing the WCtagRefs
-            //we can only do this when we are reading from a map
-            if (map_stream != null)
-            {
-                //some meta reading prologue
-                int table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
-                int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;
-
-                foreach (int temp_off in ref_WCtags)
+                //first i add all my the tagRefs in the concerned meta
+                foreach (int temp_off in ref_tags)
                 {
-                    int temp_datum = DATA_READ.ReadINT_LE(temp_off, data);//we read it from meta data
-                    string type = DATA_READ.ReadTAG_TYPE(table_start + (0xFFFF & temp_datum) * 0x10, map_stream);//we read this from map stream
+                    string type = DATA_READ.ReadTAG_TYPE(temp_off, data);
+                    int temp_datum = DATA_READ.ReadINT_LE(temp_off + 4, data);
 
-                    tagRef temp_WCtagref = new tagRef();
-                    temp_WCtagref.datum_index = temp_datum;
-                    temp_WCtagref.type = type;
+                    tagRef temp_tagref = new tagRef();
+                    temp_tagref.type = type;
+                    temp_tagref.datum_index = temp_datum;
 
-                    ret.Add(temp_WCtagref);
+                    ret.Add(temp_tagref);
+                }
+                //then we add the extended_meta dependencies
+                List<int> key_list = list_extended.Keys.ToList<int>();
+                foreach (int temp_key in key_list)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    ret.AddRange(temp_meta.Get_all_tag_refs());
+                }
+                //listing the WCtagRefs
+                //we can only do this when we are reading from a map
+                if (map_stream != null)
+                {
+                    //some meta reading prologue
+                    int table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
+                    int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;
+
+                    foreach (int temp_off in ref_WCtags)
+                    {
+                        int temp_datum = DATA_READ.ReadINT_LE(temp_off, data);//we read it from meta data
+                        string type = DATA_READ.ReadTAG_TYPE(table_start + (0xFFFF & temp_datum) * 0x10, map_stream);//we read this from map stream
+
+                        tagRef temp_WCtagref = new tagRef();
+                        temp_WCtagref.datum_index = temp_datum;
+                        temp_WCtagref.type = type;
+
+                        ret.Add(temp_WCtagref);
+                    }
                 }
             }
 
@@ -673,15 +732,63 @@ namespace DATA_STRUCTURES
                 }
             }
             //then we look for data_refs and add them
+            //but they have some issue,some dataref refers data outside of the tag
+            //so we have to be a bit carefull
             temp = fields.Get_data_ref_list();
             foreach(int i in temp)
             {
                 int Toff = off + i;
-                //we add this off to the list if it doesnt contain the off already
-                if (!ref_data.Contains(Toff))
+
+                int length = DATA_READ.ReadINT_LE(Toff, data);
+                int field_memaddr = DATA_READ.ReadINT_LE(Toff + 4, data);
+
+                int field_off = field_memaddr - mem_off;//its the offset of the field from the starting of the meta data
+
+                if(length!=0)
                 {
-                    ref_data.Add(Toff);
+                    //now we check whether its inside meta or a case of extended meta
+                    if ((field_memaddr >= mem_off) && (field_off < size))
+                    {
+                        //inside meta
+                        //we add this off to the list if it doesnt contain the off already
+                        if (!ref_data.Contains(Toff))
+                        {
+                            ref_data.Add(Toff);
+                        }
+
+                    }
+                    else
+                    {
+                        //Here i am using the same method used in the case extended reflexive fields.
+
+                        //extended meta(IN SUCCESSFULL RUN ,EXTENDED META ONLY APPEARS ONLY WHEN WE READ FROM A MAP)
+
+                        //but first we check whether we are reading meta from a map,or an exracted file,its rather easy
+                        if (list_extended != null)
+                        {
+                            //we add this off to the list if it doesnt contain the off already
+                            if (!ref_extended.ContainsKey(Toff))
+                            {
+                                ref_extended.Add(Toff, field_memaddr);
+                                //now we create and add extended_meta to the list if it isnt already there
+                                if (!list_extended.ContainsKey(field_memaddr))
+                                {
+                                    extended_meta temp_extend = new extended_meta(field_memaddr, length, 1, null, map_stream);
+                                    list_extended.Add(field_memaddr, temp_extend);
+                                }
+                                //we dont need to look into them as extended meta does it for us
+                            }
+                        }
+                        else
+                        {
+                            //the program will only reach here when u try to use an extended meta on meta file.
+                            //any meta which i extract from a map file have all issues of extended_meta fixed.
+                            throw new Exception("Meta file " + path + "." + type + " is broken.\nEither debug the extraction proceedure or fix the meta file");
+                        }
+                    }
+
                 }
+
             }
             //then we look for stringId refs and add them
             temp = fields.Get_stringID_ref_list();
@@ -972,9 +1079,9 @@ namespace DATA_STRUCTURES
         /// </summary>
         /// <param name="tag_list"></param>
         /// <returns>return a log about different encounters</returns>
-        public string Update_datum_indexes(List<injectRefs> tag_list)
+        public string Update_datum_indexes(List<injectRefs> tag_list, List<UnisonRefs> type_ref_list)
         {
-            string log = "\nUPDATE DATUM : "+path;
+            string log = "\nUPDATE DATUM : " + path;
 
             //we loop through each offset
 
@@ -983,14 +1090,14 @@ namespace DATA_STRUCTURES
             {
                 int temp_old_datum = DATA_READ.ReadINT_LE(temp_off + 4, data);
                 //next we loop through each list
-                bool sucess=false;
+                bool sucess = false;
 
-                foreach(injectRefs temp_ref in tag_list)
+                foreach (injectRefs temp_ref in tag_list)
                 {
                     int old_datum = temp_ref.old_datum;
                     int new_datum = temp_ref.new_datum;
 
-                    if(old_datum==temp_old_datum)
+                    if (old_datum == temp_old_datum)
                     {
                         //we found a match
                         if (!sucess)
@@ -1003,7 +1110,23 @@ namespace DATA_STRUCTURES
                     }
                 }
                 if (!sucess)
-                    log += "\nCouldnot find reference to " + temp_old_datum.ToString("X");
+                {
+                    //next we try to link the tags by using tag type
+                    string type = DATA_READ.ReadTAG_TYPE(temp_off, data);
+
+                    foreach(UnisonRefs temp_uni in type_ref_list)
+                    {
+                        if (type == temp_uni.type && temp_old_datum != -1)
+                        {
+                            sucess = true;
+                            DATA_READ.WriteINT_LE(temp_uni.new_datum, temp_off + 4, data);
+                            log += "\nUnison reference " + temp_uni.type + " " + temp_old_datum.ToString("X") + " to " + temp_uni.new_datum.ToString("X");
+                        }
+                    }
+                    if (!sucess)
+                        log += "\nCouldnot find reference to " + temp_old_datum.ToString("X");
+                }
+                
             }
             //Updating WCtagRefs
             foreach (int temp_off in ref_WCtags)
@@ -1029,11 +1152,59 @@ namespace DATA_STRUCTURES
                     }
                 }
                 if (!sucess)
+                {
+                    //Unfortunately WCtagRefs dont contain the type of tag to which they refer
+
                     log += "\nCouldnot find reference to " + temp_old_datum.ToString("X");
+                }
             }
 
             return log;
 
+        }
+        /// <summary>
+        /// A function that updates the StringIDS of the tag to match with the newer map
+        /// </summary>
+        /// <param name="SID_list"></param>
+        /// <returns>return info on various encounters</returns>
+        public string Update_StringID(List<StringIDRef> SID_list)
+        {
+            string log = "\nUPDATE StringID : " + path;
+
+            foreach(int temp_off in ref_stringID)
+            {
+
+                int temp_old_SID = DATA_READ.ReadINT_LE(temp_off, data);
+
+                if (temp_old_SID != 0)
+                {
+                    foreach (StringIDRef temp_SID_ref in SID_list)
+                    {
+                        int old_SID = temp_SID_ref.old_SID;
+                        int new_SID = temp_SID_ref.new_SID;
+
+                        if (temp_old_SID == old_SID)
+                        {
+                            if (new_SID != -1)
+                            {
+                                DATA_READ.WriteINT_LE(new_SID, temp_off, data);
+                                log += "\nSuccesfully refered " + temp_old_SID.ToString("X") + " to " + new_SID.ToString("X") + " : " + temp_SID_ref.STRING;
+                                break;
+                            }
+                            else
+                            {
+                                log += "\nCouldnt refer " + temp_old_SID.ToString("X") + " : " + temp_SID_ref.STRING;
+                                break;
+                            }
+                        }
+
+                    }
+                }
+
+
+            }
+
+            return log;
         }
     }
 }
