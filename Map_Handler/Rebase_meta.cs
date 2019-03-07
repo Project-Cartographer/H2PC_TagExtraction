@@ -85,18 +85,20 @@ namespace Map_Handler
 
         private void button1_Click(object sender, EventArgs e)
         {
+            _generate_cache();
+            this.Close();
+        }
+        private void _generate_cache()
+        {
             string log = "\nCOMPILATION : ";
-
-            //the File where we are gonna compile our stuff
-            StreamWriter sw = new StreamWriter(directory + "\\tags.meta");
-            //the Tables data
-            StreamWriter sw_t = new StreamWriter(directory + "\\tables.meta");
-            //creating a table
-            byte[] tables = new byte[0x10 * compile_list.Count];
-            //index of custom metas
-            int custom_table_index = 0;
-
             int new_base = Int32.Parse(textBox1.Text.Substring(2), NumberStyles.HexNumber);//the offset from the map_mem_base 0x1511020(lockout)
+            int meta_size = 0x0;
+            int tag_index = 0x0;
+
+            //maintain an array of meta
+            Queue<byte[]> meta_list = new Queue<byte[]>();
+            Queue<long> size_list = new Queue<long>();
+            byte[] tables = new byte[0x10 * compile_list.Count];
 
             foreach (injectRefs temp_ref in compile_list)
             {
@@ -116,49 +118,69 @@ namespace Map_Handler
                     sr.BaseStream.Read(meta, 0, (int)size);
                     sr.Dispose();
 
+                    //rebase the meta
                     meta obj = new meta(meta, temp_ref.type, (int)size, temp_ref.file_name);
                     log += obj.Update_datum_indexes(compile_list, type_ref_list);
-                    obj.Rebase_meta(new_base);
+                    obj.Rebase_meta(new_base + meta_size);
 
-
-                    //write it to the file
-                    sw.BaseStream.Write(meta, 0, (int)size);
-
-                    DATA_READ.WriteTAG_TYPE_LE(temp_ref.type, custom_table_index * 0x10, tables);
-                    DATA_READ.WriteINT_LE(temp_ref.new_datum, custom_table_index * 0x10 + 4, tables);
-                    DATA_READ.WriteINT_LE(new_base, custom_table_index * 0x10 + 8, tables);
-                    DATA_READ.WriteINT_LE((int)size, custom_table_index * 0x10 + 0xC, tables);
+                    meta_list.Enqueue(meta);//add to the meta list
+                    size_list.Enqueue(size);//add to the size_list
+              
+                    //tag_table_stuff
+                    DATA_READ.WriteTAG_TYPE_LE(temp_ref.type, tag_index * 0x10, tables);
+                    DATA_READ.WriteINT_LE(temp_ref.new_datum, tag_index * 0x10 + 4, tables);
+                    DATA_READ.WriteINT_LE(new_base + meta_size, tag_index * 0x10 + 8, tables);
+                    DATA_READ.WriteINT_LE((int)size, tag_index * 0x10 + 0xC, tables);
 
                     log += "\n Written tag " + temp_ref.file_name + " with new datum as " + temp_ref.new_datum.ToString("X");
 
                     //increase the tag_offset
-                    new_base += (int)size;
-
+                    meta_size += (int)size;
+                    //increase the tag_count                    
                 }
                 else log += "\nFile doesnt exists : " + temp_ref.file_name;
-                custom_table_index++;
-            }
+                tag_index++;
+            }            
+            StreamWriter sw = new StreamWriter(directory + "\\tags.cache");
+            byte[] temp = new byte[0x4];
+            byte[] lol = { 0 };
+
+            sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_table"), 0, "tag_table".Length);
+            sw.BaseStream.Write(lol, 0, 1);
+            DATA_READ.WriteINT_LE(0x34, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+            DATA_READ.WriteINT_LE(0x10 * compile_list.Count, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+            sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_data"), 0, "tag_data".Length);
+            sw.BaseStream.Write(lol, 0, 1);
+            DATA_READ.WriteINT_LE(0x34 + 0x10 * compile_list.Count, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+            DATA_READ.WriteINT_LE(meta_size, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+            sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_maps"), 0, "tag_maps".Length);
+            sw.BaseStream.Write(lol, 0, 1);
+            DATA_READ.WriteINT_LE(0x34 + 0x10 * compile_list.Count + meta_size, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+            DATA_READ.WriteINT_LE(tag_scenarios[0].Length + 1, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+
+            sw.BaseStream.Write(tables, 0, 0x10 * compile_list.Count);
+            while (meta_list.Count != 0)
+                sw.BaseStream.Write(meta_list.Dequeue(), 0x0, (int)size_list.Dequeue());
+
+            sw.BaseStream.Write(Encoding.ASCII.GetBytes(tag_scenarios[0]), 0, tag_scenarios[0].Length);
+            sw.BaseStream.Write(lol, 0, 1);
+
+            sw.Dispose();
+
             //atleast mention the universally acclaimed tag
             log += "\ntype referenced tags are :";
             foreach (UnisonRefs uni_temp in type_ref_list)
                 log += "\nReffered " + uni_temp.type + " to " + uni_temp.new_datum.ToString("X") + " file : " + uni_temp.file_name;
 
-            sw_t.BaseStream.Write(tables, 0, 0x10 * compile_list.Count());
-            //add the scenarios to which the tags are linked
-            foreach (string st in tag_scenarios)
-            {
-                byte[] lol = {0};
-                sw.BaseStream.Write(Encoding.ASCII.GetBytes(st), 0, st.Length);
-                sw.BaseStream.Write(lol, 0, 1);
-            }
-
-            sw.Dispose();
-            sw_t.Dispose();
-
             //lets launch the log box
             LogBox lb = new LogBox(log);
             lb.Show();
-            this.Close();
         }
     }
 }

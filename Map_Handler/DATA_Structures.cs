@@ -63,7 +63,6 @@ namespace DATA_STRUCTURES
         public string type;
         public int new_datum;
         public string file_name;
-
     };
     /// <summary>
     /// A class representing the structure halo2 plugins
@@ -302,6 +301,7 @@ namespace DATA_STRUCTURES
                 }
             }
             //then we look for data_refs and add them
+            /*
             temp = fields.Get_data_ref_list();
             foreach (int i in temp)
             {
@@ -311,6 +311,58 @@ namespace DATA_STRUCTURES
                 {
                     ref_data.Add(Toff);
                 }
+            }
+            */
+            //***      THIS LOGIC CHANGE HAS'NT MADE INTO CODEZ OR MAP_HANDLER_
+            temp = fields.Get_data_ref_list();
+            foreach (int i in temp)
+            {
+                int Toff = off + i;
+
+                int length = DATA_READ.ReadINT_LE(Toff, data);
+                int field_memaddr = DATA_READ.ReadINT_LE(Toff + 4, data);
+
+                int field_off = field_memaddr - mem_off;//its the offset of the field from the starting of the meta data
+
+                if (length != 0)
+                {
+                    //now we check whether its inside meta or a case of extended meta
+                    if ((field_memaddr >= mem_off) && (field_off < size))
+                    {
+                        //inside meta
+                        //we add this off to the list if it doesnt contain the off already
+                        if (!ref_data.Contains(Toff))
+                        {
+                            ref_data.Add(Toff);
+                        }
+
+                    }
+                    else
+                    {
+                        //Here i am using the same method used in the case extended reflexive fields.
+
+                        //extended meta(IN SUCCESSFULL RUN ,EXTENDED META ONLY APPEARS ONLY WHEN WE READ FROM A MAP)
+
+                        //but first we check whether we are reading meta from a map,or an exracted file,its rather easy
+                        if (list_extended != null)
+                        {
+                            //we add this off to the list if it doesnt contain the off already
+                            if (!ref_extended.ContainsKey(Toff))
+                            {
+                                ref_extended.Add(Toff, field_memaddr);
+                                //now we create and add extended_meta to the list if it isnt already there
+                                if (!list_extended.ContainsKey(field_memaddr))
+                                {
+                                    extended_meta temp_extend = new extended_meta(field_memaddr, length, 1, null, map_stream);
+                                    list_extended.Add(field_memaddr, temp_extend);
+                                }
+                                //we dont need to look into them as extended meta does it for us
+                            }
+                        }                        
+                    }
+
+                }
+
             }
             //then we look for stringId refs and add them
             temp = fields.Get_stringID_ref_list();
@@ -585,6 +637,7 @@ namespace DATA_STRUCTURES
         byte[] data;
         StreamReader map_stream;
         plugins_field plugin;
+       
 
         List<int> ref_reflexive;// a list containing the offset to the location where the reflexive fields are refered in the meta
         List<int> ref_tags;//a list containing the offsets to the locations where other tags (datum_indexes) are refered in the meta
