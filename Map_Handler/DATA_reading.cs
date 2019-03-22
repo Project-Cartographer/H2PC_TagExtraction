@@ -123,7 +123,7 @@ class DATA_READ
         return C;
     }
     /// <summary>
-    /// reads a 4 byte little endian tag type from the meta data,starting from a speccified position
+    /// reads a 4 byte little endian tag type from the meta data,starting from a specified position
     /// </summary>
     /// <param name="position"></param>
     /// <param name="meta"></param>

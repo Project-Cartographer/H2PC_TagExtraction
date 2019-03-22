@@ -34,14 +34,13 @@ C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handl
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\Map_Handler.exe
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\Map_Handler.pdb
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\BlamLib.dll
-C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\BlamLib.Forms.dll
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\BlamLib.Test.dll
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\Microsoft.VisualStudio.QualityTools.UnitTestFramework.dll
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\SlimDX.dll
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\LowLevel.dll
-C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\BlamLib.Forms.pdb
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\BlamLib.Test.pdb
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\BlamLib.pdb
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\SlimDX.pdb
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\SlimDX.xml
 C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\bin\x86\Debug\LowLevel.pdb
+C:\Users\Kids\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\obj\x86\Debug\Map_Handler.TagExtractor.resources
