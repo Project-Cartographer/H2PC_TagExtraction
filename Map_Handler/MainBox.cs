@@ -35,7 +35,7 @@ namespace Map_Handler
         int scnr_memaddr;
         int scnr_off;
         public static string map_name="";//name of the map along woth destination
-
+        public static string map_path= "";//path of the mapfile above, where we look for shared/ui etc.
         List<int> datum_list = new List<int>();
 
         public static BlamLib.Test.Halo2 H2Test = new BlamLib.Test.Halo2(); //Blam Lib Tests project
@@ -84,7 +84,8 @@ namespace Map_Handler
                 scnr_memaddr = DATA_READ.ReadINT_LE(table_start + 0x8, map_stream);//scnr tag index is 0x0
 
                 map_name =map_file.FileName;
-                
+                map_path = Path.GetDirectoryName(map_name);
+                textBox1.Text = "Map Loaded -  " + map_name;
                 initialize_treeview();
                 map_loaded = true;
                 TagToolStripMenu.Visible = true;
@@ -100,8 +101,8 @@ namespace Map_Handler
         void initialize_treeview()
         {
             treeView1.Nodes.Clear();
-            
 
+            int tag_count = 0;
             int path_start = 0;
 
             for (int i = 0; ; i++)
@@ -110,7 +111,7 @@ namespace Map_Handler
 
                 if (tag_table_REF > table_size + table_start)
                     break;
-                                
+                               
                 string type = DATA_READ.ReadTAG_TYPE(tag_table_REF, map_stream);
                 int datum_index = DATA_READ.ReadINT_LE(tag_table_REF + 4, map_stream);
                 string path = DATA_READ.ReadSTRING(file_table_offset + path_start, map_stream);
@@ -143,9 +144,10 @@ namespace Map_Handler
                     path_start += path.Length + 1;
                 }
 
-
+                tag_count = i;
             }
 
+            textBox2.Text = tag_count.ToString() + " Tags Loaded";
 
         }
 
@@ -311,6 +313,8 @@ namespace Map_Handler
         {
             CloseMap();
             treeView1.Nodes.Clear();
+            textBox1.Text = "";
+            textBox2.Text = "";
 
             TagToolStripMenu.Visible = false;
             metaToolStripMenuItem.Visible = false;
@@ -433,6 +437,39 @@ namespace Map_Handler
                 Resync_SID RSID = new Resync_SID(ofd.FileName);
             }
 
+        }
+
+     
+
+        private void menuStrip1_ItemClicked(object sender, ToolStripItemClickedEventArgs e)
+        {
+
+        }
+
+        private void MainBox_Load(object sender, EventArgs e)
+        {
+        
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            this.openMapToolStripMenuItem_Click(sender, e);
+            
+        }
+
+        private void button4_Click(object sender, EventArgs e)
+        {
+            this.closeMapToolStripMenuItem_Click(sender, e);
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            this.extractTagToolStripMenuItem_Click(sender, e);
+        }
+
+        private void button3_Click(object sender, EventArgs e)
+        {
+            this.decompileMapToolStripMenuItem_Click(sender, e);
         }
     }
 }

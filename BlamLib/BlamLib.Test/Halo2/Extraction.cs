@@ -3,8 +3,10 @@
 
 	See license\BlamLib\BlamLib for specific license information
 */
+
 ﻿using System;
 using System.IO;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -187,7 +189,7 @@ namespace BlamLib.Test
                 ti.ExtractionInitialize();
                 Assert.IsNotNull(ti.kVertexBuffers);
                 {
-                    string test_results_tags_path = Path.Combine(args.ExtractDirectory ,EngineGetTestResultsPath(args.Game) , @"tags");
+                    string test_results_tags_path = Path.Combine(args.ExtractDirectory);
 
                     // extract with dependents, database and overwrite existing tag files
                     var ex_args = new Blam.CacheExtractionArguments(test_results_tags_path,
@@ -243,10 +245,28 @@ namespace BlamLib.Test
 
 			Console.WriteLine("Halo2TestCacheExtractionPc: Overall time: {0}", StopStopwatch());
 		}
-        public void Halo2_ExtractTagCache(Blam.DatumIndex DatumIndex,bool Recursive, bool OutputDB, bool Override,string DestinationPath,params string[] map_names)
+        public void Halo2_ExtractTagCache(Blam.DatumIndex DatumIndex,bool Recursive, bool OutputDB, bool Override,string DestinationPath, string MapPath, params string[] map_names)
         {
             BlamVersion game = BlamVersion.Halo2_PC;
+
             
+            
+            
+            
+          //  MessageBox.Show("Please select your Maps Folder","Loading");
+          // FolderBrowserDialog mpd = new FolderBrowserDialog();
+          //  mpd.Description = "Select Halo 2 Maps Folder" ;
+          //  mpd.ShowNewFolderButton = true;
+
+          //  if (mpd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+          //  {
+          //      kMapsDirectoryPc = mpd.SelectedPath;
+
+          //  }
+
+            kMapsDirectoryPc = MapPath;
+            
+
             Program.Halo2.LoadPc(
                 kMapsDirectoryPc + @"mainmenu.map",
                 kMapsDirectoryPc + @"shared.map",

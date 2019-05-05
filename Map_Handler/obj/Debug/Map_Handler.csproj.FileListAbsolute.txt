@@ -28,3 +28,19 @@ C:\Users\asus\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handl
 C:\Users\asus\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\obj\Debug\Map_Handler.csprojAssemblyReference.cache
 C:\Users\asus\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\obj\Debug\Map_Handler.csproj.CoreCompileInputs.cache
 C:\Users\asus\Documents\Visual Studio 2015\Projects\H2PC_TagExtraction\Map_Handler\obj\Debug\Map_Handler.csproj.CopyComplete
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.csprojAssemblyReference.cache
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.MainBox.resources
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.MetaExtractor.resources
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.LogBox.resources
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.Properties.Resources.resources
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.Rebase_meta.resources
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.Resyncer_Dialog_Box.resources
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.TagExtractor.resources
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.csproj.GenerateResource.cache
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.csproj.CoreCompileInputs.cache
+D:\H2V\Tools\TagExtractor\bin\Debug\Map_Handler.exe.config
+D:\H2V\Tools\TagExtractor\bin\Debug\Map_Handler.exe
+D:\H2V\Tools\TagExtractor\bin\Debug\Map_Handler.pdb
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.csproj.CopyComplete
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.exe
+D:\H2V\Tools\TagExtractor\Map_Handler\obj\Debug\Map_Handler.pdb

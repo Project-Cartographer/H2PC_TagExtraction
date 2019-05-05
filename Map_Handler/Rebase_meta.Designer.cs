@@ -64,10 +64,12 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(354, 68);
+            this.ClientSize = new System.Drawing.Size(344, 68);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.label1);
+            this.MaximumSize = new System.Drawing.Size(9999, 106);
+            this.MinimumSize = new System.Drawing.Size(360, 106);
             this.Name = "Rebase_meta";
             this.Text = "Rebase_meta";
             this.ResumeLayout(false);

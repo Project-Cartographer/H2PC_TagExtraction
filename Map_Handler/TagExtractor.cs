@@ -13,6 +13,7 @@ namespace Map_Handler
 {
     public partial class TagExtractor : Form
     {
+        static string MapsFolder = "";
         static string DestinationFolder = "";
         static bool isRecursive ;
         static bool isOverrideOn ;
@@ -89,7 +90,8 @@ namespace Map_Handler
                 isOutDBOn = output_db_.Checked;
 
                 DestinationFolder = textBox1.Text;
-
+                MapsFolder = MainBox.map_path;
+                
                 string mapName = DATA_READ.Read_File_from_file_location(MainBox.map_name);
                 int TotalTags = TagsList.Count;
                 curent_tag_status.Visible = true;
@@ -102,9 +104,18 @@ namespace Map_Handler
                     return;
                 }
 
+                   if (MapsFolder == "")
+                {
+
+                    curent_tag_status.Text = "Select a Maps Folder Please";
+                    return;
+                }
+
+
 
                 curent_tag_status.Text = "Initializing Decompiler";
 
+                
                 MainBox.CloseMap();
                 progressBar1.Value = 0;
                 progressBar1.Maximum = TotalTags;
@@ -113,7 +124,7 @@ namespace Map_Handler
                 {
                     tag_count_stats.Text = "[" + index + "/" + TotalTags +"]";
                     curent_tag_status.Text = "Extracting Objects : " + TagsList.Values.ElementAt(index);
-                    MainBox.H2Test.Halo2_ExtractTagCache(i, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, mapName);
+                    MainBox.H2Test.Halo2_ExtractTagCache(i, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, MapsFolder, mapName);
                     progressBar1.Value++; //update the progress bar
                     index++;
                 }
@@ -130,6 +141,7 @@ namespace Map_Handler
                 isOutDBOn = output_db_.Checked;
 
                 DestinationFolder = textBox1.Text;
+                MapsFolder = MainBox.map_path;
 
                 string mapName = DATA_READ.Read_File_from_file_location(MainBox.map_name);
                 
@@ -140,6 +152,13 @@ namespace Map_Handler
                 {
 
                     curent_tag_status.Text = "Select a Destination Folder Please";
+                    return;
+                }
+
+                 if (MapsFolder == "")
+                {
+
+                    curent_tag_status.Text = "Select a Maps Folder Please";
                     return;
                 }
 
@@ -156,7 +175,7 @@ namespace Map_Handler
                 {
                     tag_count_stats.Text = "[" + index++ + "/" + TotalTags + "]";
                     curent_tag_status.Text = "Extracting Objects : " + TagsList.Values.ElementAt(index);
-                    MainBox.H2Test.Halo2_ExtractTagCache(i, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, mapName);
+                    MainBox.H2Test.Halo2_ExtractTagCache(i, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, MapsFolder, mapName);
                     progressBar1.Value++; //update the progress bar
                     
                 }
@@ -167,8 +186,38 @@ namespace Map_Handler
                 }
 
             }
-                            
 
+
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+
+
+            
+
+        }
+
+        private void TagExtractor_Load(object sender, EventArgs e)
+        {
+            
+        }
+
+      
+
+        private void richTextBox1_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox2_TextChanged(object sender, EventArgs e)
+        {
+
+        }
+
+        private void textBox1_TextChanged(object sender, EventArgs e)
+        {
+            
         }
 
 

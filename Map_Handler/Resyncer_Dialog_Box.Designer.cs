@@ -34,13 +34,15 @@
             // 
             // comboBox1
             // 
+            this.comboBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
             this.comboBox1.Location = new System.Drawing.Point(12, 29);
             this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(121, 21);
+            this.comboBox1.Size = new System.Drawing.Size(142, 21);
             this.comboBox1.TabIndex = 0;
             // 
             // button1
             // 
+            this.button1.Anchor = System.Windows.Forms.AnchorStyles.Right;
             this.button1.Location = new System.Drawing.Point(160, 29);
             this.button1.Name = "button1";
             this.button1.Size = new System.Drawing.Size(95, 23);
@@ -49,14 +51,16 @@
             this.button1.UseVisualStyleBackColor = true;
             this.button1.Click += new System.EventHandler(this.button1_Click);
             // 
-            // Resyncer_Dialogue_Box
+            // Resyncer_Dialog_Box
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(284, 78);
+            this.ClientSize = new System.Drawing.Size(264, 78);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.comboBox1);
-            this.Name = "Resyncer_Dialogue_Box";
+            this.MaximumSize = new System.Drawing.Size(9999, 116);
+            this.MinimumSize = new System.Drawing.Size(280, 116);
+            this.Name = "Resyncer_Dialog_Box";
             this.Text = "Resyncer_Dialogue_Box";
             this.ResumeLayout(false);
 

@@ -56,6 +56,7 @@
             // 
             // button2
             // 
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.button2.Location = new System.Drawing.Point(313, 16);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(96, 27);
@@ -69,20 +70,24 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(23, 22);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(60, 13);
+            this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 11;
-            this.label2.Text = "Destination";
+            this.label2.Text = "Extract Path";
             // 
             // textBox1
             // 
+            this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox1.HideSelection = false;
             this.textBox1.Location = new System.Drawing.Point(89, 19);
             this.textBox1.Name = "textBox1";
-            this.textBox1.ReadOnly = true;
             this.textBox1.Size = new System.Drawing.Size(218, 20);
             this.textBox1.TabIndex = 10;
+            this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // extract_button
             // 
+            this.extract_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.extract_button.Location = new System.Drawing.Point(308, 79);
             this.extract_button.Name = "extract_button";
             this.extract_button.Size = new System.Drawing.Size(144, 40);
@@ -93,11 +98,15 @@
             // 
             // richTextBox1
             // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.richTextBox1.Location = new System.Drawing.Point(12, 151);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(440, 96);
+            this.richTextBox1.Size = new System.Drawing.Size(440, 144);
             this.richTextBox1.TabIndex = 15;
             this.richTextBox1.Text = "";
+            this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
             // 
             // label1
             // 
@@ -110,20 +119,24 @@
             // 
             // progressBar1
             // 
-            this.progressBar1.Location = new System.Drawing.Point(12, 253);
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(12, 301);
             this.progressBar1.Name = "progressBar1";
             this.progressBar1.Size = new System.Drawing.Size(440, 32);
             this.progressBar1.TabIndex = 17;
             // 
             // curent_tag_status
             // 
+            this.curent_tag_status.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.curent_tag_status.AutoSize = true;
-            this.curent_tag_status.BackColor = System.Drawing.SystemColors.ButtonShadow;
-            this.curent_tag_status.Location = new System.Drawing.Point(22, 266);
+            this.curent_tag_status.BackColor = System.Drawing.Color.Transparent;
+            this.curent_tag_status.Location = new System.Drawing.Point(10, 338);
             this.curent_tag_status.Name = "curent_tag_status";
-            this.curent_tag_status.Size = new System.Drawing.Size(37, 13);
+            this.curent_tag_status.Size = new System.Drawing.Size(48, 13);
             this.curent_tag_status.TabIndex = 18;
-            this.curent_tag_status.Text = "Status";
+            this.curent_tag_status.Text = "Progress";
             this.curent_tag_status.Visible = false;
             // 
             // groupBox1
@@ -162,7 +175,7 @@
             // tag_count_stats
             // 
             this.tag_count_stats.AutoSize = true;
-            this.tag_count_stats.BackColor = System.Drawing.SystemColors.ButtonShadow;
+            this.tag_count_stats.BackColor = System.Drawing.Color.Transparent;
             this.tag_count_stats.Location = new System.Drawing.Point(103, 135);
             this.tag_count_stats.Name = "tag_count_stats";
             this.tag_count_stats.Size = new System.Drawing.Size(37, 13);
@@ -174,8 +187,8 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.BackColor = System.Drawing.Color.IndianRed;
-            this.ClientSize = new System.Drawing.Size(464, 288);
+            this.BackColor = System.Drawing.SystemColors.Menu;
+            this.ClientSize = new System.Drawing.Size(464, 352);
             this.Controls.Add(this.tag_count_stats);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.curent_tag_status);
@@ -186,10 +199,12 @@
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.extract_button);
-            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedDialog;
             this.MaximizeBox = false;
+            this.MinimumSize = new System.Drawing.Size(480, 390);
             this.Name = "TagExtractor";
+            this.SizeGripStyle = System.Windows.Forms.SizeGripStyle.Show;
             this.Text = "Tag Extractor";
+            this.Load += new System.EventHandler(this.TagExtractor_Load);
             this.groupBox1.ResumeLayout(false);
             this.groupBox1.PerformLayout();
             this.ResumeLayout(false);

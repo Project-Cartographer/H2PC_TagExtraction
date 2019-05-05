@@ -21,6 +21,14 @@ https://bitbucket.org/KornnerStudios/opensauce-release/wiki/Home
 * __Get the Requirements__
 * __Hit Clone and Start Building__
 
+
+## ChangeLog ##
+### V2.01 ###
+Features:
+* __Changed default map_directory to currently loaded map path.
+* __Changed UI colors, content anchors and reshaped some elements.
+* __Changed default extraction directory to no longer append (Halo2\PC\tags) to the extracted tag path
+
 ## ChangeLog ##
 ### V2.0 ###
 Features::
