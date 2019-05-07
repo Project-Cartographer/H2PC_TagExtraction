@@ -24,12 +24,16 @@ namespace Map_Handler
 
     public partial class MainBox : Form
     {
-        #region EXTRACTION_RELATED_VARS                
+        #region EXTRACTION_RELATED_VARS 
+       
+
+        Dictionary<int, string> Extractlist = new Dictionary<int, string>(); //Dictionary
         static StreamReader map_stream;//stream reader
         int table_off;//offset of the table
         int table_start;//start of the Actual Tables
         int table_size;//size of the table
         int file_table_offset;//file table offset from where the strings begin
+        
 
         static bool map_loaded = false;//is the map loaded
         int scnr_memaddr;
@@ -128,11 +132,12 @@ namespace Map_Handler
 
                     if (treeView1.Nodes.IndexOfKey(type) == -1)
                     {
-                        treeView1.Nodes.Add(type, type);
+                        treeView1.Nodes.Add(type, "- "+type);
                     }
                     int index = treeView1.Nodes.IndexOfKey(type);
+                    
                     //HEX Values contains ABCDEF
-                    treeView1.Nodes[index].Nodes.Add(tag_table_REF.ToString(), path);
+                    treeView1.Nodes[index].Nodes.Add(tag_table_REF.ToString(), "- "+path);
 
                     //add this stuff to the SID list
                     SID_list.Add(datum_index, path);
@@ -146,7 +151,7 @@ namespace Map_Handler
 
                 tag_count = i;
             }
-
+            treeView1.Sort();
             textBox2.Text = tag_count.ToString() + " Tags Loaded";
 
         }
@@ -244,44 +249,53 @@ namespace Map_Handler
             }
 
         }
+
+
+
+        public void CheckedTags(TreeNodeCollection nodes)
+        {
+            foreach (System.Windows.Forms.TreeNode tagitem in nodes)
+            {
+                //edit
+                if (tagitem.Checked)
+                {
+                    if (tagitem.Level != 0)
+                    {
+                        int tag_table_ref = Int32.Parse(tagitem.Name);
+                        int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4, map_stream);
+                        if (!Extractlist.ContainsKey(datum_index))
+                            Extractlist.Add(datum_index, tagitem.Text);
+                        
+                    }
+                    else
+                        CheckedTags(tagitem.Nodes);
+                }
+                if (tagitem.Nodes.Count != 0)
+                    CheckedTags(tagitem.Nodes);
+            }
+        } 
+        
+
+
         private void extractTagToolStripMenuItem_Click(object sender, EventArgs e)
         {
             if(map_loaded)
             {
 
-                Dictionary<int, string> Extractlist = new Dictionary<int, string>();
-                if (treeView1.SelectedNode!=null)
-                {
-                    //Extraction for a single tag
-                    if (treeView1.SelectedNode.Name.CompareTo(treeView1.SelectedNode.Text) != 0)
-                    {
-                        
-                        int tag_table_ref = Int32.Parse(treeView1.SelectedNode.Name);
-                        int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4, map_stream);                    
-                        Extractlist.Add(datum_index, treeView1.SelectedNode.Text);
-                        
-                    }
-                    else
-                    {
-                        //Extraction for a whole same bunch of tags
-                        
-                        foreach (TreeNode tn in treeView1.SelectedNode.Nodes)
-                        {
-                            int tag_table_ref = Int32.Parse(tn.Name);
-                            int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4,map_stream);
-                            Extractlist.Add(datum_index, tn.Text);
-                        }
-                  
-                    }
-                    TagExtractor ob = new TagExtractor(Extractlist,false);
-                    ob.Show();                    
 
-                }
-                else
-                {
-                     MessageBox.Show("Select a Tag First!", "CRASHED!!", MessageBoxButtons.OK);                  
-                                          
-                }
+
+                Extractlist.Clear();
+
+                CheckedTags(treeView1.Nodes);
+
+                
+              
+      
+
+              TagExtractor ob = new TagExtractor(Extractlist,false);
+              ob.Show();                    
+
+              
 
             }
             else
@@ -471,5 +485,50 @@ namespace Map_Handler
         {
             this.decompileMapToolStripMenuItem_Click(sender, e);
         }
+
+
+
+
+
+      //Code from VB/C# example documents. "TreeView.AfterCheck Event"
+
+
+
+        private void CheckAllChildNodes(TreeNode treeNode, bool nodeChecked)
+        {
+            foreach (TreeNode node in treeNode.Nodes)
+            { 
+                node.Checked = !nodeChecked;
+                if (node.Nodes.Count > 0)
+                {
+                    // If the current node has child nodes, call the CheckAllChildsNodes method recursively.
+                    this.CheckAllChildNodes(node, nodeChecked);
+                }
+            }
+        }
+
+        private void treeView1_AfterCheck(object sender, TreeViewEventArgs e)
+        {
+           if (e.Action != TreeViewAction.Unknown)
+            {
+                if (e.Node.Nodes.Count > 0)
+                {
+                  
+                    this.CheckAllChildNodes(e.Node, !e.Node.Checked);
+                }
+            }
+        }
+
+        
+
+
+
+
+
+
+      
+        
+
+       
     }
 }

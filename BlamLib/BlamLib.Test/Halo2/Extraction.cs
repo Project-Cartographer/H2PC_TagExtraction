@@ -253,16 +253,7 @@ namespace BlamLib.Test
             
             
             
-          //  MessageBox.Show("Please select your Maps Folder","Loading");
-          // FolderBrowserDialog mpd = new FolderBrowserDialog();
-          //  mpd.Description = "Select Halo 2 Maps Folder" ;
-          //  mpd.ShowNewFolderButton = true;
-
-          //  if (mpd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-          //  {
-          //      kMapsDirectoryPc = mpd.SelectedPath;
-
-          //  }
+          
 
             kMapsDirectoryPc = MapPath;
             
