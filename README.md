@@ -28,10 +28,11 @@ Features:
 * __Changed default map_directory to currently loaded map path.
 * __Changed UI colors, content anchors and reshaped some elements.
 * __Changed default extraction directory to no longer append (Halo2\PC\tags) to the extracted tag path
+* __Added checkboxes to TreeView, allows user to select multiple/specific tags.
 
 ## ChangeLog ##
 ### V2.0 ###
-Features::
+Features:
 * __Added extended meta logic for dataRefs__
 * __Can Now successfully extract most tags and rebase them__
 * __Added Resyncer Dialog for Relinking and fixing specific tags,class Resyncer__
@@ -40,7 +41,7 @@ Features::
 * __DataStructures Updated(new classes tag_info,StringID_info)__
 
 ### V1.7 ###
-Features::
+Features:
 * __Updated BlamLib version(With Fixed Depencies)__
 * __Fixed the long awaited Last Character Bug__
 * __Improved UI Systems(Still need to be better)__
@@ -52,7 +53,7 @@ Features::
 * __Sound Extraction (!snd) Added__
 
 ### V1.0 ###
-Features::
+Features:
 * __Tag Extration__
 * __Meta Extraction and Rebasing__
 * __Simple Cache Viewer and UI__
