@@ -672,18 +672,7 @@ namespace Map_Handler
 
         }
 
-        private void button5_Click(object sender, EventArgs e)
-        {
-
-            FolderBrowserDialog fbd = new FolderBrowserDialog();
-            fbd.ShowNewFolderButton = true;
-
-            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
-            {
-                textBox3.Text = fbd.SelectedPath;
-
-            }
-        }
+      
 
         
        
