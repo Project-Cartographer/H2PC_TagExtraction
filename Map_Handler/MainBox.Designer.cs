@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(MainBox));
             this.menuStrip1 = new System.Windows.Forms.MenuStrip();
             this.fileToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.openMapToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -59,7 +60,30 @@
             this.button2 = new System.Windows.Forms.Button();
             this.button3 = new System.Windows.Forms.Button();
             this.button4 = new System.Windows.Forms.Button();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.output_db_ = new System.Windows.Forms.CheckBox();
+            this.override_tags_ = new System.Windows.Forms.CheckBox();
+            this.recursive_radio_ = new System.Windows.Forms.CheckBox();
+            this.current_tag_status = new System.Windows.Forms.Label();
+            this.progressBar1 = new System.Windows.Forms.ProgressBar();
+            this.label1 = new System.Windows.Forms.Label();
+            this.richTextBox1 = new System.Windows.Forms.RichTextBox();
+            this.button5 = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.textBox3 = new System.Windows.Forms.TextBox();
+            this.extract_button = new System.Windows.Forms.Button();
+            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.Version = new System.Windows.Forms.Label();
+            this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.label4 = new System.Windows.Forms.Label();
+            this.clear_button = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
+            this.groupBox1.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
+            this.splitContainer1.Panel1.SuspendLayout();
+            this.splitContainer1.Panel2.SuspendLayout();
+            this.splitContainer1.SuspendLayout();
             this.SuspendLayout();
             // 
             // menuStrip1
@@ -74,10 +98,9 @@
             this.settingsToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(442, 24);
+            this.menuStrip1.Size = new System.Drawing.Size(867, 24);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
-            this.menuStrip1.ItemClicked += new System.Windows.Forms.ToolStripItemClickedEventHandler(this.menuStrip1_ItemClicked);
             // 
             // fileToolStripMenuItem
             // 
@@ -189,15 +212,15 @@
             // extractTagToolStripMenuItem
             // 
             this.extractTagToolStripMenuItem.Name = "extractTagToolStripMenuItem";
-            this.extractTagToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.extractTagToolStripMenuItem.Text = "Extract Tag";
+            this.extractTagToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.extractTagToolStripMenuItem.Text = "Add Selected";
             this.extractTagToolStripMenuItem.Click += new System.EventHandler(this.extractTagToolStripMenuItem_Click);
             // 
             // decompileMapToolStripMenuItem
             // 
             this.decompileMapToolStripMenuItem.Name = "decompileMapToolStripMenuItem";
-            this.decompileMapToolStripMenuItem.Size = new System.Drawing.Size(158, 22);
-            this.decompileMapToolStripMenuItem.Text = "Decompile Map";
+            this.decompileMapToolStripMenuItem.Size = new System.Drawing.Size(143, 22);
+            this.decompileMapToolStripMenuItem.Text = "Add All Tags";
             this.decompileMapToolStripMenuItem.Click += new System.EventHandler(this.decompileMapToolStripMenuItem_Click);
             // 
             // metaToolStripMenuItem
@@ -269,9 +292,9 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.treeView1.CheckBoxes = true;
             this.treeView1.LabelEdit = true;
-            this.treeView1.Location = new System.Drawing.Point(12, 74);
+            this.treeView1.Location = new System.Drawing.Point(3, 3);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(418, 392);
+            this.treeView1.Size = new System.Drawing.Size(394, 602);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
             // 
@@ -279,29 +302,30 @@
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(12, 36);
+            this.textBox1.Location = new System.Drawing.Point(8, 8);
+            this.textBox1.Multiline = true;
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(303, 20);
+            this.textBox1.Size = new System.Drawing.Size(416, 24);
             this.textBox1.TabIndex = 2;
             this.textBox1.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // textBox2
             // 
             this.textBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox2.Location = new System.Drawing.Point(321, 36);
+            this.textBox2.Location = new System.Drawing.Point(311, 34);
+            this.textBox2.Multiline = true;
             this.textBox2.Name = "textBox2";
             this.textBox2.ReadOnly = true;
-            this.textBox2.Size = new System.Drawing.Size(109, 20);
+            this.textBox2.Size = new System.Drawing.Size(113, 24);
             this.textBox2.TabIndex = 3;
             this.textBox2.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
             // 
             // button1
             // 
-            this.button1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button1.Location = new System.Drawing.Point(12, 472);
+            this.button1.Location = new System.Drawing.Point(8, 34);
             this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.Size = new System.Drawing.Size(80, 25);
             this.button1.TabIndex = 4;
             this.button1.Text = "Load Map";
             this.button1.UseVisualStyleBackColor = true;
@@ -309,58 +333,283 @@
             // 
             // button2
             // 
-            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(321, 472);
+            this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button2.Location = new System.Drawing.Point(225, 60);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(109, 23);
+            this.button2.Size = new System.Drawing.Size(80, 25);
             this.button2.TabIndex = 5;
-            this.button2.Text = "Extract Selection";
+            this.button2.Text = "Add Selected";
             this.button2.UseVisualStyleBackColor = true;
             this.button2.Click += new System.EventHandler(this.button2_Click);
             // 
             // button3
             // 
-            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
-            this.button3.Location = new System.Drawing.Point(206, 472);
+            this.button3.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button3.Location = new System.Drawing.Point(225, 34);
             this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(109, 23);
+            this.button3.Size = new System.Drawing.Size(80, 25);
             this.button3.TabIndex = 6;
-            this.button3.Text = "Decompile Map";
+            this.button3.Text = "Add All Tags";
             this.button3.UseVisualStyleBackColor = true;
             this.button3.Click += new System.EventHandler(this.button3_Click);
             // 
             // button4
             // 
-            this.button4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
-            this.button4.Location = new System.Drawing.Point(93, 472);
+            this.button4.Location = new System.Drawing.Point(8, 60);
             this.button4.Name = "button4";
-            this.button4.Size = new System.Drawing.Size(75, 23);
+            this.button4.Size = new System.Drawing.Size(80, 25);
             this.button4.TabIndex = 7;
             this.button4.Text = "Close Map";
             this.button4.UseVisualStyleBackColor = true;
             this.button4.Click += new System.EventHandler(this.button4_Click);
+            // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.output_db_);
+            this.groupBox1.Controls.Add(this.override_tags_);
+            this.groupBox1.Controls.Add(this.recursive_radio_);
+            this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
+            this.groupBox1.Location = new System.Drawing.Point(8, 135);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(331, 62);
+            this.groupBox1.TabIndex = 28;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "Flags :";
+            // 
+            // output_db_
+            // 
+            this.output_db_.AutoSize = true;
+            this.output_db_.Location = new System.Drawing.Point(125, 19);
+            this.output_db_.Name = "output_db_";
+            this.output_db_.Size = new System.Drawing.Size(108, 17);
+            this.output_db_.TabIndex = 15;
+            this.output_db_.Text = "Output DataBase";
+            this.output_db_.UseVisualStyleBackColor = true;
+            // 
+            // override_tags_
+            // 
+            this.override_tags_.AutoSize = true;
+            this.override_tags_.Location = new System.Drawing.Point(21, 39);
+            this.override_tags_.Name = "override_tags_";
+            this.override_tags_.Size = new System.Drawing.Size(98, 17);
+            this.override_tags_.TabIndex = 14;
+            this.override_tags_.Text = "Overwrite Tags";
+            this.override_tags_.UseVisualStyleBackColor = true;
+            // 
+            // recursive_radio_
+            // 
+            this.recursive_radio_.AutoSize = true;
+            this.recursive_radio_.Location = new System.Drawing.Point(21, 19);
+            this.recursive_radio_.Name = "recursive_radio_";
+            this.recursive_radio_.Size = new System.Drawing.Size(74, 17);
+            this.recursive_radio_.TabIndex = 13;
+            this.recursive_radio_.Text = "Recursive";
+            this.recursive_radio_.UseVisualStyleBackColor = true;
+            // 
+            // current_tag_status
+            // 
+            this.current_tag_status.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.current_tag_status.AutoSize = true;
+            this.current_tag_status.BackColor = System.Drawing.Color.Transparent;
+            this.current_tag_status.Location = new System.Drawing.Point(8, 608);
+            this.current_tag_status.Name = "current_tag_status";
+            this.current_tag_status.Size = new System.Drawing.Size(48, 13);
+            this.current_tag_status.TabIndex = 27;
+            this.current_tag_status.Text = "Progress";
+            this.current_tag_status.Visible = false;
+            // 
+            // progressBar1
+            // 
+            this.progressBar1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.progressBar1.Location = new System.Drawing.Point(8, 573);
+            this.progressBar1.Name = "progressBar1";
+            this.progressBar1.Size = new System.Drawing.Size(416, 32);
+            this.progressBar1.TabIndex = 26;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(5, 211);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(79, 13);
+            this.label1.TabIndex = 25;
+            this.label1.Text = "Selected Tags:";
+            // 
+            // richTextBox1
+            // 
+            this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.richTextBox1.Location = new System.Drawing.Point(8, 227);
+            this.richTextBox1.Name = "richTextBox1";
+            this.richTextBox1.Size = new System.Drawing.Size(416, 340);
+            this.richTextBox1.TabIndex = 24;
+            this.richTextBox1.Text = "";
+            // 
+            // button5
+            // 
+            this.button5.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button5.Location = new System.Drawing.Point(389, 109);
+            this.button5.Name = "button5";
+            this.button5.Size = new System.Drawing.Size(35, 23);
+            this.button5.TabIndex = 23;
+            this.button5.Text = "...";
+            this.button5.UseVisualStyleBackColor = true;
+            this.button5.Click += new System.EventHandler(this.button5_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(5, 112);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 13);
+            this.label2.TabIndex = 22;
+            this.label2.Text = "Extract Path";
+            // 
+            // textBox3
+            // 
+            this.textBox3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox3.HideSelection = false;
+            this.textBox3.Location = new System.Drawing.Point(76, 109);
+            this.textBox3.Multiline = true;
+            this.textBox3.Name = "textBox3";
+            this.textBox3.Size = new System.Drawing.Size(307, 24);
+            this.textBox3.TabIndex = 21;
+            // 
+            // extract_button
+            // 
+            this.extract_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.extract_button.Enabled = false;
+            this.extract_button.Location = new System.Drawing.Point(345, 139);
+            this.extract_button.Name = "extract_button";
+            this.extract_button.Size = new System.Drawing.Size(79, 25);
+            this.extract_button.TabIndex = 20;
+            this.extract_button.Text = "Extract";
+            this.extract_button.UseVisualStyleBackColor = true;
+            this.extract_button.Click += new System.EventHandler(this.extract_button_Click);
+            // 
+            // textBox4
+            // 
+            this.textBox4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.textBox4.Location = new System.Drawing.Point(311, 61);
+            this.textBox4.Multiline = true;
+            this.textBox4.Name = "textBox4";
+            this.textBox4.ReadOnly = true;
+            this.textBox4.Size = new System.Drawing.Size(113, 24);
+            this.textBox4.TabIndex = 29;
+            this.textBox4.TextAlign = System.Windows.Forms.HorizontalAlignment.Center;
+            // 
+            // label3
+            // 
+            this.label3.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label3.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.label3.Location = new System.Drawing.Point(8, 97);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(416, 2);
+            this.label3.TabIndex = 30;
+            // 
+            // Version
+            // 
+            this.Version.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.Version.AutoSize = true;
+            this.Version.BackColor = System.Drawing.Color.Transparent;
+            this.Version.Location = new System.Drawing.Point(373, 608);
+            this.Version.Name = "Version";
+            this.Version.Size = new System.Drawing.Size(22, 13);
+            this.Version.TabIndex = 31;
+            this.Version.Text = "2.1";
+            this.Version.Visible = false;
+            // 
+            // splitContainer1
+            // 
+            this.splitContainer1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.splitContainer1.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
+            this.splitContainer1.Location = new System.Drawing.Point(12, 27);
+            this.splitContainer1.Name = "splitContainer1";
+            // 
+            // splitContainer1.Panel1
+            // 
+            this.splitContainer1.Panel1.Controls.Add(this.label4);
+            this.splitContainer1.Panel1.Controls.Add(this.clear_button);
+            this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.textBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.label3);
+            this.splitContainer1.Panel1.Controls.Add(this.textBox2);
+            this.splitContainer1.Panel1.Controls.Add(this.textBox4);
+            this.splitContainer1.Panel1.Controls.Add(this.button1);
+            this.splitContainer1.Panel1.Controls.Add(this.button2);
+            this.splitContainer1.Panel1.Controls.Add(this.current_tag_status);
+            this.splitContainer1.Panel1.Controls.Add(this.button3);
+            this.splitContainer1.Panel1.Controls.Add(this.progressBar1);
+            this.splitContainer1.Panel1.Controls.Add(this.button4);
+            this.splitContainer1.Panel1.Controls.Add(this.label1);
+            this.splitContainer1.Panel1.Controls.Add(this.extract_button);
+            this.splitContainer1.Panel1.Controls.Add(this.richTextBox1);
+            this.splitContainer1.Panel1.Controls.Add(this.textBox3);
+            this.splitContainer1.Panel1.Controls.Add(this.button5);
+            this.splitContainer1.Panel1.Controls.Add(this.label2);
+            this.splitContainer1.Panel1MinSize = 435;
+            // 
+            // splitContainer1.Panel2
+            // 
+            this.splitContainer1.Panel2.Controls.Add(this.treeView1);
+            this.splitContainer1.Panel2.Controls.Add(this.Version);
+            this.splitContainer1.Size = new System.Drawing.Size(843, 629);
+            this.splitContainer1.SplitterDistance = 435;
+            this.splitContainer1.TabIndex = 32;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(90, 211);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(0, 13);
+            this.label4.TabIndex = 32;
+            this.label4.TextAlign = System.Drawing.ContentAlignment.TopRight;
+            // 
+            // clear_button
+            // 
+            this.clear_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.clear_button.Enabled = false;
+            this.clear_button.Location = new System.Drawing.Point(345, 170);
+            this.clear_button.Name = "clear_button";
+            this.clear_button.Size = new System.Drawing.Size(79, 25);
+            this.clear_button.TabIndex = 31;
+            this.clear_button.Text = "Clear";
+            this.clear_button.UseVisualStyleBackColor = true;
+            this.clear_button.Click += new System.EventHandler(this.clear_button_Click);
             // 
             // MainBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(442, 504);
-            this.Controls.Add(this.button4);
-            this.Controls.Add(this.button3);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
-            this.Controls.Add(this.treeView1);
+            this.ClientSize = new System.Drawing.Size(867, 662);
+            this.Controls.Add(this.splitContainer1);
             this.Controls.Add(this.menuStrip1);
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
-            this.MinimumSize = new System.Drawing.Size(458, 542);
+            this.MinimumSize = new System.Drawing.Size(883, 700);
             this.Name = "MainBox";
-            this.Text = "H2PC_Map_Handler";
+            this.Text = "H2PC Map Handler";
             this.Load += new System.EventHandler(this.MainBox_Load);
             this.menuStrip1.ResumeLayout(false);
             this.menuStrip1.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
+            this.splitContainer1.Panel1.ResumeLayout(false);
+            this.splitContainer1.Panel1.PerformLayout();
+            this.splitContainer1.Panel2.ResumeLayout(false);
+            this.splitContainer1.Panel2.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).EndInit();
+            this.splitContainer1.ResumeLayout(false);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -399,6 +648,24 @@
         private System.Windows.Forms.Button button2;
         private System.Windows.Forms.Button button3;
         private System.Windows.Forms.Button button4;
+        private System.Windows.Forms.GroupBox groupBox1;
+        public System.Windows.Forms.CheckBox output_db_;
+        public System.Windows.Forms.CheckBox override_tags_;
+        public System.Windows.Forms.CheckBox recursive_radio_;
+        public System.Windows.Forms.Label current_tag_status;
+        public System.Windows.Forms.ProgressBar progressBar1;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.RichTextBox richTextBox1;
+        private System.Windows.Forms.Button button5;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox textBox3;
+        public System.Windows.Forms.Button extract_button;
+        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.Label label3;
+        public System.Windows.Forms.Label Version;
+        private System.Windows.Forms.SplitContainer splitContainer1;
+        public System.Windows.Forms.Button clear_button;
+        private System.Windows.Forms.Label label4;
     }
 }
 

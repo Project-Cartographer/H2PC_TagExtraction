@@ -18,7 +18,6 @@ namespace Map_Handler
         static bool isRecursive ;
         static bool isOverrideOn ;
         static bool isOutDBOn ;
-        static int TotalTags;
 
         Dictionary<int, string> TagsList = new Dictionary<int, string>();
       
@@ -34,7 +33,7 @@ namespace Map_Handler
             InitializeComponent();
 
             isDecompileMap_ = DecompileMap;
-            TotalTags = MainBox.AllTagslist.Count;
+            
 
 
             if (!DecompileMap)
@@ -65,7 +64,7 @@ namespace Map_Handler
             for (int o = 0; o < TagsList.Count; o++)
                 richTextBox1.AppendText("[" + TagsList.ElementAt(o).Key.ToString("X") + "] " + TagsList.ElementAt(o).Value + "\n");
 
-            tag_count_stats.Text = "Total Tags : " + TotalTags;
+            
         }
         private void button2_Click(object sender, EventArgs e)
         {                  
@@ -83,8 +82,7 @@ namespace Map_Handler
 
         private void extract_button_Click(object sender, EventArgs e)
         {
-            if (!isDecompileMap_)
-            {
+            
                 isRecursive = recursive_radio_.Checked;
                 isOverrideOn = override_tags_.Checked;
                 isOutDBOn = output_db_.Checked;
@@ -133,59 +131,7 @@ namespace Map_Handler
                 {
                     MainBox.ReOpenMap();
                 }
-            }
-            else
-            {
-                isRecursive = true;
-                isOverrideOn = override_tags_.Checked;
-                isOutDBOn = output_db_.Checked;
-
-                DestinationFolder = textBox1.Text;
-                MapsFolder = MainBox.map_path;
-
-                string mapName = DATA_READ.Read_File_from_file_location(MainBox.map_name);
-                
-                curent_tag_status.Visible = true;
-                tag_count_stats.Visible = true;
-
-                if (DestinationFolder == "")
-                {
-
-                    curent_tag_status.Text = "Select a Destination Folder Please";
-                    return;
-                }
-
-                 if (MapsFolder == "")
-                {
-
-                    curent_tag_status.Text = "Select a Maps Folder Please";
-                    return;
-                }
-
-
-                curent_tag_status.Text = "Initializing Decompiler";
-
-
-                MainBox.CloseMap();
-                progressBar1.Value = 0;
-                progressBar1.Maximum = TotalTags;
-                int index = 1;
-                
-                foreach (int i in MainBox.AllTagslist.Keys)
-                {
-                    tag_count_stats.Text = "[" + index++ + "/" + TotalTags + "]";
-                    curent_tag_status.Text = "Extracting Objects : " + TagsList.Values.ElementAt(index);
-                    MainBox.H2Test.Halo2_ExtractTagCache(i, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, MapsFolder, mapName);
-                    progressBar1.Value++; //update the progress bar
-                    
-                }
-
-                if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
-                {
-                    MainBox.ReOpenMap();
-                }
-
-            }
+            
 
 
         }

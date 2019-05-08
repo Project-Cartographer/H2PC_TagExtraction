@@ -57,7 +57,7 @@
             // button2
             // 
             this.button2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button2.Location = new System.Drawing.Point(313, 16);
+            this.button2.Location = new System.Drawing.Point(356, 15);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(96, 27);
             this.button2.TabIndex = 12;
@@ -68,7 +68,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(23, 22);
+            this.label2.Location = new System.Drawing.Point(9, 22);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(65, 13);
             this.label2.TabIndex = 11;
@@ -79,18 +79,18 @@
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.textBox1.HideSelection = false;
-            this.textBox1.Location = new System.Drawing.Point(89, 19);
+            this.textBox1.Location = new System.Drawing.Point(80, 19);
             this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(218, 20);
+            this.textBox1.Size = new System.Drawing.Size(270, 20);
             this.textBox1.TabIndex = 10;
             this.textBox1.TextChanged += new System.EventHandler(this.textBox1_TextChanged);
             // 
             // extract_button
             // 
             this.extract_button.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.extract_button.Location = new System.Drawing.Point(308, 79);
+            this.extract_button.Location = new System.Drawing.Point(356, 67);
             this.extract_button.Name = "extract_button";
-            this.extract_button.Size = new System.Drawing.Size(144, 40);
+            this.extract_button.Size = new System.Drawing.Size(96, 27);
             this.extract_button.TabIndex = 9;
             this.extract_button.Text = "Extract";
             this.extract_button.UseVisualStyleBackColor = true;
@@ -101,9 +101,9 @@
             this.richTextBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.richTextBox1.Location = new System.Drawing.Point(12, 151);
+            this.richTextBox1.Location = new System.Drawing.Point(12, 116);
             this.richTextBox1.Name = "richTextBox1";
-            this.richTextBox1.Size = new System.Drawing.Size(440, 144);
+            this.richTextBox1.Size = new System.Drawing.Size(440, 179);
             this.richTextBox1.TabIndex = 15;
             this.richTextBox1.Text = "";
             this.richTextBox1.TextChanged += new System.EventHandler(this.richTextBox1_TextChanged);
@@ -111,11 +111,11 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(22, 135);
+            this.label1.Location = new System.Drawing.Point(18, 100);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(75, 13);
+            this.label1.Size = new System.Drawing.Size(79, 13);
             this.label1.TabIndex = 16;
-            this.label1.Text = "Tags In Que  :";
+            this.label1.Text = "Selected Tags:";
             // 
             // progressBar1
             // 
@@ -145,9 +145,9 @@
             this.groupBox1.Controls.Add(this.override_tags_);
             this.groupBox1.Controls.Add(this.recursive_radio_);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox1.Location = new System.Drawing.Point(89, 45);
+            this.groupBox1.Location = new System.Drawing.Point(21, 45);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 74);
+            this.groupBox1.Size = new System.Drawing.Size(329, 52);
             this.groupBox1.TabIndex = 19;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Flags :";
@@ -155,7 +155,7 @@
             // output_db_
             // 
             this.output_db_.AutoSize = true;
-            this.output_db_.Location = new System.Drawing.Point(6, 51);
+            this.output_db_.Location = new System.Drawing.Point(200, 28);
             this.output_db_.Name = "output_db_";
             this.output_db_.Size = new System.Drawing.Size(108, 17);
             this.output_db_.TabIndex = 15;
@@ -165,7 +165,7 @@
             // override_tags_
             // 
             this.override_tags_.AutoSize = true;
-            this.override_tags_.Location = new System.Drawing.Point(101, 28);
+            this.override_tags_.Location = new System.Drawing.Point(86, 28);
             this.override_tags_.Name = "override_tags_";
             this.override_tags_.Size = new System.Drawing.Size(93, 17);
             this.override_tags_.TabIndex = 14;
@@ -175,13 +175,11 @@
             // tag_count_stats
             // 
             this.tag_count_stats.AutoSize = true;
-            this.tag_count_stats.BackColor = System.Drawing.Color.Transparent;
-            this.tag_count_stats.Location = new System.Drawing.Point(103, 135);
+            this.tag_count_stats.Location = new System.Drawing.Point(103, 100);
             this.tag_count_stats.Name = "tag_count_stats";
-            this.tag_count_stats.Size = new System.Drawing.Size(37, 13);
+            this.tag_count_stats.Size = new System.Drawing.Size(79, 13);
             this.tag_count_stats.TabIndex = 20;
-            this.tag_count_stats.Text = "Status";
-            this.tag_count_stats.Visible = false;
+            this.tag_count_stats.Text = "Selected Tags:";
             // 
             // TagExtractor
             // 

@@ -226,17 +226,31 @@ namespace BlamLib.Test
 		[TestMethod]
 		public void Halo2TestCacheExtractionPc()
 		{
+
+            string MapPath = "";
+            string MapsDir = "";
+               if (MapPath != "")
+            {
+                 MapsDir = MapPath;
+            }
+            else
+            {
+                 MapsDir = kMapsDirectoryPc;
+            }
+
+
+
 			StartStopwatch();
 			Program.Halo2.LoadPc(
-				kMapsDirectoryPc + @"mainmenu.map",
-				kMapsDirectoryPc + @"shared.map",
-				kMapsDirectoryPc + @"single_player_shared.map");
+				MapsDir + @"mainmenu.map",
+				MapsDir + @"shared.map",
+				MapsDir + @"single_player_shared.map");
 			Assert.IsNotNull(Program.Halo2.PcMainmenu);
 			Assert.IsNotNull(Program.Halo2.PcShared);
 			Assert.IsNotNull(Program.Halo2.PcCampaign);
 
 			StartSubStopwatch();
-			Halo2TestCacheExtraction(BlamVersion.Halo2_PC, kMapsDirectoryPc, 
+			Halo2TestCacheExtraction(BlamVersion.Halo2_PC, MapsDir, 
 				//"00a_introduction.map"
 				//"example.map"
 				"03b_newmombasa.map"
@@ -251,24 +265,32 @@ namespace BlamLib.Test
 
             
             
+            string MapsDir = "";
             
-            
-          
+            if (MapPath != "")
+            {
+                 MapsDir = MapPath;
+            }
+            else
+            {
+                MapsDir = kMapsDirectoryPc;
+            }
 
-            kMapsDirectoryPc = MapPath;
+
+            
             
 
             Program.Halo2.LoadPc(
-                kMapsDirectoryPc + @"mainmenu.map",
-                kMapsDirectoryPc + @"shared.map",
-                kMapsDirectoryPc + @"single_player_shared.map");
+                MapsDir + @"mainmenu.map",
+                MapsDir + @"shared.map",
+                MapsDir + @"single_player_shared.map");
             
 
             (Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
             (Program.GetManager(game) as Managers.IVertexBufferController)
                 .VertexBufferCacheOpen(game);
 
-            CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, kMapsDirectoryPc, DatumIndex, Recursive, OutputDB, Override, DestinationPath, map_names);
+            CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, MapsDir, DatumIndex, Recursive, OutputDB, Override, DestinationPath, map_names);
 
 
 

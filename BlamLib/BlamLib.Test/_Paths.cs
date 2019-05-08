@@ -44,7 +44,7 @@ namespace BlamLib.Test
 		const string kTestResultsPathPc = kTestResultsPath + @"PC\";
 
 		const string kMapsDirectoryXbox = @"C:\Mount\A\Bungie\Games\Halo2\Xbox\Retail\Maps\";
-		string kMapsDirectoryPc = @"C:\Program Files (x86)\Microsoft Games\Halo 2\maps";
+		const string kMapsDirectoryPc = @"C:\Program Files (x86)\Microsoft Games\Halo 2\maps";
 		const string kMapsDirectoryXboxAlpha = @"C:\Mount\A\Bungie\Games\Halo2\Xbox\Alpha\Maps\";
 
 		const string kTestTagIndexTagsPath = TestLibrary.kProgramFilesPath + @"Microsoft Games\Halo 2 Map Editor\";
