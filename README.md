@@ -23,12 +23,12 @@ https://bitbucket.org/KornnerStudios/opensauce-release/wiki/Home
 
 
 ## ChangeLog ##
-### V2.01 ###
+### V2.1 ###
 Features:
-* __Changed default map_directory to currently loaded map path.
-* __Changed UI colors, content anchors and reshaped some elements.
-* __Changed default extraction directory to no longer append (Halo2\PC\tags) to the extracted tag path
-* __Added checkboxes to TreeView, allows user to select multiple/specific tags.
+* __New UI combines Tag Extracting with Map Loading
+* __Users can select multiple tags for extracting
+* __Users must designate a maps folder on startup, directory saved to settings file in %appdata% folder
+* __If settings file exists will automatically load maps directory. 
 
 ## ChangeLog ##
 ### V2.0 ###
