@@ -75,7 +75,6 @@ _Chutzpah*
 ipch/
 *.aps
 *.ncb
-*.opensdf
 *.sdf
 *.cachefile
 
@@ -213,3 +212,7 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 obj/Debug
+*.csproj.FileListAbsolute.txt
+*.csproj.GenerateResource.Cache
+*.csprojResolveAssemblyReference.cache
+*.cache
