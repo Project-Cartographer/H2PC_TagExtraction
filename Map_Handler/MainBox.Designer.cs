@@ -76,9 +76,9 @@
             this.label3 = new System.Windows.Forms.Label();
             this.Version = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.clear_button = new System.Windows.Forms.Button();
-            this.button6 = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -566,10 +566,21 @@
             this.splitContainer1.SplitterDistance = 340;
             this.splitContainer1.TabIndex = 32;
             // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.Location = new System.Drawing.Point(298, 107);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(35, 25);
+            this.button6.TabIndex = 33;
+            this.button6.Text = "...";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(90, 211);
+            this.label4.Location = new System.Drawing.Point(90, 200);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 32;
@@ -586,17 +597,6 @@
             this.clear_button.Text = "Clear";
             this.clear_button.UseVisualStyleBackColor = true;
             this.clear_button.Click += new System.EventHandler(this.clear_button_Click);
-            // 
-            // button6
-            // 
-            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
-            this.button6.Location = new System.Drawing.Point(298, 107);
-            this.button6.Name = "button6";
-            this.button6.Size = new System.Drawing.Size(35, 25);
-            this.button6.TabIndex = 33;
-            this.button6.Text = "...";
-            this.button6.UseVisualStyleBackColor = true;
-            this.button6.Click += new System.EventHandler(this.button6_Click);
             // 
             // MainBox
             // 
