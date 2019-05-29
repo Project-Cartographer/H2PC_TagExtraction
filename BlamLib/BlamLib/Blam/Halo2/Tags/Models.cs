@@ -15,18 +15,12 @@ namespace BlamLib.Blam.Halo2.Tags
 	public class bsp3d_nodes_block : TI.Definition
 	{
 		#region Fields
-		public TI.ShortInteger Plane;
-		public TI.ShortInteger BackChild;
-		public TI.ShortInteger FrontChild;
 		#endregion
 
 		#region Ctor
 		public bsp3d_nodes_block() : base(4)
 		{
-			Add(Plane = new TI.ShortInteger());
-			Add(new TI.Pad(2));
-			Add(BackChild = new TI.ShortInteger());
-			Add(FrontChild = new TI.ShortInteger());
+			Add(new TI.Skip(8));
 		}
 		#endregion
 	}
