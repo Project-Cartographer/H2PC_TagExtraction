@@ -14,11 +14,11 @@ namespace BlamLib.Blam.Halo2.Tags
 	{
 		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 		{
-			//PredictedResources.DeleteAll();
-			//EditorScenarioData.Delete();
+			PredictedResources.DeleteAll();
+			EditorScenarioData.Delete();
 			LevelData.DeleteAll();
-			//SharedReferences.DeleteAll();
-			//SimulationDefinitionTable.DeleteAll();
+			SharedReferences.DeleteAll();
+			SimulationDefinitionTable.DeleteAll();
 
 			return true;
 		}
