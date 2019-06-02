@@ -76,6 +76,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.Version = new System.Windows.Forms.Label();
             this.splitContainer1 = new System.Windows.Forms.SplitContainer();
+            this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.clear_button = new System.Windows.Forms.Button();
             this.menuStrip1.SuspendLayout();
@@ -475,7 +476,7 @@
             this.textBox3.Location = new System.Drawing.Point(76, 109);
             this.textBox3.Multiline = true;
             this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(257, 24);
+            this.textBox3.Size = new System.Drawing.Size(214, 24);
             this.textBox3.TabIndex = 21;
             // 
             // extract_button
@@ -535,6 +536,7 @@
             // 
             // splitContainer1.Panel1
             // 
+            this.splitContainer1.Panel1.Controls.Add(this.button6);
             this.splitContainer1.Panel1.Controls.Add(this.label4);
             this.splitContainer1.Panel1.Controls.Add(this.clear_button);
             this.splitContainer1.Panel1.Controls.Add(this.groupBox1);
@@ -564,10 +566,21 @@
             this.splitContainer1.SplitterDistance = 340;
             this.splitContainer1.TabIndex = 32;
             // 
+            // button6
+            // 
+            this.button6.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
+            this.button6.Location = new System.Drawing.Point(298, 107);
+            this.button6.Name = "button6";
+            this.button6.Size = new System.Drawing.Size(35, 25);
+            this.button6.TabIndex = 33;
+            this.button6.Text = "...";
+            this.button6.UseVisualStyleBackColor = true;
+            this.button6.Click += new System.EventHandler(this.button6_Click);
+            // 
             // label4
             // 
             this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(90, 211);
+            this.label4.Location = new System.Drawing.Point(90, 200);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(0, 13);
             this.label4.TabIndex = 32;
@@ -664,6 +677,7 @@
         private System.Windows.Forms.SplitContainer splitContainer1;
         public System.Windows.Forms.Button clear_button;
         private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Button button6;
     }
 }
 

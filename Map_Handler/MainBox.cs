@@ -16,6 +16,7 @@ using DATA_STRUCTURES;
 /*
 Created and developed by Himanshu01 in H2PC Project Cartographer Team
 Also uses BlamLib by Kornner Studios for tag extraction 
+<3 Hamp
 */
 
 
@@ -670,6 +671,19 @@ namespace Map_Handler
 
            
 
+        }
+
+        private void button6_Click(object sender, EventArgs e)
+        {
+
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.ShowNewFolderButton = true;
+
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+                textBox3.Text = fbd.SelectedPath;
+
+            }
         }
 
       
