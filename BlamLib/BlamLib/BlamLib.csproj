@@ -43,6 +43,7 @@
     <Compile Include="Blam\DataHandles\MapId.cs" />
     <Compile Include="Blam\DataHandles\ResourcePtr.cs" />
     <Compile Include="Blam\DataHandles\StringId.cs" />
+    <Compile Include="Blam\Halo2\Tags\Code\Objects.cs" />
     <Compile Include="Blam\Halo4\Tags\Code\Interface.cs" />
     <Compile Include="Blam\Halo4\Tags\Code\Multiplayer.cs" />
     <Compile Include="Blam\Halo4\Tags\Code\Resources.cs" />
