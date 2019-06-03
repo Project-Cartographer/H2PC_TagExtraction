@@ -170,9 +170,6 @@
     </Compile>
   </ItemGroup>
   <ItemGroup>
-    <None Include="App.config" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\BlamLib\BlamLib.Test\BlamLib.Test.csproj">
       <Project>{2bb37b4c-d7e0-451f-a8c8-997890b98b9f}</Project>
       <Name>BlamLib.Test</Name>

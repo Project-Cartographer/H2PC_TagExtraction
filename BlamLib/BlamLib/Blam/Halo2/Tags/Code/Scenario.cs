@@ -12,13 +12,23 @@ namespace BlamLib.Blam.Halo2.Tags
 	#region scenario
 	partial class scenario_group
 	{
+        internal void DeleteCompiledScripts()
+        {
+			HsScriptDatums.DeleteAll();
+			HsGlobals.DeleteAll();
+			HsScripts.DeleteAll();
+			HsStringData.Delete();
+			HsSyntaxData.Delete();
+        }
+
 		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 		{
-			//PredictedResources.DeleteAll();
-			//EditorScenarioData.Delete();
+			PredictedResources.DeleteAll();
+			EditorScenarioData.Delete();
 			LevelData.DeleteAll();
-			//SharedReferences.DeleteAll();
-			//SimulationDefinitionTable.DeleteAll();
+			SharedReferences.DeleteAll();
+			SimulationDefinitionTable.DeleteAll();
+			DeleteCompiledScripts();
 
 			return true;
 		}

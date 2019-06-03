@@ -351,7 +351,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Ctor
-		public device_group() : this(0) {}
+		public device_group() : this(0) { }
 		protected device_group(int field_count) : base(field_count + DeviceFieldCount)
 		{
 			Add(/*flags = */ new TI.Flags());
@@ -912,7 +912,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			{
 				Add(/*flags = */ new TI.Flags());
 				Add(/*global indirect material name = */ new TI.StringId());
-				Add(/*indirect damage section = */ new TI.BlockIndex()); // 2 3¿Å|$Ùe?
+				Add(/*indirect damage section = */ new TI.BlockIndex()); // Unicode was a mistake
 				Add(new TI.Pad(2 + 4));
 				Add(/*collision damage reporting type = */ new TI.Enum(TI.FieldType.ByteEnum));
 				Add(/*response damage reporting type = */ new TI.Enum(TI.FieldType.ByteEnum));
@@ -1297,7 +1297,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Ctor
-		public object_group() : this(0) {}
+		public object_group() : this(0) { }
 		protected object_group(int field_count) : base(field_count + ObjectFieldCount)
 		{
 			Add(/*object type = */ new TI.Enum());
@@ -1358,7 +1358,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		/// <param name="other"></param>
 		internal void FromObject(object_group other)
 		{
-			for(int x = 0; x < ObjectFieldCount; x++)
+			for (int x = 0; x < ObjectFieldCount; x++)
 				this[x].FieldValue = other[x].FieldValue;
 		}
 	};
@@ -1574,18 +1574,20 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region unit_seat_acceleration_struct
 	[TI.Struct((int)StructGroups.Enumerated.usas, 1, 20)]
-	public class unit_seat_acceleration_struct : TI.Definition
+	public partial class unit_seat_acceleration_struct : TI.Definition
 	{
 		#region Fields
+		public TI.RealVector3D acceleration_range;
 		#endregion
 
 		#region Ctor
 		public unit_seat_acceleration_struct() : base(3)
 		{
-			Add(/*acceleration range = */ new TI.RealVector3D());
+			Add(acceleration_range = new TI.RealVector3D());
 			Add(/*accel action scale = */ new TI.Real());
 			Add(/*accel attach scale = */ new TI.Real());
 		}
+
 		#endregion
 	}
 	#endregion
@@ -1816,7 +1818,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Ctor
-		public unit_group() : this(0) {}
+		public unit_group() : this(0) { }
 		protected unit_group(int field_count) : base(field_count + UnitFieldCount)
 		{
 			Add(/*flags = */ new TI.Flags());
@@ -2043,8 +2045,8 @@ namespace BlamLib.Blam.Halo2.Tags
 				Add(/*sphere = */ new TI.RealVector3D());
 				Add(new TI.Skip(4));
 				Add(/*sphere = */ new TI.RealVector3D());
-				Add(new TI.Skip(4 + 
-					
+				Add(new TI.Skip(4 +
+
 					4));
 				Add(/*size = */ new TI.ShortInteger());
 				Add(/*count = */ new TI.ShortInteger());
@@ -2065,8 +2067,8 @@ namespace BlamLib.Blam.Halo2.Tags
 				Add(/*sphere = */ new TI.RealVector3D());
 				Add(new TI.Skip(4));
 				Add(/*sphere = */ new TI.RealVector3D());
-				Add(new TI.Skip(4 + 
-					
+				Add(new TI.Skip(4 +
+
 					4));
 				Add(/*size = */ new TI.ShortInteger());
 				Add(/*count = */ new TI.ShortInteger());
@@ -2087,8 +2089,8 @@ namespace BlamLib.Blam.Halo2.Tags
 				Add(/*sphere = */ new TI.RealVector3D());
 				Add(new TI.Skip(4));
 				Add(/*sphere = */ new TI.RealVector3D());
-				Add(new TI.Skip(4 + 
-					
+				Add(new TI.Skip(4 +
+
 					4));
 				Add(/*size = */ new TI.ShortInteger());
 				Add(/*count = */ new TI.ShortInteger());
