@@ -1527,14 +1527,17 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Fields
+		public TI.Block<scenario_resource_reference_block> references;
+		public TI.Block<scenario_hs_source_reference_block> script_source;
+		public TI.Block<scenario_ai_resource_reference_block> ai_resources;
 		#endregion
 
 		#region Ctor
 		public scenario_resources_block() : base(3)
 		{
-			Add(/*References = */ new TI.Block<scenario_resource_reference_block>(this, 16));
-			Add(/*Script Source = */ new TI.Block<scenario_hs_source_reference_block>(this, 8));
-			Add(/*AI Resources = */ new TI.Block<scenario_ai_resource_reference_block>(this, 2));
+			Add(references = new TI.Block<scenario_resource_reference_block>(this, 16));
+			Add(script_source =  new TI.Block<scenario_hs_source_reference_block>(this, 8));
+			Add(ai_resources =  new TI.Block<scenario_ai_resource_reference_block>(this, 2));
 		}
 		#endregion
 	}

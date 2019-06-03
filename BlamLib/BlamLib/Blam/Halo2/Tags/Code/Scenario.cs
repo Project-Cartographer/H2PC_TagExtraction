@@ -28,7 +28,15 @@ namespace BlamLib.Blam.Halo2.Tags
 			LevelData.DeleteAll();
 			SharedReferences.DeleteAll();
 			SimulationDefinitionTable.DeleteAll();
+
 			DeleteCompiledScripts();
+
+			if (ScenarioResources.Count >= 1)
+			{
+				var scenario_resources = ScenarioResources[0];
+				scenario_resources.references.DeleteAll();
+				scenario_resources.ai_resources.DeleteAll();
+			}
 
 			return true;
 		}
