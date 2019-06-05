@@ -313,7 +313,7 @@ namespace DATA_STRUCTURES
                 }
             }
             */
-            //***      THIS LOGIC CHANGE HAS'NT MADE INTO CODEZ OR MAP_HANDLER_
+            //***      added this logic 
             temp = fields.Get_data_ref_list();
             foreach (int i in temp)
             {

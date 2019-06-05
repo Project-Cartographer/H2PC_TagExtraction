@@ -213,3 +213,6 @@ _Pvt_Extensions/
 ModelManifest.xml
 
 obj/Debug
+/BlamLib/BlamLib.VC.db
+/Map_Handler.VC.db
+/Map_Handler.VC.VC.opendb

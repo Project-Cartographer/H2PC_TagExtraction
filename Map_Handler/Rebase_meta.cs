@@ -178,6 +178,11 @@ namespace Map_Handler
             foreach (UnisonRefs uni_temp in type_ref_list)
                 log += "\nReffered " + uni_temp.type + " to " + uni_temp.new_datum.ToString("X") + " file : " + uni_temp.file_name;
 
+            //writing log 
+            sw = new StreamWriter(directory + "\\compile_log.txt");
+            sw.Write(log);
+
+
             //lets launch the log box
             LogBox lb = new LogBox(log);
             lb.Show();
