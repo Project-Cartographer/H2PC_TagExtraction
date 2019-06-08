@@ -111,7 +111,7 @@ namespace Map_Handler
                         else log += "\nFile doesnt exists : " + temp_ref.file_name;
 
                     }
-                    StreamWriter sw_1 = new StreamWriter(directory + "\\StringID_log.txt");
+                    StreamWriter sw_1 = new StreamWriter(directory + "\\Tagref_resync_log.txt");
                     sw_1.Write(log);
 
                     LogBox lol = new LogBox(log);
@@ -316,6 +316,9 @@ namespace Map_Handler
                         else log += "\nFile doesnt exists : " + temp_ref.file_name;
 
                     }
+                    StreamWriter sw_1 = new StreamWriter(directory + "\\StringID_resync_logs.txt");
+                    sw_1.Write(log);
+
                     LogBox lol = new LogBox(log);
                     lol.Show();
 
