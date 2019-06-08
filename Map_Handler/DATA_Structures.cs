@@ -703,7 +703,9 @@ namespace DATA_STRUCTURES
             ref_extended = new Dictionary<int, int>();
             list_extended = new Dictionary<int, extended_meta>();
             ref_WCtags = new List<int>();
-            
+
+            if (size == 0)
+                return;
 
             //now lets search for all kinds of stuff
             List_deps(0x0, plugin);
@@ -735,6 +737,9 @@ namespace DATA_STRUCTURES
             //plugin
             plugin = DATA_READ.Get_Tag_stucture_from_plugin(type);
 
+            if (size == 0)
+                return;
+            
             List_deps(0x0, plugin);
         }
         /// <summary>
@@ -762,6 +767,9 @@ namespace DATA_STRUCTURES
             //while extracting the meta ,i fix all the extended meta stuff so we dont need it now
 
             plugin = DATA_READ.Get_Tag_stucture_from_plugin(type);
+
+            if (size == 0)
+                return;
 
             List_deps(0x0, plugin);
         }
@@ -932,8 +940,9 @@ namespace DATA_STRUCTURES
         /// <param name="new_base">the new memory address to which the meta has to rebased</param>
         public void Rebase_meta(int new_base)
         {
+
             //first rebase reflexive fields
-            foreach(int off in ref_reflexive)
+            foreach (int off in ref_reflexive)
             {
                 int old_mem_addr = DATA_READ.ReadINT_LE(off + 4, data);
                 int new_mem_addr = new_base + (old_mem_addr - mem_off);
