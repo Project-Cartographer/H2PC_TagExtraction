@@ -53,6 +53,7 @@
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultMaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
+            this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -86,21 +87,21 @@
             // openMapToolStripMenuItem
             // 
             this.openMapToolStripMenuItem.Name = "openMapToolStripMenuItem";
-            this.openMapToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.openMapToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.openMapToolStripMenuItem.Text = "Open Map";
             this.openMapToolStripMenuItem.Click += new System.EventHandler(this.openMapToolStripMenuItem_Click);
             // 
             // closeMapToolStripMenuItem
             // 
             this.closeMapToolStripMenuItem.Name = "closeMapToolStripMenuItem";
-            this.closeMapToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.closeMapToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.closeMapToolStripMenuItem.Text = "Close Map";
             this.closeMapToolStripMenuItem.Click += new System.EventHandler(this.closeMapToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -201,7 +202,8 @@
             this.injectMetaToolStripMenuItem,
             this.getTagStructureToolStripMenuItem,
             this.resyncshadToolStripMenuItem,
-            this.resyncStringIDsToolStripMenuItem});
+            this.resyncStringIDsToolStripMenuItem,
+            this.sndtagFixesToolStripMenuItem});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.metaToolStripMenuItem.Text = "Meta";
@@ -260,10 +262,17 @@
             // 
             this.treeView1.LabelEdit = true;
             this.treeView1.Location = new System.Drawing.Point(16, 46);
-            this.treeView1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.treeView1.Margin = new System.Windows.Forms.Padding(4);
             this.treeView1.Name = "treeView1";
             this.treeView1.Size = new System.Drawing.Size(556, 542);
             this.treeView1.TabIndex = 1;
+            // 
+            // sndtagFixesToolStripMenuItem
+            // 
+            this.sndtagFixesToolStripMenuItem.Name = "sndtagFixesToolStripMenuItem";
+            this.sndtagFixesToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.sndtagFixesToolStripMenuItem.Text = "snd!_tag Fixes";
+            this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
             // 
             // MainBox
             // 
@@ -273,7 +282,7 @@
             this.ClientSize = new System.Drawing.Size(589, 620);
             this.Controls.Add(this.treeView1);
             this.Controls.Add(this.menuStrip1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.MaximizeBox = false;
             this.Name = "MainBox";
             this.Text = "H2PC_Map_Handler";
@@ -311,6 +320,7 @@
         private System.Windows.Forms.ToolStripMenuItem tests1ToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resyncshadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resyncStringIDsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem sndtagFixesToolStripMenuItem;
     }
 }
 

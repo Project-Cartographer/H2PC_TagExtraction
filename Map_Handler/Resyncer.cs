@@ -111,8 +111,9 @@ namespace Map_Handler
                         else log += "\nFile doesnt exists : " + temp_ref.file_name;
 
                     }
-                    StreamWriter sw_1 = new StreamWriter(directory + "\\Tagref_resync_log.txt");
+                    StreamWriter sw_1 = new StreamWriter(directory + "\\Tagref_" + resync_type + "_resync_log.txt");
                     sw_1.Write(log);
+                    sw_1.Close();
 
                     LogBox lol = new LogBox(log);
                     lol.Show();
@@ -318,6 +319,7 @@ namespace Map_Handler
                     }
                     StreamWriter sw_1 = new StreamWriter(directory + "\\StringID_resync_logs.txt");
                     sw_1.Write(log);
+                    sw_1.Close();
 
                     LogBox lol = new LogBox(log);
                     lol.Show();
@@ -413,5 +415,89 @@ namespace Map_Handler
 
             return ret;
         }
+    }
+    class snd_fixes
+    {
+        string directory;
+
+        //list of meta which are gonna be resynced
+        List<string> tag_list;
+
+        public snd_fixes(string file)
+        {
+            directory = DATA_READ.ReadDirectory_from_file_location(file);
+
+            XmlDocument xd = new XmlDocument();
+            xd.Load(file);
+
+            tag_list = new List<string>();
+
+            foreach (XmlNode Xn in xd.SelectNodes("config/tag"))
+            {
+
+                string temp = Xn.SelectSingleNode("name").InnerText;
+
+                if (DATA_READ.ReadTAG_TYPE_form_name(temp) == "snd!")
+                    //lets add the tag to the list
+                    tag_list.Add(temp);
+            }
+            apply_fixes();
+        }
+        /// <summary>
+        /// Fixing purpose
+        /// </summary>
+        void apply_fixes()
+        {
+            string log = "LOG_BOX\n";
+
+            foreach (string temp_loc in tag_list)
+            {
+
+                if (File.Exists(directory + "\\" +temp_loc))
+                {
+                    //lets open the file
+                    FileStream fs = new FileStream(directory + "\\" + temp_loc, FileMode.Append);
+                    long size = fs.Position;
+                    fs.Close();
+
+                    //lets load it into memory
+                    byte[] meta = new byte[size];
+
+                    //Filestream imposed some probs
+                    StreamReader sr = new StreamReader(directory + "\\" + temp_loc);
+                    //lets read the data
+                    sr.BaseStream.Read(meta, 0, (int)size);
+                    sr.Dispose();
+
+                    //its only a snd! tag,EZY
+                    DATA_READ.WriteINT_LE(0, 0x6, meta);
+
+                    int t = DATA_READ.ReadINT_LE(0xC, meta);
+                    t = (int)(t | 0xFFFFFFFF);
+                    DATA_READ.WriteINT_LE(t, 0xC, meta);
+
+                    DATA_READ.WriteINT_LE(0, 0x10, meta);
+
+                    log += "\nUpdating :" + temp_loc;
+                    //write it to the file
+                    StreamWriter sw = new StreamWriter(directory + "\\" + temp_loc);
+                    sw.BaseStream.Seek(0, SeekOrigin.Begin);
+                    sw.BaseStream.Write(meta, 0, (int)size);
+                    sw.Dispose();
+
+                }
+                else log += "\nFile doesnt exists : " + temp_loc;
+
+            }
+            StreamWriter sw_1 = new StreamWriter(directory + "\\snd_fixes_logs.txt");
+            sw_1.Write(log);
+            sw_1.Close();
+
+            LogBox lol = new LogBox(log);
+            lol.Show();
+
+
+        }
+
     }
 }
