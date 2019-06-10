@@ -342,25 +342,31 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region device
 	[TI.TagGroup((int)TagGroups.Enumerated.devi, 1, device_group.DeviceSize, typeof(object_group))]
-	public class device_group : object_group
+	public partial class device_group : object_group
 	{
 		internal const int DeviceSize = 152 /*+ ObjectSize*/;
 		internal const int DeviceFieldCount = 21;
 
-		#region Fields
-		#endregion
+        #region Fields
+        public TI.Real power_transition_time;
+        public TI.Real power_acceleration_time;
+        public TI.Real position_transition_time;
+        public TI.Real position_acceleration_time;
+        public TI.Real depowered_position_transition_time;
+        public TI.Real depowered_position_acceleration_time;
+        #endregion
 
-		#region Ctor
-		public device_group() : this(0) { }
+        #region Ctor
+        public device_group() : this(0) { }
 		protected device_group(int field_count) : base(field_count + DeviceFieldCount)
 		{
 			Add(/*flags = */ new TI.Flags());
-			Add(/*power transition time = */ new TI.Real());
-			Add(/*power acceleration time = */ new TI.Real());
-			Add(/*position transition time = */ new TI.Real());
-			Add(/*position acceleration time = */ new TI.Real());
-			Add(/*depowered position transition time = */ new TI.Real());
-			Add(/*depowered position acceleration time = */ new TI.Real());
+			Add(power_transition_time = new TI.Real());
+			Add(power_acceleration_time = new TI.Real());
+			Add(position_transition_time = new TI.Real());
+			Add(position_acceleration_time = new TI.Real());
+			Add(depowered_position_transition_time = new TI.Real());
+			Add(depowered_position_acceleration_time = new TI.Real());
 			Add(/*lightmap flags = */ new TI.Flags(TI.FieldType.WordFlags));
 			Add(new TI.Pad(2));
 			Add(new TI.UselessPad(4));

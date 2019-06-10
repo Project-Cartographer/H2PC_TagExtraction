@@ -12,7 +12,7 @@ namespace BlamLib.Blam.Halo2.Tags
 	#region unit_seat_accerleration_struct_block
 	partial class unit_seat_acceleration_struct
 	{
-		void invert_value(ref float value)
+		void Invert_value(ref float value)
 		{
 			if (value == 0.0f)
 				return;
@@ -22,12 +22,37 @@ namespace BlamLib.Blam.Halo2.Tags
 		#region Reconstruct
 		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 		{
-			invert_value(ref acceleration_range.I);
-			invert_value(ref acceleration_range.J);
-			invert_value(ref acceleration_range.K);
+			Invert_value(ref acceleration_range.I);
+			Invert_value(ref acceleration_range.J);
+			Invert_value(ref acceleration_range.K);
 			return true;
 		}
 		#endregion
 	}
-	#endregion
+    #endregion
+
+    #region device_group
+    partial class device_group
+    {
+        void Invert_value(ref float value)
+        {
+            if (value == 0.0f)
+                return;
+            value = 1f / value;
+        }
+
+        #region Reconstruct
+        internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+        {
+            Invert_value(ref power_transition_time.Value);
+            Invert_value(ref power_acceleration_time.Value);
+            Invert_value(ref position_transition_time.Value);
+            Invert_value(ref position_acceleration_time.Value);
+            Invert_value(ref depowered_position_transition_time.Value);
+            Invert_value(ref depowered_position_acceleration_time.Value);
+            return true;
+        }
+        #endregion
+    }
+    #endregion
 }
