@@ -284,7 +284,10 @@ namespace BlamLib.Test
                 MapsDir + @"mainmenu.map",
                 MapsDir + @"shared.map",
                 MapsDir + @"single_player_shared.map");
-            
+            Assert.IsNotNull(Program.Halo2.PcMainmenu);
+            Assert.IsNotNull(Program.Halo2.PcShared);
+            Assert.IsNotNull(Program.Halo2.PcCampaign);
+
 
             (Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
             (Program.GetManager(game) as Managers.IVertexBufferController)
