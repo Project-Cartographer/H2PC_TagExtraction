@@ -812,10 +812,6 @@ namespace BlamLib.Managers
 		// However, there is a maximum of 255 handles for each system which I don't think will ever be overflowed 
 		// even after extended use. Worse case scenario, TagIndex shit could cause this, but who the hell would open 
 		// that many fucking tag index objects?
-        /// <summary>
-        /// well the current version of extraction is entirely based upon the codes provided in BlamLib.Test
-        /// which results in creation of multiple handles causing overflowing and fuking this system.
-        /// </summary>
 
 		#region CacheBuilders
 		const ushort kCacheBuilderSaltBase = (0xBEEF & 0xFF00);
@@ -981,11 +977,10 @@ namespace BlamLib.Managers
 			Blam.DatumIndex cache_id;
 			lock (cacheFiles)
 			{
-                // Id is built from the a salt value, and placed in the datum's index field, 
-                // then the engine version is placed in the salt field. Yes, I realize I should 
-                // call it something else besides salt since it's not placed in the salt field...
-                // cache_id = new BlamLib.Blam.DatumIndex((ushort)(kCacheFileSaltBase | CacheFileSalt++), (short)game);
-                cache_id = new BlamLib.Blam.DatumIndex((ushort)(kCacheFileSaltBase | cacheFiles.Count), (short)game);
+				// Id is built from the a salt value, and placed in the datum's index field, 
+				// then the engine version is placed in the salt field. Yes, I realize I should 
+				// call it something else besides salt since it's not placed in the salt field...
+				cache_id = new BlamLib.Blam.DatumIndex((ushort)(kCacheFileSaltBase | CacheFileSalt++), (short)game);
 
                 if (!cacheFiles.ContainsKey(cache_id))
                     cacheFiles.Add(cache_id, cf);
@@ -1099,10 +1094,9 @@ namespace BlamLib.Managers
 		{
 			lock (tagIndexes)
 			{
-                //Blam.DatumIndex index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | TagIndexSalt++), (short)cf.EngineVersion);
-                Blam.DatumIndex index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | tagIndexes.Count), (short)cf.EngineVersion);
+				Blam.DatumIndex index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | TagIndexSalt++), (short)cf.EngineVersion);
 
-                tagIndexes.Add(cache_index.IndexId = index_id, cache_index);
+				tagIndexes.Add(cache_index.IndexId = index_id, cache_index);
 			}
 		}
 
@@ -1171,13 +1165,12 @@ namespace BlamLib.Managers
 			Blam.DatumIndex index_id;
 			lock (tagIndexes)
 			{
-                // Id is built from the a salt value, and placed in the datum's index field, 
-                // then the engine version is placed in the salt field. Yes, I realize I should 
-                // call it something else besides salt since it's not placed in the salt field...
-                //index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | TagIndexSalt++), (short)game);
-                index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | tagIndexes.Count), (short)game);
+				// Id is built from the a salt value, and placed in the datum's index field, 
+				// then the engine version is placed in the salt field. Yes, I realize I should 
+				// call it something else besides salt since it's not placed in the salt field...
+				index_id = new BlamLib.Blam.DatumIndex((ushort)(kTagIndexSaltBase | TagIndexSalt++), (short)game);
 
-                tagIndexes.Add(index_id, ti);
+				tagIndexes.Add(index_id, ti);
 			}
 
 			return ti.IndexId = index_id;
