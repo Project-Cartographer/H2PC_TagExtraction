@@ -166,26 +166,26 @@ namespace BlamLib
 			{
 				Blam.DatumIndex di;
 
-				if (paths.Length >= 1 && System.IO.File.Exists(paths[0]))
-				{
-					di = manager.OpenCacheFile(BlamVersion.Halo2_PC, PcMainmenuPath = paths[0]);
-					PcMainmenu = manager.GetCacheFile(di) as BlamLib.Blam.Halo2.CacheFile;
-					PcMainmenu.Read();
-				}
+                if (paths.Length >= 1 && System.IO.File.Exists(paths[0]) && PcMainmenu == null)
+                {
+                    di = manager.OpenCacheFile(BlamVersion.Halo2_PC, PcMainmenuPath = paths[0]);
+                    PcMainmenu = manager.GetCacheFile(di) as BlamLib.Blam.Halo2.CacheFile;
+                    PcMainmenu.Read();
+                }
 
-				if (paths.Length >= 2 && System.IO.File.Exists(paths[1]))
-				{
-					di = manager.OpenCacheFile(BlamVersion.Halo2_PC, PcSharedPath = paths[1]);
-					PcShared = manager.GetCacheFile(di) as BlamLib.Blam.Halo2.CacheFile;
-					PcShared.Read();
-				}
+                if (paths.Length >= 2 && System.IO.File.Exists(paths[1]) && PcShared == null)
+                {
+                    di = manager.OpenCacheFile(BlamVersion.Halo2_PC, PcSharedPath = paths[1]);
+                    PcShared = manager.GetCacheFile(di) as BlamLib.Blam.Halo2.CacheFile;
+                    PcShared.Read();
+                }
 
-				if (paths.Length >= 3 && System.IO.File.Exists(paths[2]))
-				{
-					di = manager.OpenCacheFile(BlamVersion.Halo2_PC, PcCampaignPath = paths[2]);
-					PcCampaign = manager.GetCacheFile(di) as BlamLib.Blam.Halo2.CacheFile;
-					PcCampaign.Read();
-				}
+                if (paths.Length >= 3 && System.IO.File.Exists(paths[2]) && PcCampaign == null)
+                {
+                    di = manager.OpenCacheFile(BlamVersion.Halo2_PC, PcCampaignPath = paths[2]);
+                    PcCampaign = manager.GetCacheFile(di) as BlamLib.Blam.Halo2.CacheFile;
+                    PcCampaign.Read();
+                }
 			}
 			/// <summary>Loads the Halo 2 files needed to fully run this library</summary>
 			public static void LoadPc() { LoadPc(PcMainmenuPath, PcSharedPath, PcCampaignPath); }
