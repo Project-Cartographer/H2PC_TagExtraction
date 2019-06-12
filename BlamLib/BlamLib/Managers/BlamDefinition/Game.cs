@@ -982,7 +982,8 @@ namespace BlamLib.Managers
 				// call it something else besides salt since it's not placed in the salt field...
 				cache_id = new BlamLib.Blam.DatumIndex((ushort)(kCacheFileSaltBase | CacheFileSalt++), (short)game);
 
-				cacheFiles.Add(cache_id, cf);
+                if (!cacheFiles.ContainsKey(cache_id))
+                    cacheFiles.Add(cache_id, cf);
 			}
 
 			return cf.CacheId = cache_id;
