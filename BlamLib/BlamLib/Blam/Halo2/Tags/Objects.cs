@@ -342,25 +342,31 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region device
 	[TI.TagGroup((int)TagGroups.Enumerated.devi, 1, device_group.DeviceSize, typeof(object_group))]
-	public class device_group : object_group
+	public partial class device_group : object_group
 	{
 		internal const int DeviceSize = 152 /*+ ObjectSize*/;
 		internal const int DeviceFieldCount = 21;
 
-		#region Fields
-		#endregion
+        #region Fields
+        public TI.Real power_transition_time;
+        public TI.Real power_acceleration_time;
+        public TI.Real position_transition_time;
+        public TI.Real position_acceleration_time;
+        public TI.Real depowered_position_transition_time;
+        public TI.Real depowered_position_acceleration_time;
+        #endregion
 
-		#region Ctor
-		public device_group() : this(0) { }
+        #region Ctor
+        public device_group() : this(0) { }
 		protected device_group(int field_count) : base(field_count + DeviceFieldCount)
 		{
 			Add(/*flags = */ new TI.Flags());
-			Add(/*power transition time = */ new TI.Real());
-			Add(/*power acceleration time = */ new TI.Real());
-			Add(/*position transition time = */ new TI.Real());
-			Add(/*position acceleration time = */ new TI.Real());
-			Add(/*depowered position transition time = */ new TI.Real());
-			Add(/*depowered position acceleration time = */ new TI.Real());
+			Add(power_transition_time = new TI.Real());
+			Add(power_acceleration_time = new TI.Real());
+			Add(position_transition_time = new TI.Real());
+			Add(position_acceleration_time = new TI.Real());
+			Add(depowered_position_transition_time = new TI.Real());
+			Add(depowered_position_acceleration_time = new TI.Real());
 			Add(/*lightmap flags = */ new TI.Flags(TI.FieldType.WordFlags));
 			Add(new TI.Pad(2));
 			Add(new TI.UselessPad(4));
@@ -1341,22 +1347,22 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(ChangeColors = new TI.Block<object_change_colors>(this, 4));
 			Add(PredictedResources = new TI.Block<predicted_resource_block>(this, 2048));
 		}
-		#endregion
+        #endregion
 
-		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
-		{
-			PredictedResources.DeleteAll();
+        internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+        {
+            PredictedResources.DeleteAll();
 
-			return true;
-		}
+            return true;
+        }
 
-		/// <summary>
-		/// This is a very dangerous method if used incorrectly.
-		/// Will set all of this object's field to the FieldValue
-		/// returned by <paramref name="other"/>'s fields.
-		/// </summary>
-		/// <param name="other"></param>
-		internal void FromObject(object_group other)
+        /// <summary>
+        /// This is a very dangerous method if used incorrectly.
+        /// Will set all of this object's field to the FieldValue
+        /// returned by <paramref name="other"/>'s fields.
+        /// </summary>
+        /// <param name="other"></param>
+        internal void FromObject(object_group other)
 		{
 			for (int x = 0; x < ObjectFieldCount; x++)
 				this[x].FieldValue = other[x].FieldValue;
