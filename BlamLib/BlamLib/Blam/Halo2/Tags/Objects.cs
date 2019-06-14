@@ -1349,13 +1349,6 @@ namespace BlamLib.Blam.Halo2.Tags
 		}
 		#endregion
 
-		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
-		{
-			PredictedResources.DeleteAll();
-
-			return true;
-		}
-
 		/// <summary>
 		/// This is a very dangerous method if used incorrectly.
 		/// Will set all of this object's field to the FieldValue
