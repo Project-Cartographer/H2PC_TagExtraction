@@ -1347,15 +1347,22 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(ChangeColors = new TI.Block<object_change_colors>(this, 4));
 			Add(PredictedResources = new TI.Block<predicted_resource_block>(this, 2048));
 		}
-		#endregion
+        #endregion
 
-		/// <summary>
-		/// This is a very dangerous method if used incorrectly.
-		/// Will set all of this object's field to the FieldValue
-		/// returned by <paramref name="other"/>'s fields.
-		/// </summary>
-		/// <param name="other"></param>
-		internal void FromObject(object_group other)
+        internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+        {
+            PredictedResources.DeleteAll();
+
+            return true;
+        }
+
+        /// <summary>
+        /// This is a very dangerous method if used incorrectly.
+        /// Will set all of this object's field to the FieldValue
+        /// returned by <paramref name="other"/>'s fields.
+        /// </summary>
+        /// <param name="other"></param>
+        internal void FromObject(object_group other)
 		{
 			for (int x = 0; x < ObjectFieldCount; x++)
 				this[x].FieldValue = other[x].FieldValue;
