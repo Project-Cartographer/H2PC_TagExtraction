@@ -5,6 +5,7 @@
 */
 ﻿using System;
 using System.IO;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -172,6 +173,8 @@ namespace BlamLib.Test
 
 			args.SignalFinished();
 		}
+        //dont be mad,i could only come up with this
+        static List<int> extraction_indices;
 
         static void H2CacheExtractionMethod(object param)
         {
@@ -193,10 +196,21 @@ namespace BlamLib.Test
                     var ex_args = new Blam.CacheExtractionArguments(test_results_tags_path,
                         args.Output_DB, args.Recursive, args.Overrite, kExtractionDontUseTags);
 
-                    
-                    var cei = ti.ExtractionBegin(args.DatumIndex, ex_args);
-                    ti.Extract(cei);
-                    ti.ExtractionEnd();
+                    if (args.DatumIndex != -1)
+                    {
+                        var cei = ti.ExtractionBegin(args.DatumIndex, ex_args);
+                        ti.Extract(cei);
+                        ti.ExtractionEnd();
+                    }
+                    else
+                    {
+                        foreach(int i in extraction_indices)
+                        {
+                            var cei = ti.ExtractionBegin(i, ex_args);
+                            ti.Extract(cei);
+                            ti.ExtractionEnd();
+                        }
+                    }
 
                 }
                 ti.ExtractionDispose();
@@ -261,6 +275,35 @@ namespace BlamLib.Test
                 .VertexBufferCacheOpen(game);
 
             CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, kMapsDirectoryPc, DatumIndex, Recursive, OutputDB, Override, DestinationPath, map_names);
+
+
+
+            (Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheClose(game);
+            (Program.GetManager(game) as Managers.IStringIdController)
+                .StringIdCacheClose(game);
+
+        }
+        //cheap version to extract bunch of tags
+        public void Halo2_ExtractTagCache(List<int> DatumIndices, bool Recursive, bool OutputDB, bool Override, string DestinationPath, params string[] map_names)
+        {
+            BlamVersion game = BlamVersion.Halo2_PC;
+
+            Program.Halo2.LoadPc(
+                kMapsDirectoryPc + @"mainmenu.map",
+                kMapsDirectoryPc + @"shared.map",
+                kMapsDirectoryPc + @"single_player_shared.map");
+            Assert.IsNotNull(Program.Halo2.PcMainmenu);
+            Assert.IsNotNull(Program.Halo2.PcShared);
+            Assert.IsNotNull(Program.Halo2.PcCampaign);
+
+
+            (Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
+            (Program.GetManager(game) as Managers.IVertexBufferController)
+                .VertexBufferCacheOpen(game);
+
+            
+            extraction_indices = DatumIndices;
+            CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, kMapsDirectoryPc, -1, Recursive, OutputDB, Override, DestinationPath, map_names);
 
 
 

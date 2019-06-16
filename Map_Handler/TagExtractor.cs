@@ -106,6 +106,11 @@ namespace Map_Handler
                 curent_tag_status.Text = "Initializing Decompiler";
 
                 MainBox.CloseMap();
+
+                List<int> extract_list = TagsList.Keys.ToList<int>();
+                MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, mapName);
+
+                /*
                 progressBar1.Value = 0;
                 progressBar1.Maximum = TotalTags;
                 int index = 0;
@@ -117,6 +122,7 @@ namespace Map_Handler
                     progressBar1.Value++; //update the progress bar
                     index++;
                 }
+                */
 
                 if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
                 {
@@ -152,13 +158,16 @@ namespace Map_Handler
 
 
                 curent_tag_status.Text = "Initializing Decompiler";
-
-
                 MainBox.CloseMap();
+                
+
+                List<int> extract_list = MainBox.AllTagslist.Keys.ToList<int>();
+                MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, mapName);
+
+                /*
                 progressBar1.Value = 0;
                 progressBar1.Maximum = TotalTags;
                 int index = 1;
-                
                 foreach (int i in MainBox.AllTagslist.Keys)
                 {
                     tag_count_stats.Text = "[" + index++ + "/" + TotalTags + "]";
@@ -167,6 +176,7 @@ namespace Map_Handler
                     progressBar1.Value++; //update the progress bar
                     
                 }
+                */
 
                 if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
                 {
