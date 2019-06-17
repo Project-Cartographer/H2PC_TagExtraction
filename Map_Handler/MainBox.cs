@@ -624,7 +624,7 @@ namespace Map_Handler
             {
                 
                 current_tag_status.Text = "Extracting Objects : " + ExtractList.Values.ElementAt(index);
-                MainBox.H2Test.Halo2_ExtractTagCache(i, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, H2V_BaseMapsDirectory, mapName);
+                MainBox.H2Test.Halo2_ExtractTagCache(i, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, H2V_BaseMapsDirectory + "\\", mapName);
                 progressBar1.Value++; //update the progress bar
                 index++;
             }
