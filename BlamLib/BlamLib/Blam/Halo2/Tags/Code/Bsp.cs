@@ -26,7 +26,9 @@ namespace BlamLib.Blam.Halo2.Tags
 		#region Reconstruct
 		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 		{
-			bool result = true;
+            PredictedResources.DeleteAll();
+
+            bool result = true;
 
 			// recreate the section data
 			if (ClusterData.Count != 1)
@@ -40,7 +42,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			GeometryBlockInfo.Value.ClearPostReconstruction();
 
 			return result;
-		}
+        }
 		#endregion
 
 		public void Render(TI.Block<global_geometry_material_block> materials)

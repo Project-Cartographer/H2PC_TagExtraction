@@ -82,4 +82,22 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 	};
 	#endregion
+
+	#region light_volume_group
+	partial class light_volume_group
+	{
+		#region light_volume_volume_block
+		partial class light_volume_volume_block
+		{
+			#region Reconstruct
+			internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+			{
+				light_volume_runtime_offset.DeleteAll();
+				return true;
+			}
+			#endregion
+		}
+		#endregion
+	}
+	#endregion
 }
