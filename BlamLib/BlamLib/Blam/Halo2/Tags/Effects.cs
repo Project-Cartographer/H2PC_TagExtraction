@@ -728,11 +728,11 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region light_volume
 	[TI.TagGroup((int)TagGroups.Enumerated.MGS2, 1, 20)]
-	public class light_volume_group : TI.Definition
+	public partial class light_volume_group : TI.Definition
 	{
 		#region light_volume_volume_block
 		[TI.Definition(1, 188)]
-		public class light_volume_volume_block : TI.Definition
+		public partial class light_volume_volume_block : TI.Definition
 		{
 			#region light_volume_aspect_block
 			[TI.Definition(1, 36)]
@@ -768,13 +768,14 @@ namespace BlamLib.Blam.Halo2.Tags
 				}
 				#endregion
 			}
-			#endregion
+            #endregion
 
-			#region Fields
-			#endregion
+            #region Fields
+            public TI.Block<light_volume_runtime_offset_block> light_volume_runtime_offset;
+            #endregion
 
-			#region Ctor
-			public light_volume_volume_block() : base(25)
+            #region Ctor
+            public light_volume_volume_block() : base(25)
 			{
 				Add(/*flags = */ new TI.Flags());
 				Add(new TI.UselessPad(16));
@@ -799,7 +800,7 @@ namespace BlamLib.Blam.Halo2.Tags
 				Add(/*x-delta max error = */ new TI.Real(TI.FieldType.RealFraction));
 				Add(new TI.UselessPad(48));
 				Add(new TI.Skip(4));
-				Add(/* = */ new TI.Block<light_volume_runtime_offset_block>(this, 256));
+				Add(light_volume_runtime_offset = new TI.Block<light_volume_runtime_offset_block>(this, 256));
 				Add(new TI.Skip(48));
 			}
 			#endregion

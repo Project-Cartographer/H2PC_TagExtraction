@@ -118,7 +118,7 @@ namespace BlamLib.Blam.Halo2.Tags
 	#region character_physics_struct
 	//character physics
 	[TI.Struct((int)StructGroups.Enumerated.chpy, 1, 160)]
-	public class character_physics_struct : TI.Definition
+	public partial class character_physics_struct : TI.Definition
 	{
 		#region spheres_block
 		[TI.Definition(1, 128)]
@@ -194,13 +194,16 @@ namespace BlamLib.Blam.Halo2.Tags
 			}
 			#endregion
 		}
-		#endregion
+        #endregion
 
-		#region Fields
-		#endregion
+        #region Fields
+        public TI.Block<spheres_block> dead_sphere_shapes;
+        public TI.Block<pills_block> pill_shapes;
+        public TI.Block<spheres_block> sphere_shapes;
+        #endregion
 
-		#region Ctor
-		public character_physics_struct() : base(17)
+        #region Ctor
+        public character_physics_struct() : base(17)
 		{
 			Add(/*flags = */ new TI.Flags());
 			Add(/*height standing = */ new TI.Real());
@@ -212,9 +215,9 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(new TI.UselessPad(16));
 			Add(new TI.Pad(4));
 			Add(new TI.UselessPad(20));
-			Add(/*dead sphere shapes = */ new TI.Block<spheres_block>(this, 1024));
-			Add(/*pill shapes = */ new TI.Block<pills_block>(this, 1024));
-			Add(/*sphere shapes = */ new TI.Block<spheres_block>(this, 1024));
+			Add(dead_sphere_shapes = new TI.Block<spheres_block>(this, 1024));
+			Add(pill_shapes = new TI.Block<pills_block>(this, 1024));
+			Add(sphere_shapes = new TI.Block<spheres_block>(this, 1024));
 			Add(/*ground physics = */ new TI.Struct<character_physics_ground_struct>(this));
 			Add(/*flying physics = */ new TI.Struct<character_physics_flying_struct>(this));
 			Add(/*dead physics = */ new TI.Struct<character_physics_dead_struct>(this));
@@ -521,13 +524,14 @@ namespace BlamLib.Blam.Halo2.Tags
 			}
 			#endregion
 		}
-		#endregion
+        #endregion
 
-		#region Fields
-		#endregion
+        #region Fields
+        public TI.Block<predicted_bitmaps_block> PredictedBitmaps;
+        #endregion
 
-		#region Ctor
-		public item_group() : this(0) { }
+        #region Ctor
+        public item_group() : this(0) { }
 		public item_group(int field_count) : base(field_count + ItemFieldCount)
 		{
 			Add(/*flags = */ new TI.Flags());
@@ -548,7 +552,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(new TI.UselessPad(148));
 			Add(/*UNUSED = */ new TI.TagReference(this, TagGroups.foot));
 			Add(/*collision sound = */ new TI.TagReference(this, TagGroups.snd_));
-			Add(/*predicted bitmaps = */ new TI.Block<predicted_bitmaps_block>(this, 8));
+			Add(PredictedBitmaps = new TI.Block<predicted_bitmaps_block>(this, 8));
 			Add(new TI.UselessPad(92));
 			Add(/*detonation damage effect = */ new TI.TagReference(this, TagGroups.jpt_));
 			Add(/*detonation delay = */ new TI.RealBounds());
@@ -662,7 +666,7 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region model
 	[TI.TagGroup((int)TagGroups.Enumerated.hlmt, 1, 2, 348)]
-	public class model_group : TI.Definition
+	public partial class model_group : TI.Definition
 	{
 		#region model_variant_block
 		[TI.Definition(1, 72)]
@@ -792,7 +796,7 @@ namespace BlamLib.Blam.Halo2.Tags
 
 		#region global_damage_info_block
 		[TI.Definition(2, 320)]
-		public class global_damage_info_block : TI.Definition
+		public partial class global_damage_info_block : TI.Definition
 		{
 			#region global_damage_section_block
 			[TI.Definition(1, 68)]
@@ -908,13 +912,14 @@ namespace BlamLib.Blam.Halo2.Tags
 				}
 				#endregion
 			}
-			#endregion
+            #endregion
 
-			#region Fields
-			#endregion
+            #region Fields
+            public TI.Block<global_damage_nodes_block> nodes;
+            #endregion
 
-			#region Ctor
-			public global_damage_info_block() : base(31)
+            #region Ctor
+            public global_damage_info_block() : base(31)
 			{
 				Add(/*flags = */ new TI.Flags());
 				Add(/*global indirect material name = */ new TI.StringId());
@@ -941,7 +946,7 @@ namespace BlamLib.Blam.Halo2.Tags
 				Add(/*shield depleted effect = */ new TI.TagReference(this, TagGroups.effe));
 				Add(/*shield recharging effect = */ new TI.TagReference(this, TagGroups.effe));
 				Add(/*damage sections = */ new TI.Block<global_damage_section_block>(this, 16));
-				Add(/*nodes = */ new TI.Block<global_damage_nodes_block>(this, 255));
+				Add(nodes = new TI.Block<global_damage_nodes_block>(this, 255));
 				Add(new TI.Pad(2 + 2 + 4 + 4));
 				Add(/*damage seats = */ new TI.Block<damage_seat_info_block>(this, 16));
 				Add(/*damage constraints = */ new TI.Block<damage_constraint_info_block>(this, 16));
@@ -1923,7 +1928,7 @@ namespace BlamLib.Blam.Halo2.Tags
 	#region havok_vehicle_physics_struct
 	//havok vehicle physics
 	[TI.Struct((int)StructGroups.Enumerated.HVPH, 1, 96)]
-	public class havok_vehicle_physics_struct : TI.Definition
+	public partial class havok_vehicle_physics_struct : TI.Definition
 	{
 		#region anti_gravity_point_definition_block
 		[TI.Definition(1, 76)]
@@ -2121,13 +2126,14 @@ namespace BlamLib.Blam.Halo2.Tags
 			}
 			#endregion
 		}
-		#endregion
+        #endregion
 
-		#region Fields
-		#endregion
+        #region Fields
+        public TI.Block<vehicle_phantom_shape_block> shape_phantom_shape;
+        #endregion
 
-		#region Ctor
-		public havok_vehicle_physics_struct() : base(15)
+        #region Ctor
+        public havok_vehicle_physics_struct() : base(15)
 		{
 			Add(/*flags = */ new TI.Flags());
 			Add(/*ground friction = */ new TI.Real());
@@ -2143,7 +2149,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(/*radius = */ new TI.Real());
 			Add(/*anti gravity points = */ new TI.Block<anti_gravity_point_definition_block>(this, 16));
 			Add(/*friction points = */ new TI.Block<friction_point_definition_block>(this, 16));
-			Add(/*shape phantom shape = */ new TI.Block<vehicle_phantom_shape_block>(this, 1));
+			Add(shape_phantom_shape = new TI.Block<vehicle_phantom_shape_block>(this, 1));
 		}
 		#endregion
 	}
@@ -2467,7 +2473,7 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region weapon
 	[TI.TagGroup((int)TagGroups.Enumerated.weap, 2, 4, /*item_group.ItemSize +*/ 716, typeof(item_group))]
-	public class weapon_group : item_group
+	public partial class weapon_group : item_group
 	{
 		#region magazines
 		[TI.Definition(2, 128)]
