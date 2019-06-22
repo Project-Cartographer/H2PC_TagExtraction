@@ -194,16 +194,16 @@ namespace BlamLib.Blam.Halo2.Tags
 			}
 			#endregion
 		}
-        #endregion
+		#endregion
 
-        #region Fields
-        public TI.Block<spheres_block> dead_sphere_shapes;
-        public TI.Block<pills_block> pill_shapes;
-        public TI.Block<spheres_block> sphere_shapes;
-        #endregion
+		#region Fields
+		public TI.Block<spheres_block> dead_sphere_shapes;
+		public TI.Block<pills_block> pill_shapes;
+		public TI.Block<spheres_block> sphere_shapes;
+		#endregion
 
-        #region Ctor
-        public character_physics_struct() : base(17)
+		#region Ctor
+		public character_physics_struct() : base(17)
 		{
 			Add(/*flags = */ new TI.Flags());
 			Add(/*height standing = */ new TI.Real());
@@ -350,17 +350,17 @@ namespace BlamLib.Blam.Halo2.Tags
 		internal const int DeviceSize = 152 /*+ ObjectSize*/;
 		internal const int DeviceFieldCount = 21;
 
-        #region Fields
-        public TI.Real power_transition_time;
-        public TI.Real power_acceleration_time;
-        public TI.Real position_transition_time;
-        public TI.Real position_acceleration_time;
-        public TI.Real depowered_position_transition_time;
-        public TI.Real depowered_position_acceleration_time;
-        #endregion
+		#region Fields
+		public TI.Real power_transition_time;
+		public TI.Real power_acceleration_time;
+		public TI.Real position_transition_time;
+		public TI.Real position_acceleration_time;
+		public TI.Real depowered_position_transition_time;
+		public TI.Real depowered_position_acceleration_time;
+		#endregion
 
-        #region Ctor
-        public device_group() : this(0) { }
+		#region Ctor
+		public device_group() : this(0) { }
 		protected device_group(int field_count) : base(field_count + DeviceFieldCount)
 		{
 			Add(/*flags = */ new TI.Flags());
@@ -524,14 +524,14 @@ namespace BlamLib.Blam.Halo2.Tags
 			}
 			#endregion
 		}
-        #endregion
+		#endregion
 
-        #region Fields
-        public TI.Block<predicted_bitmaps_block> PredictedBitmaps;
-        #endregion
+		#region Fields
+		public TI.Block<predicted_bitmaps_block> PredictedBitmaps;
+		#endregion
 
-        #region Ctor
-        public item_group() : this(0) { }
+		#region Ctor
+		public item_group() : this(0) { }
 		public item_group(int field_count) : base(field_count + ItemFieldCount)
 		{
 			Add(/*flags = */ new TI.Flags());
@@ -912,14 +912,14 @@ namespace BlamLib.Blam.Halo2.Tags
 				}
 				#endregion
 			}
-            #endregion
+			#endregion
 
-            #region Fields
-            public TI.Block<global_damage_nodes_block> nodes;
-            #endregion
+			#region Fields
+			public TI.Block<global_damage_nodes_block> nodes;
+			#endregion
 
-            #region Ctor
-            public global_damage_info_block() : base(31)
+			#region Ctor
+			public global_damage_info_block() : base(31)
 			{
 				Add(/*flags = */ new TI.Flags());
 				Add(/*global indirect material name = */ new TI.StringId());
@@ -1352,22 +1352,22 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(ChangeColors = new TI.Block<object_change_colors>(this, 4));
 			Add(PredictedResources = new TI.Block<predicted_resource_block>(this, 2048));
 		}
-        #endregion
+		#endregion
 
-        internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
-        {
-            PredictedResources.DeleteAll();
+		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+		{
+			PredictedResources.DeleteAll();
 
-            return true;
-        }
+			return true;
+		}
 
-        /// <summary>
-        /// This is a very dangerous method if used incorrectly.
-        /// Will set all of this object's field to the FieldValue
-        /// returned by <paramref name="other"/>'s fields.
-        /// </summary>
-        /// <param name="other"></param>
-        internal void FromObject(object_group other)
+		/// <summary>
+		/// This is a very dangerous method if used incorrectly.
+		/// Will set all of this object's field to the FieldValue
+		/// returned by <paramref name="other"/>'s fields.
+		/// </summary>
+		/// <param name="other"></param>
+		internal void FromObject(object_group other)
 		{
 			for (int x = 0; x < ObjectFieldCount; x++)
 				this[x].FieldValue = other[x].FieldValue;
@@ -2126,14 +2126,14 @@ namespace BlamLib.Blam.Halo2.Tags
 			}
 			#endregion
 		}
-        #endregion
+		#endregion
 
-        #region Fields
-        public TI.Block<vehicle_phantom_shape_block> shape_phantom_shape;
-        #endregion
+		#region Fields
+		public TI.Block<vehicle_phantom_shape_block> shape_phantom_shape;
+		#endregion
 
-        #region Ctor
-        public havok_vehicle_physics_struct() : base(15)
+		#region Ctor
+		public havok_vehicle_physics_struct() : base(15)
 		{
 			Add(/*flags = */ new TI.Flags());
 			Add(/*ground friction = */ new TI.Real());

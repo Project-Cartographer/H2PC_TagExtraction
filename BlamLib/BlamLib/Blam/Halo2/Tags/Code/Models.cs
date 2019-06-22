@@ -353,6 +353,8 @@ namespace BlamLib.Blam.Halo2.Tags
 		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 		{
 			//ReconstructRigidBodyShapeData();
+			int Object_Count = Spheres.Count + MultiSpheres.Count + Pills.Count + Boxes.Count + Triangles.Count + Polyhedra.Count;
+			MassDistributions.Resize(Object_Count);//TODO: Find a proper way to generate values for this. This fix will only go so far.
 
 			return true;
 		}
