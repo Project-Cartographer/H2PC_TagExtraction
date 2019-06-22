@@ -2118,7 +2118,20 @@ namespace BlamLib.Blam.Halo2.Tags
 				Add(GeometryBlockInfo = new TI.Struct<geometry_block_info_struct>(this));
 				Add(CacheData = new TI.Block<lightmap_geometry_section_cache_data_block>(this, 1));
 			}
-		}
+            public lightmap_geometry_section_block(Blam.Halo2.Tags.structure_bsp_cluster_block arg):base(3)
+            {
+                GeometryInfo = new TI.Struct<global_geometry_section_info_struct>(this);
+                GeometryInfo.Value = arg.SectionInfo.Value;              
+                Add(GeometryInfo);
+
+                GeometryBlockInfo = new TI.Struct<geometry_block_info_struct>(this);
+                GeometryBlockInfo.Value = arg.GeometryBlockInfo.Value;
+                Add(GeometryBlockInfo);
+
+                CacheData = new TI.Block<lightmap_geometry_section_cache_data_block>(this, 1);
+                Add(CacheData);
+            }
+        }
 		#endregion
 
 		#region lightmap_geometry_render_info_block

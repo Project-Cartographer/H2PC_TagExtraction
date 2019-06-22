@@ -50,10 +50,11 @@
             this.getTagStructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resyncshadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resyncStringIDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultMaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpshadinfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -87,21 +88,21 @@
             // openMapToolStripMenuItem
             // 
             this.openMapToolStripMenuItem.Name = "openMapToolStripMenuItem";
-            this.openMapToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.openMapToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.openMapToolStripMenuItem.Text = "Open Map";
             this.openMapToolStripMenuItem.Click += new System.EventHandler(this.openMapToolStripMenuItem_Click);
             // 
             // closeMapToolStripMenuItem
             // 
             this.closeMapToolStripMenuItem.Name = "closeMapToolStripMenuItem";
-            this.closeMapToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.closeMapToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.closeMapToolStripMenuItem.Text = "Close Map";
             this.closeMapToolStripMenuItem.Click += new System.EventHandler(this.closeMapToolStripMenuItem_Click);
             // 
             // exitToolStripMenuItem
             // 
             this.exitToolStripMenuItem.Name = "exitToolStripMenuItem";
-            this.exitToolStripMenuItem.Size = new System.Drawing.Size(181, 26);
+            this.exitToolStripMenuItem.Size = new System.Drawing.Size(154, 26);
             this.exitToolStripMenuItem.Text = "Exit";
             this.exitToolStripMenuItem.Click += new System.EventHandler(this.exitToolStripMenuItem_Click);
             // 
@@ -203,7 +204,8 @@
             this.getTagStructureToolStripMenuItem,
             this.resyncshadToolStripMenuItem,
             this.resyncStringIDsToolStripMenuItem,
-            this.sndtagFixesToolStripMenuItem});
+            this.sndtagFixesToolStripMenuItem,
+            this.dumpshadinfoToolStripMenuItem});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.metaToolStripMenuItem.Text = "Meta";
@@ -243,6 +245,13 @@
             this.resyncStringIDsToolStripMenuItem.Text = "Resync StringIDs";
             this.resyncStringIDsToolStripMenuItem.Click += new System.EventHandler(this.resyncStringIDsToolStripMenuItem_Click);
             // 
+            // sndtagFixesToolStripMenuItem
+            // 
+            this.sndtagFixesToolStripMenuItem.Name = "sndtagFixesToolStripMenuItem";
+            this.sndtagFixesToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.sndtagFixesToolStripMenuItem.Text = "snd!_tag nullifier";
+            this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
+            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -267,12 +276,12 @@
             this.treeView1.Size = new System.Drawing.Size(556, 542);
             this.treeView1.TabIndex = 1;
             // 
-            // sndtagFixesToolStripMenuItem
+            // dumpshadinfoToolStripMenuItem
             // 
-            this.sndtagFixesToolStripMenuItem.Name = "sndtagFixesToolStripMenuItem";
-            this.sndtagFixesToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.sndtagFixesToolStripMenuItem.Text = "snd!_tag Fixes";
-            this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
+            this.dumpshadinfoToolStripMenuItem.Name = "dumpshadinfoToolStripMenuItem";
+            this.dumpshadinfoToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.dumpshadinfoToolStripMenuItem.Text = "Dump_shad_info";
+            this.dumpshadinfoToolStripMenuItem.Click += new System.EventHandler(this.dumpshadinfoToolStripMenuItem_Click);
             // 
             // MainBox
             // 
@@ -321,6 +330,7 @@
         private System.Windows.Forms.ToolStripMenuItem resyncshadToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem resyncStringIDsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sndtagFixesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dumpshadinfoToolStripMenuItem;
     }
 }
 

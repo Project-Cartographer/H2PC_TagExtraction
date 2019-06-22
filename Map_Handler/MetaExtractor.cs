@@ -20,7 +20,7 @@ namespace Map_Handler
         List<tagRef> extraction_list;//a list containing the datum indexes waiting for extraction
         List<int> extracted_list;//a list containing the datum indexes already extracted
 
-        string[] non_extractable = {"stem"};//list of tags that arent to be extracted
+        //string[] non_extractable = {"stem"};//list of tags that arent to be extracted
 
 
         public MetaExtractor(int datum,string type,Dictionary<int,string> SID_list,StreamReader sr)
@@ -146,11 +146,12 @@ namespace Map_Handler
                                     //add it to the extracted list
                                     extracted_list.Add(datum);
                                 }
-                                else log += "\nCouldnot find stringID to datum_index " + datum.ToString("X");
+                                else log += "\nCouldnot find stringID/tag of datum_index " + datum.ToString("X");
                             }
                             else
                             {
                                 log += "\nPlugin " + type + ".xml doesnt exist";
+                                log += "\nCannot extract tag : " + datum.ToString("X");
                                 extracted_list.Add(datum);
                             }
                         }
@@ -159,6 +160,11 @@ namespace Map_Handler
                 //close the config field and close the xml handle
                 xw.WriteEndElement();
                 xw.Dispose();
+
+                //logs 
+                StreamWriter sw_1 = new StreamWriter(textBox1.Text + "\\extraction_logs.txt");
+                sw_1.Write(log);
+                sw_1.Close();
 
                 //Log box
                 LogBox lb = new LogBox(log);

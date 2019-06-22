@@ -44,7 +44,7 @@ namespace Map_Handler
      
         
 
-        Dictionary<int, string> SID_list;//a list containing string index stuff
+        Dictionary<int, string> SID_list;//a list containing tag path stuff :P
         public static Dictionary<int, string> AllTagslist;
         public static string H2V_BaseMapsDirectory;
 
@@ -302,11 +302,15 @@ namespace Map_Handler
 
         }
 
+        private void sbspltmpHaxToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            H2Test.sbsptoltmp_cluster_block_copy(@"C:\Program Files (x86)\Microsoft Games\Halo 2 Map Editor\tags\scenarios\multi\example\example_example_lightmap.scenario_structure_lightmap", @"C:\Program Files (x86)\Microsoft Games\Halo 2 Map Editor\tags\scenarios\multi\example\example.scenario_structure_bsp");
+        }
 
         #endregion
-        
 
- 
+
+
         private void closeMapToolStripMenuItem_Click(object sender, EventArgs e)
         {
             CloseMap();
@@ -444,6 +448,84 @@ namespace Map_Handler
             {
                 snd_fixes snd = new snd_fixes(ofd.FileName);
             }
+        }
+
+        private void dumpshadinfoToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (map_loaded)
+            {
+                FolderBrowserDialog fbd = new FolderBrowserDialog();
+                fbd.ShowNewFolderButton = true;
+
+                MessageBox.Show("Select tags directory");
+
+
+                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    string  tags_directory = fbd.SelectedPath;
+
+                    StreamWriter log = new StreamWriter(tags_directory + '\\' + map_name.Substring(map_name.LastIndexOf('\\') + 1) + "_shad_logs.txt");
+
+                    foreach (TreeNode element in treeView1.Nodes["shad"].Nodes)
+                    {
+                        int table_ref = Int32.Parse(element.Name);
+                        int datum = DATA_READ.ReadINT_LE(table_ref + 4, map_stream);
+                        int mem_off = DATA_READ.ReadINT_LE(table_ref + 8, map_stream);
+                        int size = DATA_READ.ReadINT_LE(table_ref + 0xc, map_stream);
+
+                        meta meta_obj = new meta(datum, SID_list[datum], map_stream);
+                        meta_obj.Rebase_meta(0x0);
+
+                        if (meta_obj.Get_Total_size()!=0)
+                        {
+                            byte[] meta_data = meta_obj.Generate_meta_file();
+
+                            string text_path = tags_directory + '\\' + SID_list[datum] + ".txt";
+
+                            //lets create our directory
+                            System.IO.Directory.CreateDirectory(DATA_READ.ReadDirectory_from_file_location(text_path));
+
+                            StreamWriter sw = new StreamWriter(text_path);
+
+                            //supoosing each shad contains only one Post process block element
+                            int PPB_off = DATA_READ.ReadINT_LE(0x24, meta_data);
+
+                            int stem_datum = DATA_READ.ReadINT_LE(PPB_off, meta_data);
+                            int bitmap_count = DATA_READ.ReadINT_LE(PPB_off + 0x4, meta_data);
+                            int bitmapB_off = DATA_READ.ReadINT_LE(PPB_off + 0x8, meta_data);
+
+                            //write the stemp path
+                            string out_temp;
+                            if (stem_datum != 0 && stem_datum != -1)
+                            {
+                                if (SID_list.TryGetValue(stem_datum,out out_temp))
+                                    sw.WriteLine(SID_list[stem_datum]);
+                                else sw.WriteLine("Couldnt find tag_path to index : 0x" + stem_datum.ToString("X"));
+                            }
+                            for (int i = 0; i < bitmap_count; i++)
+                            {
+                                int bitm_datum = DATA_READ.ReadINT_LE(bitmapB_off + i * 0xC, meta_data);
+                                if (bitm_datum != 0 && bitm_datum != -1)
+                                {
+                                    if (SID_list.TryGetValue(bitm_datum, out out_temp))
+                                        sw.WriteLine(SID_list[bitm_datum]);
+                                    else sw.WriteLine("Couldnt find tag_path to index : 0x" + bitm_datum.ToString("X"));
+                                }
+                            }
+
+                            log.WriteLine("Dumped log 0x" + datum.ToString("X") + " : \\" + SID_list[datum]+".txt");
+
+                            sw.Close();
+                        }
+                        else
+                        {
+                            log.WriteLine("Couldnt read tag 0x" + datum.ToString("X") + " : " + mem_off.ToString("X") + " : " + size.ToString("X"));
+                        }
+                    }
+                    log.Close();
+                }
+            }
+            else MessageBox.Show("Load a map first");
         }
     }
 }
