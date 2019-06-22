@@ -768,14 +768,14 @@ namespace BlamLib.Blam.Halo2.Tags
 				}
 				#endregion
 			}
-            #endregion
+			#endregion
 
-            #region Fields
-            public TI.Block<light_volume_runtime_offset_block> light_volume_runtime_offset;
-            #endregion
+			#region Fields
+			public TI.Block<light_volume_runtime_offset_block> light_volume_runtime_offset;
+			#endregion
 
-            #region Ctor
-            public light_volume_volume_block() : base(25)
+			#region Ctor
+			public light_volume_volume_block() : base(25)
 			{
 				Add(/*flags = */ new TI.Flags());
 				Add(new TI.UselessPad(16));
