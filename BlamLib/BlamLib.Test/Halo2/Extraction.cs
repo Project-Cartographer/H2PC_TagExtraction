@@ -7,6 +7,7 @@
 ﻿using System;
 using System.IO;
 using System.Windows.Forms;
+using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
@@ -19,7 +20,7 @@ namespace BlamLib.Test
 		{
 			if (tii != null) foreach (var b in tii.Files)
 			{
-                var k = b.Path.Value.Substring(b.Path.Value.IndexOf("data"));
+				var k = b.Path.Value.Substring(b.Path.Value.IndexOf("data"));
 				var path = Path.Combine(out_path, k);
 
 				var dir = Path.GetDirectoryName(path);
@@ -78,37 +79,37 @@ namespace BlamLib.Test
 			tagindex = null;
 			bd.CloseTagIndex(datum_tagindex);
 		}
-        public void Halo2TestImportInfoExtraction(String SelectedFolder,String OutPath)
-        {
-            string test_results_path = Path.Combine(OutPath, EngineGetTestResultsPath(BlamVersion.Halo2_PC));
+		public void Halo2TestImportInfoExtraction(String SelectedFolder,String OutPath)
+		{
+			string test_results_path = Path.Combine(OutPath, EngineGetTestResultsPath(BlamVersion.Halo2_PC));
 
-            string[] coll = Directory.GetFiles(SelectedFolder,
-                Blam.Halo2.TagGroups.coll.ToFileSearchPattern(), SearchOption.AllDirectories);
-            string[] phmo = Directory.GetFiles(SelectedFolder,
-                Blam.Halo2.TagGroups.phmo.ToFileSearchPattern(), SearchOption.AllDirectories);
-            string[] mode = Directory.GetFiles(SelectedFolder,
-                Blam.Halo2.TagGroups.mode.ToFileSearchPattern(), SearchOption.AllDirectories);
-            string[] sbsp = Directory.GetFiles(SelectedFolder,
-                Blam.Halo2.TagGroups.sbsp.ToFileSearchPattern(), SearchOption.AllDirectories);
-            string[] hlmt = Directory.GetFiles(SelectedFolder,
-                Blam.Halo2.TagGroups.hlmt.ToFileSearchPattern(), SearchOption.AllDirectories);
+			string[] coll = Directory.GetFiles(SelectedFolder,
+				Blam.Halo2.TagGroups.coll.ToFileSearchPattern(), SearchOption.AllDirectories);
+			string[] phmo = Directory.GetFiles(SelectedFolder,
+				Blam.Halo2.TagGroups.phmo.ToFileSearchPattern(), SearchOption.AllDirectories);
+			string[] mode = Directory.GetFiles(SelectedFolder,
+				Blam.Halo2.TagGroups.mode.ToFileSearchPattern(), SearchOption.AllDirectories);
+			string[] sbsp = Directory.GetFiles(SelectedFolder,
+				Blam.Halo2.TagGroups.sbsp.ToFileSearchPattern(), SearchOption.AllDirectories);
+			string[] hlmt = Directory.GetFiles(SelectedFolder,
+				Blam.Halo2.TagGroups.hlmt.ToFileSearchPattern(), SearchOption.AllDirectories);
 
-            var bd = Program.Halo2.Manager;
-            var datum_tagindex = bd.OpenTagIndex(BlamVersion.Halo2_PC, kTestTagIndexTagsPath);
-            var tagindex = bd.GetTagIndex(datum_tagindex) as Managers.TagIndex;
+			var bd = Program.Halo2.Manager;
+			var datum_tagindex = bd.OpenTagIndex(BlamVersion.Halo2_PC, kTestTagIndexTagsPath);
+			var tagindex = bd.GetTagIndex(datum_tagindex) as Managers.TagIndex;
 
-            ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.coll, coll);
-            ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.phmo, phmo);
-            ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.mode, mode);
-            ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.sbsp, sbsp);
-            //ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.hlmt, hlmt);
+			ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.coll, coll);
+			ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.phmo, phmo);
+			ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.mode, mode);
+			ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.sbsp, sbsp);
+			//ExtractImportInfo(test_results_path, tagindex, Blam.Halo2.TagGroups.hlmt, hlmt);
 
-            tagindex = null;
-            bd.CloseTagIndex(datum_tagindex);
-        }
-        #endregion
+			tagindex = null;
+			bd.CloseTagIndex(datum_tagindex);
+		}
+		#endregion
 
-        static readonly TagInterface.TagGroupCollection kExtractionDontUseTags = new TagInterface.TagGroupCollection(true,
+		static readonly TagInterface.TagGroupCollection kExtractionDontUseTags = new TagInterface.TagGroupCollection(true,
 			Blam.Halo2.TagGroups.ugh_
 		#region These will never appear in a cache file anyway
 // 			Blam.Halo2.TagGroups.srscen,
@@ -174,39 +175,51 @@ namespace BlamLib.Test
 
 			args.SignalFinished();
 		}
+		//dont be mad,i could only come up with this
+		static List<int> extraction_indices;
 
-        static void H2CacheExtractionMethod(object param)
-        {
-            var args = param as CacheFileOutputInfoArgs;
+		static void H2CacheExtractionMethod(object param)
+		{
+			var args = param as CacheFileOutputInfoArgs;
 
-            using (var handler = new CacheHandler<Blam.Halo2.CacheFile>(args.Game, args.MapPath))
-            {
-                handler.Read();
-                var cache = handler.CacheInterface;
+			using (var handler = new CacheHandler<Blam.Halo2.CacheFile>(args.Game, args.MapPath))
+			{
+				handler.Read();
+				var cache = handler.CacheInterface;
 
-                var ti = cache.TagIndexManager as Blam.Halo2.InternalCacheTagIndex;
+				var ti = cache.TagIndexManager as Blam.Halo2.InternalCacheTagIndex;
 
-                ti.ExtractionInitialize();
-                Assert.IsNotNull(ti.kVertexBuffers);
-                {
-                    string test_results_tags_path = Path.Combine(args.ExtractDirectory);
+				ti.ExtractionInitialize();
+				Assert.IsNotNull(ti.kVertexBuffers);
+				{
+					string test_results_tags_path = Path.Combine(args.ExtractDirectory);
 
-                    // extract with dependents, database and overwrite existing tag files
-                    var ex_args = new Blam.CacheExtractionArguments(test_results_tags_path,
-                        args.Output_DB, args.Recursive, args.Overrite, kExtractionDontUseTags);
+					// extract with dependents, database and overwrite existing tag files
+					var ex_args = new Blam.CacheExtractionArguments(test_results_tags_path,
+						args.Output_DB, args.Recursive, args.Overrite, kExtractionDontUseTags);
 
-                    
-                    var cei = ti.ExtractionBegin(args.DatumIndex, ex_args);
-                    ti.Extract(cei);
-                    ti.ExtractionEnd();
+					if (args.DatumIndex != -1)
+					{
+						var cei = ti.ExtractionBegin(args.DatumIndex, ex_args);
+						ti.Extract(cei);
+						ti.ExtractionEnd();
+					}
+					else
+					{
+						foreach (int i in extraction_indices)
+						{
+							var cei = ti.ExtractionBegin(i, ex_args);
+							ti.Extract(cei);
+							ti.ExtractionEnd();
+						}
+					}
+				}
+				ti.ExtractionDispose();
+			}
 
-                }
-                ti.ExtractionDispose();
-            }
-
-            args.SignalFinished();
-        }
-        void Halo2TestCacheExtraction(BlamVersion game, string dir, params string[] map_names)
+			args.SignalFinished();
+		}
+		void Halo2TestCacheExtraction(BlamVersion game, string dir, params string[] map_names)
 		{
 			(Program.GetManager(game) as Managers.IStringIdController)
 				.StringIdCacheOpen(game);
@@ -227,16 +240,16 @@ namespace BlamLib.Test
 		public void Halo2TestCacheExtractionPc()
 		{
 
-            string MapPath = "";
-            string MapsDir = "";
-               if (MapPath != "")
-            {
-                 MapsDir = MapPath;
-            }
-            else
-            {
-                 MapsDir = kMapsDirectoryPc;
-            }
+			string MapPath = "";
+			string MapsDir = "";
+			   if (MapPath != "")
+			{
+				 MapsDir = MapPath;
+			}
+			else
+			{
+				 MapsDir = kMapsDirectoryPc;
+			}
 
 
 
@@ -259,50 +272,79 @@ namespace BlamLib.Test
 
 			Console.WriteLine("Halo2TestCacheExtractionPc: Overall time: {0}", StopStopwatch());
 		}
-        public void Halo2_ExtractTagCache(Blam.DatumIndex DatumIndex,bool Recursive, bool OutputDB, bool Override,string DestinationPath, string MapPath, params string[] map_names)
-        {
-            BlamVersion game = BlamVersion.Halo2_PC;
 
-            
-            
-            string MapsDir = "";
-            
-            if (MapPath != "")
-            {
-                 MapsDir = MapPath;
-            }
-            else
-            {
-                MapsDir = kMapsDirectoryPc;
-            }
+		public void Halo2_ExtractTagCache(Blam.DatumIndex DatumIndex,bool Recursive, bool OutputDB, bool Override,string DestinationPath, string MapPath, params string[] map_names)
+		{
+			BlamVersion game = BlamVersion.Halo2_PC;
+			
+			string MapsDir = "";
+			
+			if (MapPath != "")
+			{
+				 MapsDir = MapPath;
+			}
+			else
+			{
+				MapsDir = kMapsDirectoryPc;
+			}
+
+			Program.Halo2.LoadPc(
+				MapsDir + @"mainmenu.map",
+				MapsDir + @"shared.map",
+				MapsDir + @"single_player_shared.map");
+			Assert.IsNotNull(Program.Halo2.PcMainmenu);
+			Assert.IsNotNull(Program.Halo2.PcShared);
+			Assert.IsNotNull(Program.Halo2.PcCampaign);
+
+			(Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
+			(Program.GetManager(game) as Managers.IVertexBufferController)
+				.VertexBufferCacheOpen(game);
+
+			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, MapsDir, DatumIndex, Recursive, OutputDB, Override, DestinationPath, map_names);
+
+			(Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheClose(game);
+			(Program.GetManager(game) as Managers.IStringIdController)
+				.StringIdCacheClose(game);
+		}
+
+		//cheap version to extract bunch of tags
+		public void Halo2_ExtractTagCache(List<int> DatumIndices, bool Recursive, bool OutputDB, bool Override, string DestinationPath, string MapPath, params string[] map_names)
+		{
+			BlamVersion game = BlamVersion.Halo2_PC;
+
+			string MapsDir = "";
+
+			if (MapPath != "")
+			{
+				MapsDir = MapPath;
+			}
+			else
+			{
+				MapsDir = kMapsDirectoryPc;
+			}
+
+			Program.Halo2.LoadPc(
+				kMapsDirectoryPc + @"mainmenu.map",
+				kMapsDirectoryPc + @"shared.map",
+				kMapsDirectoryPc + @"single_player_shared.map");
+			Assert.IsNotNull(Program.Halo2.PcMainmenu);
+			Assert.IsNotNull(Program.Halo2.PcShared);
+			Assert.IsNotNull(Program.Halo2.PcCampaign);
 
 
-            
-            
+			(Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
+			(Program.GetManager(game) as Managers.IVertexBufferController)
+				.VertexBufferCacheOpen(game);
 
-            Program.Halo2.LoadPc(
-                MapsDir + @"mainmenu.map",
-                MapsDir + @"shared.map",
-                MapsDir + @"single_player_shared.map");
-            Assert.IsNotNull(Program.Halo2.PcMainmenu);
-            Assert.IsNotNull(Program.Halo2.PcShared);
-            Assert.IsNotNull(Program.Halo2.PcCampaign);
+			extraction_indices = DatumIndices;
+			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, MapsDir, -1, Recursive, OutputDB, Override, DestinationPath, map_names);
 
+			(Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheClose(game);
+			(Program.GetManager(game) as Managers.IStringIdController)
+				.StringIdCacheClose(game);
+		}
 
-            (Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
-            (Program.GetManager(game) as Managers.IVertexBufferController)
-                .VertexBufferCacheOpen(game);
-
-            CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, MapsDir, DatumIndex, Recursive, OutputDB, Override, DestinationPath, map_names);
-
-
-
-            (Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheClose(game);
-            (Program.GetManager(game) as Managers.IStringIdController)
-                .StringIdCacheClose(game);
-
-        }
-        [TestMethod]
+		[TestMethod]
 		public void Halo2TestCacheExtractionXbox()
 		{
 			StartStopwatch();
