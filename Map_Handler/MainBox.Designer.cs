@@ -79,6 +79,7 @@
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.clear_button = new System.Windows.Forms.Button();
+            this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -231,7 +232,8 @@
             this.injectMetaToolStripMenuItem,
             this.getTagStructureToolStripMenuItem,
             this.resyncshadToolStripMenuItem,
-            this.resyncStringIDsToolStripMenuItem});
+            this.resyncStringIDsToolStripMenuItem,
+            this.sndtagFixesToolStripMenuItem});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.metaToolStripMenuItem.Text = "Meta";
@@ -298,6 +300,13 @@
             this.treeView1.Size = new System.Drawing.Size(406, 619);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
+            // 
+            // sndtagFixesToolStripMenuItem
+            // 
+            this.sndtagFixesToolStripMenuItem.Name = "sndtagFixesToolStripMenuItem";
+            this.sndtagFixesToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.sndtagFixesToolStripMenuItem.Text = "snd!_tag Fixes";
+            this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
             // 
             // textBox1
             // 
@@ -678,6 +687,7 @@
         public System.Windows.Forms.Button clear_button;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button6;
+        private System.Windows.Forms.ToolStripMenuItem sndtagFixesToolStripMenuItem;
     }
 }
 

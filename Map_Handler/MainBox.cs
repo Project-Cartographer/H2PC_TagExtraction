@@ -686,23 +686,15 @@ namespace Map_Handler
             }
         }
 
-      
+        private void sndtagFixesToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ofd = new OpenFileDialog();
+            ofd.Filter = "config files(*.xml)|*.xml";
 
-        
-       
-
-    
-
-        
-
-
-
-
-
-
-      
-        
-
-       
+            if (ofd.ShowDialog() == DialogResult.OK)
+            {
+                snd_fixes snd = new snd_fixes(ofd.FileName);
+            }
+        }
     }
 }
