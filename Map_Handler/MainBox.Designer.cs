@@ -80,7 +80,10 @@
             this.label4 = new System.Windows.Forms.Label();
             this.clear_button = new System.Windows.Forms.Button();
             this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dumpshadinfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shaderEmulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createPluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpShadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.emulateShaderDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -235,7 +238,7 @@
             this.resyncshadToolStripMenuItem,
             this.resyncStringIDsToolStripMenuItem,
             this.sndtagFixesToolStripMenuItem,
-            this.dumpshadinfoToolStripMenuItem});
+            this.shaderEmulatorToolStripMenuItem});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.metaToolStripMenuItem.Text = "Meta";
@@ -310,12 +313,36 @@
             this.sndtagFixesToolStripMenuItem.Text = "snd!_tag Fixes";
             this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
             // 
-            // dumpshadinfoToolStripMenuItem
+            // shaderEmulatorToolStripMenuItem
             // 
-            this.dumpshadinfoToolStripMenuItem.Name = "dumpshadinfoToolStripMenuItem";
-            this.dumpshadinfoToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.dumpshadinfoToolStripMenuItem.Text = "Dump_shad_info";
-            this.dumpshadinfoToolStripMenuItem.Click += new System.EventHandler(this.dumpshadinfoToolStripMenuItem_Click);
+            this.shaderEmulatorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createPluginsToolStripMenuItem,
+            this.dumpShadersToolStripMenuItem,
+            this.emulateShaderDumpToolStripMenuItem});
+            this.shaderEmulatorToolStripMenuItem.Name = "shaderEmulatorToolStripMenuItem";
+            this.shaderEmulatorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.shaderEmulatorToolStripMenuItem.Text = "Shader Emulator";
+            // 
+            // createPluginsToolStripMenuItem
+            // 
+            this.createPluginsToolStripMenuItem.Name = "createPluginsToolStripMenuItem";
+            this.createPluginsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.createPluginsToolStripMenuItem.Text = "Create Shader Plugins";
+            this.createPluginsToolStripMenuItem.Click += new System.EventHandler(this.CreatePluginsToolStripMenuItem_Click);
+            // 
+            // dumpShadersToolStripMenuItem
+            // 
+            this.dumpShadersToolStripMenuItem.Name = "dumpShadersToolStripMenuItem";
+            this.dumpShadersToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.dumpShadersToolStripMenuItem.Text = "Export Shader Dump";
+            this.dumpShadersToolStripMenuItem.Click += new System.EventHandler(this.DumpShadersToolStripMenuItem_Click);
+            // 
+            // emulateShaderDumpToolStripMenuItem
+            // 
+            this.emulateShaderDumpToolStripMenuItem.Name = "emulateShaderDumpToolStripMenuItem";
+            this.emulateShaderDumpToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.emulateShaderDumpToolStripMenuItem.Text = "Process Shader Dump";
+            this.emulateShaderDumpToolStripMenuItem.Click += new System.EventHandler(this.EmulateShaderDumpToolStripMenuItem_Click);
             // 
             // textBox1
             // 
@@ -697,7 +724,10 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripMenuItem sndtagFixesToolStripMenuItem;
-        private System.Windows.Forms.ToolStripMenuItem dumpshadinfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem shaderEmulatorToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem createPluginsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dumpShadersToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem emulateShaderDumpToolStripMenuItem;
     }
 }
 
