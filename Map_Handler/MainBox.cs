@@ -700,82 +700,513 @@ namespace Map_Handler
             }
         }
 
-        private void dumpshadinfoToolStripMenuItem_Click(object sender, EventArgs e)
+        private void EmulateShaderDumpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            if (map_loaded)
+
+
+            OpenFileDialog fbd = new OpenFileDialog();
+
+
+            MessageBox.Show("Please select the Shader Log.");
+
+
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-                FolderBrowserDialog fbd = new FolderBrowserDialog();
-                fbd.ShowNewFolderButton = true;
+                string filePath = Path.Combine(Environment.CurrentDirectory, "plugins", "shaderstemplates", "blank.shader");
+                string shaderpath = Path.GetDirectoryName(fbd.FileName);
+                string tagfolder = Path.Combine(shaderpath, "TAGS");
+                string workingdirectory = Environment.CurrentDirectory;
+                Directory.CreateDirectory(tagfolder);
 
-                MessageBox.Show("Select tags directory");
-
-
-                if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                foreach (string line in File.ReadLines(fbd.FileName))
                 {
-                    string tags_directory = fbd.SelectedPath;
 
-                    StreamWriter log = new StreamWriter(tags_directory + '\\' + map_name.Substring(map_name.LastIndexOf('\\') + 1) + "_shad_logs.txt");
+                    string[] tagpaths = File.ReadAllLines(Path.Combine(shaderpath, line));
 
-                    foreach (TreeNode element in treeView1.Nodes["shad"].Nodes)
+                    string shadertemplate = Path.GetFileName(tagpaths[0]) + ".shader_template.txt";
+
+                    string[] bitmap_labels = File.ReadAllLines(Path.Combine(workingdirectory, "plugins", "shaderstemplates", shadertemplate));
+                    int parametercount = bitmap_labels.GetLength(0);
+                    string tagname = Path.Combine(tagfolder, line.Substring(0, (line.Length - 4)) + ".shader");
+                    Directory.CreateDirectory(Directory.GetParent(tagname).ToString());
+
+                    using (var fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                    using (var ds = new FileStream(tagname, FileMode.Create, FileAccess.ReadWrite))
+                    using (var ms = new MemoryStream())
+                    using (var bw = new BinaryWriter(ms))
+                    using (var br = new BinaryReader(ms))
+
                     {
-                        int table_ref = Int32.Parse(element.Name);
-                        int datum = DATA_READ.ReadINT_LE(table_ref + 4, map_stream);
-                        int mem_off = DATA_READ.ReadINT_LE(table_ref + 8, map_stream);
-                        int size = DATA_READ.ReadINT_LE(table_ref + 0xc, map_stream);
+                        fs.CopyTo(ms);
+                        ms.Position = 0;
 
-                        meta meta_obj = new meta(datum, SID_list[datum], map_stream);
-                        meta_obj.Rebase_meta(0x0);
 
-                        if (meta_obj.Get_Total_size() != 0)
+
+
+                        bw.BaseStream.Seek(88, SeekOrigin.Begin);
+                        bw.Write(Convert.ToInt32(tagpaths[0].Length));
+                        bw.BaseStream.Seek(116, SeekOrigin.Begin);
+                        bw.Write(Convert.ToInt32(parametercount));
+
+                        bw.BaseStream.Seek(208, SeekOrigin.Begin);
+
+
+                        bw.Write(Encoding.UTF8.GetBytes(tagpaths[0]));
+                        bw.Write(Convert.ToByte(0));
+                        bw.Write(Encoding.UTF8.GetBytes("dfbt"));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(parametercount));
+                        bw.Write(Convert.ToInt32(52));
+
+                        for (int i = 0; i < parametercount; i++)
                         {
-                            byte[] meta_data = meta_obj.Generate_meta_file();
+                            bw.Write(Convert.ToInt16(0));
 
-                            string text_path = tags_directory + '\\' + SID_list[datum] + ".txt";
-
-                            //lets create our directory
-                            System.IO.Directory.CreateDirectory(DATA_READ.ReadDirectory_from_file_location(text_path));
-
-                            StreamWriter sw = new StreamWriter(text_path);
-
-                            //supoosing each shad contains only one Post process block element
-                            int PPB_off = DATA_READ.ReadINT_LE(0x24, meta_data);
-
-                            int stem_datum = DATA_READ.ReadINT_LE(PPB_off, meta_data);
-                            int bitmap_count = DATA_READ.ReadINT_LE(PPB_off + 0x4, meta_data);
-                            int bitmapB_off = DATA_READ.ReadINT_LE(PPB_off + 0x8, meta_data);
-
-                            //write the stemp path
-                            string out_temp;
-                            if (stem_datum != 0 && stem_datum != -1)
+                            if (tagpaths[i + 1] == " ")
                             {
-                                if (SID_list.TryGetValue(stem_datum, out out_temp))
-                                    sw.WriteLine(SID_list[stem_datum]);
-                                else sw.WriteLine("Couldnt find tag_path to index : 0x" + stem_datum.ToString("X"));
+                                tagpaths[i + 1] = "";
                             }
-                            for (int i = 0; i < bitmap_count; i++)
+
+                            byte[] flip = new byte[2];
+                            flip = BitConverter.GetBytes(Convert.ToInt16(bitmap_labels[i].Length));
+                            Array.Reverse(flip);
+
+                            bw.Write(BitConverter.ToInt16(flip, 0));
+                            bw.Write(Convert.ToInt32(0));
+                            bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                            bw.Write(Convert.ToInt32(0));
+                            bw.Write((Convert.ToInt32(tagpaths[i + 1].Length)));
+                            bw.Write(Convert.ToInt32(-1));
+
+
+                            bw.Write(Convert.ToInt32(0));
+                            bw.Write(Convert.ToInt32(0));
+                            bw.Write(Convert.ToInt32(0));
+                            bw.Write(Convert.ToInt32(0));
+                            bw.Write(Convert.ToInt32(0));
+                            // 5 time 5 time 5 time 5 time 5 time WCW Champion
+
+                            bw.Write(Convert.ToInt32(-1));
+
+                            bw.Write(Convert.ToInt32(10088844));
+                            //Look I don't design the tags I just write them to the file. I need to write 10088844 and I don't care why.
+                        }
+                        for (int i = 0; i < parametercount; i++)
+                        {
+                            bw.Write(Encoding.UTF8.GetBytes(bitmap_labels[i]));
+                            bw.Write(Encoding.UTF8.GetBytes(tagpaths[i + 1]));
+                            if (tagpaths[i + 1].Length > 0)
                             {
-                                int bitm_datum = DATA_READ.ReadINT_LE(bitmapB_off + i * 0xC, meta_data);
-                                if (bitm_datum != 0 && bitm_datum != -1)
+                                bw.Write(Convert.ToByte(0));
+                            }
+
+                        }
+
+                        ms.Position = 0;
+                        ds.Position = 0;
+                        ms.CopyTo(ds);
+
+                        ms.Close();
+                        fs.Close();
+                        ds.Close();
+
+
+
+                    }
+
+                }
+
+
+
+
+
+
+            }
+        }
+
+        private void CreatePluginsToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+
+            // Elmer Source Code
+            // <3 Hamp
+
+
+
+            string tagdirectory = "";
+
+            FolderBrowserDialog fbd = new FolderBrowserDialog();
+            fbd.ShowNewFolderButton = true;
+
+
+            MessageBox.Show("Please select a directory containing .shader_template files. These will be converted to plugins for the shader emulator.");
+
+            if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+            {
+
+
+                tagdirectory = fbd.SelectedPath;
+
+
+
+
+
+                var stfiles = Directory.GetFiles(tagdirectory, $"*.shader_template", SearchOption.AllDirectories);
+                string outpath = Path.Combine(Environment.CurrentDirectory, "plugins", "shaderstemplates");
+                Directory.CreateDirectory(outpath);
+
+                foreach (var stfile in stfiles)
+                {
+
+                    int magic = new int();
+
+                    int propcount = new int();
+                    int catcount = new int();
+
+                    List<string> bitmapID = new List<string>();
+
+
+
+                    using (var fs = new FileStream(stfile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
+                    using (var ms = new MemoryStream())
+                    using (var bw = new BinaryWriter(ms))
+                    using (var br = new BinaryReader(ms))
+
+                    {
+                        fs.CopyTo(ms);
+                        ms.Position = 0;
+
+                        br.BaseStream.Seek(80, SeekOrigin.Begin);
+                        magic = magic + br.ReadInt16();
+
+
+                        br.BaseStream.Seek(108, SeekOrigin.Begin);
+                        propcount = br.ReadInt16();
+
+
+                        br.BaseStream.Seek(120, SeekOrigin.Begin);
+                        catcount = br.ReadInt16();
+
+
+                        int[] catskipcount = new int[catcount];
+                        int[] parcount = new int[catcount];
+
+                        br.BaseStream.Seek(236 + magic, SeekOrigin.Begin);
+
+                        if (propcount > 0)
+                        {
+                            br.BaseStream.Seek(16, SeekOrigin.Current);
+                            magic = magic + 16;
+                        }
+
+
+                        for (int i = 0; i < propcount; i++)
+                        {
+                            br.BaseStream.Seek(7, SeekOrigin.Current);
+                            magic = magic + br.ReadByte();
+                        }
+
+                        magic = magic + (propcount * 8);
+
+
+
+                        br.BaseStream.Seek(236 + magic, SeekOrigin.Begin);
+
+                        if (catcount > 0)
+                        {
+                            br.BaseStream.Seek(16, SeekOrigin.Current);
+                            magic = magic + 16;
+                        }
+
+                        for (int i = 0; i < catcount; i++)
+                        {
+                            br.BaseStream.Seek(3, SeekOrigin.Current);
+                            catskipcount[i] = catskipcount[i] + br.ReadByte();
+                            parcount[i] = br.ReadByte();
+
+                            if (parcount[i] == 0)
+                            {
+                                parcount[i] = 1;
+                            }
+                            br.BaseStream.Seek(11, SeekOrigin.Current);
+                        }
+
+                        magic = magic + (catcount * 16);
+
+
+                        br.BaseStream.Seek(236 + magic, SeekOrigin.Begin);
+
+
+                        for (int i = 0; i < catcount; i++)
+                        {
+
+                            br.BaseStream.Seek(catskipcount[i], SeekOrigin.Current);
+                            br.BaseStream.Seek(16, SeekOrigin.Current);
+                            // MessageBox.Show(br.BaseStream.Position.ToString()+"cat");
+                            int[] parskipcount = new int[parcount[i]];
+                            int[] namelength = new int[parcount[i]];
+                            int[] tagpath = new int[parcount[i]];
+                            int[] ID = new int[parcount[i]];
+                            for (int n = 0; n < parcount[i]; n++)
+                            {
+
+                                parskipcount[n] = 0;
+                                namelength[n] = 0;
+                                br.BaseStream.Seek(3, SeekOrigin.Current);
+                                namelength[n] = br.ReadByte();
+
+                                parskipcount[n] = parskipcount[n] + br.ReadByte();
+
+
+
+
+                                br.BaseStream.Seek(19, SeekOrigin.Current);
+                                ID[n] = br.ReadInt16();
+
+                                br.BaseStream.Seek(10, SeekOrigin.Current);
+                                tagpath[n] = br.ReadInt16();
+
+
+
+
+                                br.BaseStream.Seek(34, SeekOrigin.Current);
+                            }
+
+                            for (int n = 0; n < parcount[i]; n++)
+                            {
+
+                                if (ID[n] == 0)
                                 {
-                                    if (SID_list.TryGetValue(bitm_datum, out out_temp))
-                                        sw.WriteLine(SID_list[bitm_datum]);
-                                    else sw.WriteLine("Couldnt find tag_path to index : 0x" + bitm_datum.ToString("X"));
+                                    //MessageBox.Show(br.BaseStream.Position.ToString() + "--nl" + namelength[n]);
+                                    bitmapID.Add(new string(br.ReadChars(namelength[n])));
+                                    //MessageBox.Show("Wrote-" + bitmapID[bitmapID.Count - 1]);
+                                }
+                                else
+                                {
+                                    br.BaseStream.Seek(namelength[n], SeekOrigin.Current);
+                                    //MessageBox.Show("Skipped-"+namelength[n].ToString());
+                                }
+                                //MessageBox.Show(br.BaseStream.Position.ToString() + "--ps" + parskipcount[n]);
+                                br.BaseStream.Seek(parskipcount[n], SeekOrigin.Current);
+                                if (tagpath[n] > 0)
+                                {
+                                    // MessageBox.Show(br.BaseStream.Position.ToString() + "--tp" + tagpath[n] + 1);
+                                    br.BaseStream.Seek(tagpath[n] + 1, SeekOrigin.Current);
                                 }
                             }
 
-                            log.WriteLine("Dumped log 0x" + datum.ToString("X") + " : \\" + SID_list[datum] + ".txt");
-
-                            sw.Close();
                         }
-                        else
+
+
+
+                        string output = Path.Combine(outpath, Path.GetFileName(stfile) + ".txt");
+
+                        System.IO.File.WriteAllText(output, "");
+
+
+                        foreach (var bitm in bitmapID)
                         {
-                            log.WriteLine("Couldnt read tag 0x" + datum.ToString("X") + " : " + mem_off.ToString("X") + " : " + size.ToString("X"));
+                            //  MessageBox.Show(bitm);
+                            System.IO.File.AppendAllText(output, bitm + Environment.NewLine);
                         }
                     }
-                    log.Close();
+
+                    string blankshader = Path.Combine(outpath, "blank.shader");
+
+                    using (var fs = new FileStream(blankshader, FileMode.Create, FileAccess.ReadWrite))
+                    using (var ms = new MemoryStream())
+                    using (var bw = new BinaryWriter(ms))
+                    using (var br = new BinaryReader(ms))
+
+                    {
+                        fs.CopyTo(ms);
+                        ms.Position = 0;
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Encoding.UTF8.GetBytes("dahs"));
+
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(64));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(-16777215));
+
+                        bw.Write(Encoding.UTF8.GetBytes("!MLBdfbt"));
+
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(1));
+
+                        bw.Write(Convert.ToInt32(128));
+
+                        bw.Write(Encoding.UTF8.GetBytes("mets"));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(-1));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(-1));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(-1));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(-1));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(-1));
+
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Encoding.UTF8.GetBytes("tils"));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(-1));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+                        bw.Write(Convert.ToInt32(-1));
+
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+                        bw.Write(Convert.ToInt32(0));
+
+
+                        ms.Position = 0;
+                        ms.CopyTo(fs);
+
+
+                    }
+
+
+
                 }
             }
-            else MessageBox.Show("Load a map first");
+
+
+
+        }
+
+        private void DumpShadersToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            {
+                if (map_loaded)
+                {
+                    FolderBrowserDialog fbd = new FolderBrowserDialog();
+                    fbd.ShowNewFolderButton = true;
+
+                    MessageBox.Show("Select a directory to export the shader dump. Preferably an empty folder.");
+
+
+                    if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                    {
+                        string tags_directory = fbd.SelectedPath;
+
+                        StreamWriter log = new StreamWriter(tags_directory + '\\' + map_name.Substring(map_name.LastIndexOf('\\') + 1) + ".shader_log");
+
+                        foreach (TreeNode element in treeView1.Nodes["shad"].Nodes)
+                        {
+                            int table_ref = Int32.Parse(element.Name);
+                            int datum = DATA_READ.ReadINT_LE(table_ref + 4, map_stream);
+                            int mem_off = DATA_READ.ReadINT_LE(table_ref + 8, map_stream);
+                            int size = DATA_READ.ReadINT_LE(table_ref + 0xc, map_stream);
+
+                            meta meta_obj = new meta(datum, SID_list[datum], map_stream);
+                            meta_obj.Rebase_meta(0x0);
+
+                            if (meta_obj.Get_Total_size() != 0)
+                            {
+                                byte[] meta_data = meta_obj.Generate_meta_file();
+
+                                string text_path = tags_directory + '\\' + SID_list[datum] + ".txt";
+
+                                //lets create our directory
+                                System.IO.Directory.CreateDirectory(DATA_READ.ReadDirectory_from_file_location(text_path));
+
+                                StreamWriter sw = new StreamWriter(text_path);
+
+                                //supoosing each shad contains only one Post process block element
+                                int PPB_off = DATA_READ.ReadINT_LE(0x24, meta_data);
+
+                                int stem_datum = DATA_READ.ReadINT_LE(PPB_off, meta_data);
+                                int bitmap_count = DATA_READ.ReadINT_LE(PPB_off + 0x4, meta_data);
+                                int bitmapB_off = DATA_READ.ReadINT_LE(PPB_off + 0x8, meta_data);
+
+                                //write the stemp path
+                                string out_temp;
+                                if (stem_datum != 0 && stem_datum != -1)
+                                {
+                                    if (SID_list.TryGetValue(stem_datum, out out_temp))
+                                        sw.WriteLine(SID_list[stem_datum]);
+                                    else sw.WriteLine("---");
+                                }
+                                for (int i = 0; i < bitmap_count; i++)
+                                {
+                                    int bitm_datum = DATA_READ.ReadINT_LE(bitmapB_off + i * 0xC, meta_data);
+
+                                    if (bitm_datum != 0 && bitm_datum != -1)
+                                    {
+                                        if (SID_list.TryGetValue(bitm_datum, out out_temp))
+                                            if (SID_list[bitm_datum] == "")
+                                            {
+                                                sw.WriteLine(" ");
+                                            }
+                                            else
+                                            {
+                                                sw.WriteLine(SID_list[bitm_datum]);
+                                            }
+                                        else sw.WriteLine("---");
+                                    }
+                                    else
+                                    {
+                                        sw.WriteLine(" ");
+                                    }
+                                }
+
+                                log.WriteLine(SID_list[datum] + ".txt");
+
+                                sw.Close();
+                            }
+                            else
+                            {
+                                log.WriteLine("---");
+                            }
+                        }
+                        log.Close();
+                        MessageBox.Show("Extraction Complete");
+                    }
+                }
+                else MessageBox.Show("Load a map first");
+            }
         }
     }
 }
