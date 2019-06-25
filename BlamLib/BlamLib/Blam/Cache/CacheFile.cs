@@ -916,6 +916,7 @@ namespace BlamLib.Blam
 		/// <param name="src">Source cache object with the information we want shared</param>
 		internal protected static void ShareCacheStreams(CacheFile dst, CacheFile src)
 		{
+			dst.EngineVersion = src.EngineVersion;
 			dst.InputStream = src.InputStream;
 			dst.OutputStream = src.OutputStream;
 			dst.IsSharedReference = true;
