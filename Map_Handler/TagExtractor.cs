@@ -129,8 +129,15 @@ namespace Map_Handler
 
                 if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
                 {
+                try
+                {
                     MainBox.ReOpenMap();
                 }
+                catch (Exception ex)
+                {
+                    TagsList.Clear();
+                }
+            }
             
 
 
