@@ -80,6 +80,7 @@
             this.label4 = new System.Windows.Forms.Label();
             this.clear_button = new System.Windows.Forms.Button();
             this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpshadinfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -233,7 +234,8 @@
             this.getTagStructureToolStripMenuItem,
             this.resyncshadToolStripMenuItem,
             this.resyncStringIDsToolStripMenuItem,
-            this.sndtagFixesToolStripMenuItem});
+            this.sndtagFixesToolStripMenuItem,
+            this.dumpshadinfoToolStripMenuItem});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
             this.metaToolStripMenuItem.Text = "Meta";
@@ -307,6 +309,13 @@
             this.sndtagFixesToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.sndtagFixesToolStripMenuItem.Text = "snd!_tag Fixes";
             this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
+            // 
+            // dumpshadinfoToolStripMenuItem
+            // 
+            this.dumpshadinfoToolStripMenuItem.Name = "dumpshadinfoToolStripMenuItem";
+            this.dumpshadinfoToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.dumpshadinfoToolStripMenuItem.Text = "Dump_shad_info";
+            this.dumpshadinfoToolStripMenuItem.Click += new System.EventHandler(this.dumpshadinfoToolStripMenuItem_Click);
             // 
             // textBox1
             // 
@@ -688,6 +697,7 @@
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button6;
         private System.Windows.Forms.ToolStripMenuItem sndtagFixesToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dumpshadinfoToolStripMenuItem;
     }
 }
 
