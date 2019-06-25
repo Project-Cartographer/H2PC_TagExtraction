@@ -362,5 +362,61 @@ namespace BlamLib.Test
 
 			Console.WriteLine("Halo2TestCacheExtractionXbox: Overall time: {0}", StopStopwatch());
 		}
+
+	#region lightmap_hacks
+	//Cheap hacks that korn would even regret
+	public bool sbsptoltmp_cluster_block_copy(string ltmp_loc, string sbsp_loc)
+	{
+		bool ret = false;
+
+		var bd = Program.Halo2.Manager;
+		var datum_tagindex = bd.OpenTagIndex(BlamVersion.Halo2_PC, kTestTagIndexTagsPath);
+		var ti = bd.GetTagIndex(datum_tagindex) as Managers.TagIndex;
+
+		int ti_dir_length = ti.Directory.Length;
+
+		//open lightmap tag
+		var t = ltmp_loc.Substring(ti_dir_length); // remove tags dir
+		t = t.Remove(t.Length - Blam.Halo2.TagGroups.ltmp.Name.Length - 1); // remove extension
+
+		var ltmp_index = ti.Open(t, Blam.Halo2.TagGroups.ltmp);
+
+		Assert.IsTrue(ltmp_index != Blam.DatumIndex.Null);
+
+		var tagman = ti[ltmp_index];
+		var ltmp = tagman.TagDefinition as Blam.Halo2.Tags.scenario_structure_lightmap_group;
+
+		//open sbsp tag
+		t = sbsp_loc.Substring(ti_dir_length); // remove tags dir
+		t = t.Remove(t.Length - Blam.Halo2.TagGroups.sbsp.Name.Length - 1); // remove extension
+
+		var sbsp_index = ti.Open(t, Blam.Halo2.TagGroups.sbsp);
+
+		Assert.IsTrue(sbsp_index != Blam.DatumIndex.Null);
+
+		tagman = ti[sbsp_index];
+		var sbsp = tagman.TagDefinition as Blam.Halo2.Tags.scenario_structure_bsp_group;
+
+		// sbsp[19].CopyTo(ltmp[14]);
+		ltmp.LightmapGroups[0].Clusters.DeleteAll();
+
+		foreach (var i in sbsp.Clusters)
+		{
+			var temp = new Blam.Halo2.Tags.structure_lightmap_group_block.lightmap_geometry_section_block(i);
+			ltmp.LightmapGroups[0].Clusters.Add(out temp);
+		}
+
+
+
+		ti.Save(sbsp_index);
+		ti.Save(ltmp_index);
+
+		ti.UnloadAll();
+		ti = null;
+		bd.CloseTagIndex(datum_tagindex);
+
+		return ret;
+	}
+	#endregion
 	};
 }
