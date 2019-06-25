@@ -614,9 +614,12 @@ namespace Map_Handler
 
 
             current_tag_status.Text = "Initializing Decompiler";
-
-
             MainBox.CloseMap();
+
+
+            List<int> extract_list = ExtractList.Keys.ToList<int>();
+            MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, H2V_BaseMapsDirectory + "\\", mapName);
+            /*
             progressBar1.Value = 0;
             progressBar1.Maximum = ExtractList.Count;
             int index = 0;
@@ -628,8 +631,9 @@ namespace Map_Handler
                 progressBar1.Value++; //update the progress bar
                 index++;
             }
+            */
 
-             current_tag_status.Text = "Extraction Complete!";
+            current_tag_status.Text = "Extraction Complete!";
             if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
             {
                 MainBox.ReOpenMap();

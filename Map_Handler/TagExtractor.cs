@@ -115,6 +115,11 @@ namespace Map_Handler
 
                 
                 MainBox.CloseMap();
+
+                List<int> extract_list = TagsList.Keys.ToList<int>();
+                MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, MapsFolder, mapName);
+
+                /*
                 progressBar1.Value = 0;
                 progressBar1.Maximum = TotalTags;
                 int index = 0;
@@ -126,6 +131,8 @@ namespace Map_Handler
                     progressBar1.Value++; //update the progress bar
                     index++;
                 }
+                */
+
 
                 if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
                 {
