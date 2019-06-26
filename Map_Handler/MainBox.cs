@@ -702,13 +702,9 @@ namespace Map_Handler
 
         private void EmulateShaderDumpToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
-
             OpenFileDialog fbd = new OpenFileDialog();
 
-
             MessageBox.Show("Please select the Shader Log.");
-
 
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
@@ -720,7 +716,6 @@ namespace Map_Handler
 
                 foreach (string line in File.ReadLines(fbd.FileName))
                 {
-
                     string[] tagpaths = File.ReadAllLines(Path.Combine(shaderpath, line));
 
                     string shadertemplate = Path.GetFileName(tagpaths[0]) + ".shader_template.txt";
@@ -740,16 +735,12 @@ namespace Map_Handler
                         fs.CopyTo(ms);
                         ms.Position = 0;
 
-
-
-
                         bw.BaseStream.Seek(88, SeekOrigin.Begin);
                         bw.Write(Convert.ToInt32(tagpaths[0].Length));
                         bw.BaseStream.Seek(116, SeekOrigin.Begin);
                         bw.Write(Convert.ToInt32(parametercount));
 
                         bw.BaseStream.Seek(208, SeekOrigin.Begin);
-
 
                         bw.Write(Encoding.UTF8.GetBytes(tagpaths[0]));
                         bw.Write(Convert.ToByte(0));
@@ -778,7 +769,6 @@ namespace Map_Handler
                             bw.Write((Convert.ToInt32(tagpaths[i + 1].Length)));
                             bw.Write(Convert.ToInt32(-1));
 
-
                             bw.Write(Convert.ToInt32(0));
                             bw.Write(Convert.ToInt32(0));
                             bw.Write(Convert.ToInt32(0));
@@ -799,9 +789,7 @@ namespace Map_Handler
                             {
                                 bw.Write(Convert.ToByte(0));
                             }
-
                         }
-
                         ms.Position = 0;
                         ds.Position = 0;
                         ms.CopyTo(ds);
@@ -809,46 +797,27 @@ namespace Map_Handler
                         ms.Close();
                         fs.Close();
                         ds.Close();
-
-
-
                     }
-
                 }
-
-
-
-
-
-
+                MessageBox.Show("Finished Creating Tags");
             }
         }
 
         private void CreatePluginsToolStripMenuItem_Click(object sender, EventArgs e)
         {
-
             // Elmer Source Code
             // <3 Hamp
-
-
 
             string tagdirectory = "";
 
             FolderBrowserDialog fbd = new FolderBrowserDialog();
             fbd.ShowNewFolderButton = true;
 
-
             MessageBox.Show("Please select a directory containing .shader_template files. These will be converted to plugins for the shader emulator.");
 
             if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
             {
-
-
                 tagdirectory = fbd.SelectedPath;
-
-
-
-
 
                 var stfiles = Directory.GetFiles(tagdirectory, $"*.shader_template", SearchOption.AllDirectories);
                 string outpath = Path.Combine(Environment.CurrentDirectory, "plugins", "shaderstemplates");
@@ -856,7 +825,6 @@ namespace Map_Handler
 
                 foreach (var stfile in stfiles)
                 {
-
                     int magic = new int();
 
                     int propcount = new int();
@@ -864,13 +832,10 @@ namespace Map_Handler
 
                     List<string> bitmapID = new List<string>();
 
-
-
                     using (var fs = new FileStream(stfile, FileMode.OpenOrCreate, FileAccess.ReadWrite))
                     using (var ms = new MemoryStream())
                     using (var bw = new BinaryWriter(ms))
                     using (var br = new BinaryReader(ms))
-
                     {
                         fs.CopyTo(ms);
                         ms.Position = 0;
@@ -878,16 +843,15 @@ namespace Map_Handler
                         br.BaseStream.Seek(80, SeekOrigin.Begin);
                         magic = magic + br.ReadInt16();
 
-
                         br.BaseStream.Seek(108, SeekOrigin.Begin);
                         propcount = br.ReadInt16();
-
 
                         br.BaseStream.Seek(120, SeekOrigin.Begin);
                         catcount = br.ReadInt16();
 
-
-                        int[] catskipcount = new int[catcount];
+                        int[] catskipcount = new int[catcount];   // we use this as a collection of both description text length
+                                                                  // as well as any other random data of indeterminate length 
+                                                                  // along the way that we need to skip reading over. Sloppy! <3 Hamp
                         int[] parcount = new int[catcount];
 
                         br.BaseStream.Seek(236 + magic, SeekOrigin.Begin);
@@ -898,7 +862,6 @@ namespace Map_Handler
                             magic = magic + 16;
                         }
 
-
                         for (int i = 0; i < propcount; i++)
                         {
                             br.BaseStream.Seek(7, SeekOrigin.Current);
@@ -907,9 +870,8 @@ namespace Map_Handler
 
                         magic = magic + (propcount * 8);
 
-
-
                         br.BaseStream.Seek(236 + magic, SeekOrigin.Begin);
+                        //MessageBox.Show(br.BaseStream.Position.ToString() + "test");
 
                         if (catcount > 0)
                         {
@@ -932,41 +894,33 @@ namespace Map_Handler
 
                         magic = magic + (catcount * 16);
 
-
                         br.BaseStream.Seek(236 + magic, SeekOrigin.Begin);
-
 
                         for (int i = 0; i < catcount; i++)
                         {
-
                             br.BaseStream.Seek(catskipcount[i], SeekOrigin.Current);
                             br.BaseStream.Seek(16, SeekOrigin.Current);
-                            // MessageBox.Show(br.BaseStream.Position.ToString()+"cat");
-                            int[] parskipcount = new int[parcount[i]];
+
+                            int[] descriptionlength = new int[parcount[i]];
                             int[] namelength = new int[parcount[i]];
                             int[] tagpath = new int[parcount[i]];
                             int[] ID = new int[parcount[i]];
                             for (int n = 0; n < parcount[i]; n++)
                             {
-
-                                parskipcount[n] = 0;
                                 namelength[n] = 0;
-                                br.BaseStream.Seek(3, SeekOrigin.Current);
-                                namelength[n] = br.ReadByte();
+                                br.BaseStream.Seek(2, SeekOrigin.Current);
 
-                                parskipcount[n] = parskipcount[n] + br.ReadByte();
+                                byte[] flip = br.ReadBytes(2);
+                                Array.Reverse(flip);
+                                namelength[n] = BitConverter.ToInt16(flip, 0);
 
+                                descriptionlength[n] = br.ReadInt16();
 
-
-
-                                br.BaseStream.Seek(19, SeekOrigin.Current);
+                                br.BaseStream.Seek(18, SeekOrigin.Current);
                                 ID[n] = br.ReadInt16();
 
                                 br.BaseStream.Seek(10, SeekOrigin.Current);
                                 tagpath[n] = br.ReadInt16();
-
-
-
 
                                 br.BaseStream.Seek(34, SeekOrigin.Current);
                             }
@@ -980,28 +934,25 @@ namespace Map_Handler
                                     bitmapID.Add(new string(br.ReadChars(namelength[n])));
                                     //MessageBox.Show("Wrote-" + bitmapID[bitmapID.Count - 1]);
                                 }
+
                                 else
                                 {
                                     br.BaseStream.Seek(namelength[n], SeekOrigin.Current);
                                     //MessageBox.Show("Skipped-"+namelength[n].ToString());
                                 }
-                                //MessageBox.Show(br.BaseStream.Position.ToString() + "--ps" + parskipcount[n]);
-                                br.BaseStream.Seek(parskipcount[n], SeekOrigin.Current);
+                                //MessageBox.Show(br.BaseStream.Position.ToString() + "--ps" + descriptionlength[n]);
+                                br.BaseStream.Seek(descriptionlength[n], SeekOrigin.Current);
+
                                 if (tagpath[n] > 0)
                                 {
                                     // MessageBox.Show(br.BaseStream.Position.ToString() + "--tp" + tagpath[n] + 1);
                                     br.BaseStream.Seek(tagpath[n] + 1, SeekOrigin.Current);
                                 }
                             }
-
                         }
-
-
-
                         string output = Path.Combine(outpath, Path.GetFileName(stfile) + ".txt");
 
                         System.IO.File.WriteAllText(output, "");
-
 
                         foreach (var bitm in bitmapID)
                         {
@@ -1009,111 +960,103 @@ namespace Map_Handler
                             System.IO.File.AppendAllText(output, bitm + Environment.NewLine);
                         }
                     }
-
-                    string blankshader = Path.Combine(outpath, "blank.shader");
-
-                    using (var fs = new FileStream(blankshader, FileMode.Create, FileAccess.ReadWrite))
-                    using (var ms = new MemoryStream())
-                    using (var bw = new BinaryWriter(ms))
-                    using (var br = new BinaryReader(ms))
-
-                    {
-                        fs.CopyTo(ms);
-                        ms.Position = 0;
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Encoding.UTF8.GetBytes("dahs"));
-
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(64));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(-16777215));
-
-                        bw.Write(Encoding.UTF8.GetBytes("!MLBdfbt"));
-
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(1));
-
-                        bw.Write(Convert.ToInt32(128));
-
-                        bw.Write(Encoding.UTF8.GetBytes("mets"));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(-1));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(-1));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(-1));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(-1));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(-1));
-
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Encoding.UTF8.GetBytes("tils"));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(-1));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-                        bw.Write(Convert.ToInt32(-1));
-
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-                        bw.Write(Convert.ToInt32(0));
-
-
-                        ms.Position = 0;
-                        ms.CopyTo(fs);
-
-
-                    }
-
-
-
                 }
+
+                string blankshader = Path.Combine(outpath, "blank.shader");
+
+                using (var fs = new FileStream(blankshader, FileMode.Create, FileAccess.ReadWrite))
+                using (var ms = new MemoryStream())
+                using (var bw = new BinaryWriter(ms))
+                using (var br = new BinaryReader(ms))
+
+                {
+                    fs.CopyTo(ms);
+                    ms.Position = 0;
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Encoding.UTF8.GetBytes("dahs"));
+
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(64));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(-16777215));
+
+                    bw.Write(Encoding.UTF8.GetBytes("!MLBdfbt"));
+
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(1));
+
+                    bw.Write(Convert.ToInt32(128));
+
+                    bw.Write(Encoding.UTF8.GetBytes("mets"));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(-1));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(-1));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(-1));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(-1));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(-1));
+
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Encoding.UTF8.GetBytes("tils"));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(-1));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    bw.Write(Convert.ToInt32(-1));
+
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+                    bw.Write(Convert.ToInt32(0));
+
+                    ms.Position = 0;
+                    ms.CopyTo(fs);
+                }
+                MessageBox.Show("Finished Writing Plugins");
             }
-
-
-
         }
 
         private void DumpShadersToolStripMenuItem_Click(object sender, EventArgs e)
