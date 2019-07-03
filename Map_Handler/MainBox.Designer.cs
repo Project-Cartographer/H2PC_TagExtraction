@@ -51,10 +51,12 @@
             this.resyncshadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resyncStringIDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpshadinfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultMaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
-            this.dumpshadinfoToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpTagListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpStringIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.SuspendLayout();
             // 
@@ -205,7 +207,9 @@
             this.resyncshadToolStripMenuItem,
             this.resyncStringIDsToolStripMenuItem,
             this.sndtagFixesToolStripMenuItem,
-            this.dumpshadinfoToolStripMenuItem});
+            this.dumpshadinfoToolStripMenuItem,
+            this.dumpTagListToolStripMenuItem,
+            this.dumpStringIDToolStripMenuItem});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.metaToolStripMenuItem.Text = "Meta";
@@ -252,6 +256,13 @@
             this.sndtagFixesToolStripMenuItem.Text = "snd!_tag nullifier";
             this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
             // 
+            // dumpshadinfoToolStripMenuItem
+            // 
+            this.dumpshadinfoToolStripMenuItem.Name = "dumpshadinfoToolStripMenuItem";
+            this.dumpshadinfoToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.dumpshadinfoToolStripMenuItem.Text = "Dump_shad_info";
+            this.dumpshadinfoToolStripMenuItem.Click += new System.EventHandler(this.dumpshadinfoToolStripMenuItem_Click);
+            // 
             // settingsToolStripMenuItem
             // 
             this.settingsToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
@@ -276,12 +287,19 @@
             this.treeView1.Size = new System.Drawing.Size(556, 542);
             this.treeView1.TabIndex = 1;
             // 
-            // dumpshadinfoToolStripMenuItem
+            // dumpTagListToolStripMenuItem
             // 
-            this.dumpshadinfoToolStripMenuItem.Name = "dumpshadinfoToolStripMenuItem";
-            this.dumpshadinfoToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.dumpshadinfoToolStripMenuItem.Text = "Dump_shad_info";
-            this.dumpshadinfoToolStripMenuItem.Click += new System.EventHandler(this.dumpshadinfoToolStripMenuItem_Click);
+            this.dumpTagListToolStripMenuItem.Name = "dumpTagListToolStripMenuItem";
+            this.dumpTagListToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.dumpTagListToolStripMenuItem.Text = "Dump tag list";
+            this.dumpTagListToolStripMenuItem.Click += new System.EventHandler(this.dumpTagListToolStripMenuItem_Click);
+            // 
+            // dumpStringIDToolStripMenuItem
+            // 
+            this.dumpStringIDToolStripMenuItem.Name = "dumpStringIDToolStripMenuItem";
+            this.dumpStringIDToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.dumpStringIDToolStripMenuItem.Text = "Dump StringID";
+            this.dumpStringIDToolStripMenuItem.Click += new System.EventHandler(this.dumpStringIDToolStripMenuItem_Click);
             // 
             // MainBox
             // 
@@ -331,6 +349,8 @@
         private System.Windows.Forms.ToolStripMenuItem resyncStringIDsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem sndtagFixesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dumpshadinfoToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dumpTagListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dumpStringIDToolStripMenuItem;
     }
 }
 
