@@ -94,4 +94,18 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 	};
 	#endregion
+
+	partial class decorator_set_group
+	{
+		#region Reconstruct
+		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+		{
+			bool result = true;
+
+			GeometryBlockInfo.Value.ClearPostReconstruction();
+
+			return result;
+		}
+		#endregion
+	}
 }

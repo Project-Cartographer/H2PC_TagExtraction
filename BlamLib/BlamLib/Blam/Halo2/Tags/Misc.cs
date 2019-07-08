@@ -84,7 +84,7 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region decorator_set
 	[TI.TagGroup((int)TagGroups.Enumerated.DECR, 1, 2, 140)]
-	public class decorator_set_group : TI.Definition
+	public partial class decorator_set_group : TI.Definition
 	{
 		#region decorator_shader_reference_block
 		[TI.Definition(1, 16)]
@@ -205,6 +205,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Fields
+		public TI.Struct<geometry_block_info_struct> GeometryBlockInfo;
 		#endregion
 
 		#region Ctor
@@ -218,7 +219,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(/*raw vertices = */ new TI.Block<decorator_model_vertices_block>(this, 32768));
 			Add(/*indices = */ new TI.Block<decorator_model_indices_block>(this, 32768));
 			Add(/*cached data = */ new TI.Block<cached_data_block>(this, 1));
-			Add(/*geometry section info = */ new TI.Struct<geometry_block_info_struct>(this));
+			Add(GeometryBlockInfo = new TI.Struct<geometry_block_info_struct>(this));
 			Add(new TI.Pad(16));
 			Add(new TI.Pad(4)); // TODO: PC ONLY?
 		}
