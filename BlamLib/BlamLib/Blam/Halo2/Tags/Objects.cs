@@ -2637,6 +2637,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Fields
+		public TI.Block<predicted_resource_block> WeaponPredictedResources;
 		#endregion
 
 		#region Ctor
@@ -2696,7 +2697,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(/*weapon type = */ new TI.Enum());
 			Add(/*tracking = */ new TI.Struct<weapon_tracking_struct>(this));
 			Add(/*player interface = */ new TI.Struct<weapon_interface_struct>(this));
-			Add(/*predicted resources = */ new TI.Block<predicted_resource_block>(this, 2048));
+			Add(WeaponPredictedResources = new TI.Block<predicted_resource_block>(this, 2048));
 			Add(/*magazines = */ new TI.Block<magazines>(this, 2));
 			Add(/*new triggers = */ new TI.Block<weapon_triggers>(this, 2));
 			Add(/*barrels = */ new TI.Block<weapon_barrels>(this, 2));
