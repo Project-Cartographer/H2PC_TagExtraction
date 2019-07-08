@@ -1084,6 +1084,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Fields
+		public TI.Flags RuntimeFlags;
 		#endregion
 
 		#region Ctor
@@ -1124,7 +1125,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			for (int x = 0; x < 32; x++)
 				Add(/* = */ new TI.ByteInteger());
 
-			Add(/*runtime flags = */ new TI.Flags());
+			Add(RuntimeFlags = new TI.Flags());
 			Add(/*scenario load parameters = */ new TI.Block<global_scenario_load_parameters_block>(this, 32));
 			Add(/*hologram shader = */ new TI.TagReference(this, TagGroups.shad));
 			Add(/*hologram control function = */ new TI.StringId());
