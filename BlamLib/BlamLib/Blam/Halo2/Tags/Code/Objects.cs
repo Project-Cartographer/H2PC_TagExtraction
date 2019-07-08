@@ -89,6 +89,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		{
 			PredictedResources.DeleteAll();
 			PredictedBitmaps.DeleteAll();
+			WeaponPredictedResources.DeleteAll();
 			return true;
 		}
 		#endregion
