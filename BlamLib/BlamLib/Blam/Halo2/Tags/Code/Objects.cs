@@ -66,6 +66,14 @@ namespace BlamLib.Blam.Halo2.Tags
 	#region model_group
 	partial class model_group
 	{
+		#region Reconstruct
+		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+		{
+			RuntimeFlags.Value = 0;        
+			return true;
+		}
+		#endregion
+
 		#region global_damage_info_block
 		partial class global_damage_info_block
 		{
