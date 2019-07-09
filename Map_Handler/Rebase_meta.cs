@@ -98,6 +98,9 @@ namespace Map_Handler
             //maintain an array of meta
             Queue<byte[]> meta_list = new Queue<byte[]>();
             Queue<long> size_list = new Queue<long>();
+            Queue<string> file_list = new Queue<string>();
+            int file_list_size = 0x0;
+
             byte[] tables = new byte[0x10 * compile_list.Count];
 
             foreach (injectRefs temp_ref in compile_list)
@@ -125,7 +128,9 @@ namespace Map_Handler
 
                     meta_list.Enqueue(meta);//add to the meta list
                     size_list.Enqueue(size);//add to the size_list
-              
+                    string tmp_file_name = temp_ref.file_name.Substring(0, temp_ref.file_name.IndexOf('.'));
+                    file_list.Enqueue(tmp_file_name);//add to the file_list
+
                     //tag_table_stuff
                     DATA_READ.WriteTAG_TYPE_LE(temp_ref.type, tag_index * 0x10, tables);
                     DATA_READ.WriteINT_LE(temp_ref.new_datum, tag_index * 0x10 + 4, tables);
@@ -134,6 +139,8 @@ namespace Map_Handler
 
                     log += "\n Written tag " + temp_ref.file_name + " with new datum as " + temp_ref.new_datum.ToString("X");
 
+                    //add the file_name size
+                    file_list_size += tmp_file_name.Length + 1;
                     //increase the tag_offset
                     meta_size += (int)size;
                     //increase the tag_count                    
@@ -147,21 +154,27 @@ namespace Map_Handler
 
             sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_table"), 0, "tag_table".Length);
             sw.BaseStream.Write(lol, 0, 1);
-            DATA_READ.WriteINT_LE(0x34, 0, temp);
+            DATA_READ.WriteINT_LE(0x46, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             DATA_READ.WriteINT_LE(0x10 * compile_list.Count, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_data"), 0, "tag_data".Length);
             sw.BaseStream.Write(lol, 0, 1);
-            DATA_READ.WriteINT_LE(0x34 + 0x10 * compile_list.Count, 0, temp);
+            DATA_READ.WriteINT_LE(0x46 + 0x10 * compile_list.Count, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             DATA_READ.WriteINT_LE(meta_size, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_maps"), 0, "tag_maps".Length);
             sw.BaseStream.Write(lol, 0, 1);
-            DATA_READ.WriteINT_LE(0x34 + 0x10 * compile_list.Count + meta_size, 0, temp);
+            DATA_READ.WriteINT_LE(0x46 + 0x10 * compile_list.Count + meta_size, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             DATA_READ.WriteINT_LE(tag_scenarios[0].Length + 1, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+            sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_names"), 0, "tag_names".Length);
+            sw.BaseStream.Write(lol, 0, 1);
+            DATA_READ.WriteINT_LE(0x46 + 0x10 * compile_list.Count + meta_size + tag_scenarios[0].Length + 1, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+            DATA_READ.WriteINT_LE(file_list_size, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
 
             sw.BaseStream.Write(tables, 0, 0x10 * compile_list.Count);
@@ -170,6 +183,13 @@ namespace Map_Handler
 
             sw.BaseStream.Write(Encoding.ASCII.GetBytes(tag_scenarios[0]), 0, tag_scenarios[0].Length);
             sw.BaseStream.Write(lol, 0, 1);
+
+            while (file_list.Count != 0)
+            {
+                string tmp_string = file_list.Dequeue();
+                sw.BaseStream.Write(Encoding.ASCII.GetBytes(tmp_string), 0x0, (int)tmp_string.Length);
+                sw.BaseStream.Write(lol, 0, 1);
+            }
 
             sw.Dispose();
 
