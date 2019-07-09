@@ -157,13 +157,17 @@ namespace BlamLib.Blam
 		}
 	};
 
-
 	partial class CacheFile
 	{
 		internal CacheExtraction ExtractionState = null;
 		internal void PrepareForExtraction(CacheExtractionInfo initial_info)
 		{
 			ExtractionState = new CacheExtraction(Index.TagCount);
+		}
+
+		internal void PrepareForExtractionEnd()
+		{
+			ExtractionState = null;
 		}
 	};
 }

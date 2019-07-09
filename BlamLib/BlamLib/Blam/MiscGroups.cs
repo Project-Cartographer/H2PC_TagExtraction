@@ -143,11 +143,12 @@ namespace BlamLib.Blam
 		/// <exception cref="Debug.Exceptions.UnreachableException"><paramref name="v"/> doesn't match any expected base game versions</exception>
 		public static char[] VersionToTag(BlamVersion v, bool internal_use)
 		{
-			if		((v & BlamVersion.Halo1) != 0)					return blam.Tag;
-			else if (internal_use && (v & BlamVersion.Halo2) != 0)	return blm2.Tag;
-			else if (!internal_use && (v & BlamVersion.Halo2) != 0)	return blam2d.Tag;
-			else if ((v & BlamVersion.Halo3) != 0)					return blm3.Tag;
-			else if ((v & BlamVersion.Stubbs) != 0)					return stub.Tag;
+			if		((v & BlamVersion.Halo1) != 0)					 return blam.Tag;
+			else if (internal_use && (v & BlamVersion.Halo2) != 0)	 return blm2.Tag;
+			else if (!internal_use && (v & BlamVersion.Halo2) != 0)	 return blam2d.Tag;
+			else if ((v & BlamVersion.Halo3) != 0)					 return blm3.Tag;
+			else if (internal_use && (v & BlamVersion.Stubbs) != 0)  return stub.Tag;
+			else if (!internal_use && (v & BlamVersion.Stubbs) != 0) return blam.Tag; // converting stubbs to halo1
 			else	throw new Debug.Exceptions.UnreachableException(v);
 		}
 
