@@ -17,8 +17,92 @@ namespace BlamLib.Blam.Halo1.Tags
 		{
 			public override int GetDepth() { return Depth.Value; }
 			public override short GetMipmapCount() { return MipmapCount.Value; }
+
+			#region Cache postprocess
+			bool CacheRead(BlamLib.Blam.CacheFile c, out byte[] data)
+			{
+				data = null;
+
+				int offset = PixelsOffset.Value;
+				int size = PixelDataSize.Value;
+
+				// get the input stream we need
+				IO.EndianReader er = c.InputStream;
+
+				// read the bitmap
+				er.Seek(offset);
+				data = er.ReadBytes(size);
+
+				return true;
+			}
+
+			internal byte[] CacheRead(BlamLib.Blam.CacheFile c)
+			{
+				// read the cache block...
+				byte[] bytes;
+				if (!CacheRead(c, out bytes))
+					return null;
+
+				return bytes;
+			}
+			#endregion
 		};
 		#endregion
+
+		internal override bool Reconstruct(Blam.CacheFile c)
+		{
+			const uint _bitmap_cached_bit = 1 << 7;
+			const uint _bitmap_in_data_file_bit = 1 << 8; // PC only
+
+			// just checking the sanity...you never know if there will be a silly 
+			// user building (with unofficial tools!) a cache with an empty bitmap
+			if (Bitmaps.Count< 1)
+				return true;
+
+			int tag = Bitmaps[0].OwnerTagIndex;
+			if (c.ExtractionState != null && c.ExtractionState.CurrentTag != DatumIndex.Null)
+				tag = (int) c.ExtractionState.CurrentTag;
+
+			string filename = c.GetReferenceName(c.LocateTagByDatum(tag));
+
+			using (var ms = new System.IO.MemoryStream())
+			{
+				byte[] buffer;
+
+				// read all of the bitmap data cache blocks
+				for (int x = 0; x<Bitmaps.Count; x++)
+				{
+					var data = Bitmaps[x];
+
+					bool is_bitmap_cached_bit = data.Flags.Test(_bitmap_cached_bit);
+					bool is_bitmap_in_data_file_bit = data.Flags.Test(_bitmap_in_data_file_bit);
+
+					data.Flags.Remove(_bitmap_cached_bit);
+					data.Flags.Remove(_bitmap_in_data_file_bit);
+
+					if (!is_bitmap_cached_bit && !is_bitmap_in_data_file_bit)
+						continue;
+
+					if (is_bitmap_in_data_file_bit)
+					{
+						Debug.LogFile.WriteLine("TODO: _bitmap_in_data_file_bit, bitmap file will be incomplete {0}",
+							filename);
+						return true;
+					}
+
+					if ((buffer = Bitmaps[x].CacheRead(c)) == null)
+						Debug.LogFile.WriteLine("Failed to load bitmap data for '{0}' [{1}]", filename, x);
+					else
+						ms.Write(buffer, 0, buffer.Length);
+				}
+
+				// reset the pixel data
+				ProcessedPixelData.Reset(ms.ToArray());
+				buffer = null;
+			}
+
+			return true;
+		}
 	};
 	#endregion
 

@@ -62,7 +62,7 @@ namespace BlamLib.Test
 
 			if(!string.IsNullOrEmpty(dir))
 			{
-				CacheFileOutputInfoArgs.TestMethodThreaded(TestContext,
+				CacheFileOutputInfoArgs./*TestThreadedMethod*/TestMethodSerial(TestContext,
 					CacheOutputInformation,
 					game, dir, kMapNames);
 			}

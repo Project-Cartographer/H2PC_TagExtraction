@@ -135,9 +135,10 @@ namespace BlamLib.Blam.Halo2.Tags
 			if (Bitmaps.Count < 1) return true;
 
 			int tag = Bitmaps[0].OwnerTagIndex;
+			if (c.ExtractionState != null && c.ExtractionState.CurrentTag != DatumIndex.Null)
+				tag = (int)c.ExtractionState.CurrentTag;
 
-			string filename = c.GetReferenceName(c.LocateTagByDatum((
-				c.ExtractionState.CurrentTag == DatumIndex.Null ? tag : (int)c.ExtractionState.CurrentTag)));
+			string filename = c.GetReferenceName(c.LocateTagByDatum(tag));
 
 			using (var ms = new System.IO.MemoryStream())
 			{

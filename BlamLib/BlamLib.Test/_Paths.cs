@@ -6,11 +6,10 @@
 
 namespace BlamLib.Test
 {
-   
-   
+
 	partial class TestLibrary
 	{
-		public const string kTestResultsPath =@"";
+		public const string kTestResultsPath = @"C:\Mount\B\Projects\test_results\";
 
 		public const string kProgramFilesPath =
 			@"C:\Program Files (x86)\"
@@ -31,7 +30,7 @@ namespace BlamLib.Test
 	{
 		internal const string kTestResultsPath = TestLibrary.kTestResultsPath + @"Stubbs\";
 
-		const string kMapsDirectoryPc = @"C:\Mount\A\Bungie\GamesRelated\Stubbs\PC\Maps\";
+		const string kMapsDirectoryPc = @"D:\Bungie\Games\Stubbs\PC\maps\";
 		const string kMapsDirectoryXbox = @"";
 	};
 

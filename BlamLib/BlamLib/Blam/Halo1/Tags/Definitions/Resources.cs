@@ -50,6 +50,9 @@ namespace BlamLib.Blam.Halo1.Tags
 
 			public TI.ShortInteger MipmapCount;
 
+			public TI.LongInteger PixelDataSize;
+			public TI.LongInteger OwnerTagIndex;
+
 			public TI.LongInteger HardwareFormat;
 			public TI.LongInteger BaseAddress;
 		};

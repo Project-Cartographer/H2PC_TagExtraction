@@ -55,7 +55,7 @@ namespace BlamLib.Blam.Halo1.Tags
 		#region bitmap_data_block
 		public partial class bitmap_data_block
 		{
-			public bitmap_data_block() : base(14)
+			public bitmap_data_block() : base(16)
 			{
 				Add(Signature = new TI.Tag());
 				Add(Width = new TI.ShortInteger());
@@ -68,7 +68,9 @@ namespace BlamLib.Blam.Halo1.Tags
 				Add(MipmapCount = new TI.ShortInteger());
 				Add(new TI.Pad(2));
 				Add(PixelsOffset = new TI.LongInteger());
-				Add(new TI.Skip(12));
+				Add(PixelDataSize = new TI.LongInteger());
+				Add(OwnerTagIndex = new TI.LongInteger());
+				Add(new TI.Skip(4));
 				Add(HardwareFormat = new TI.LongInteger());
 				Add(BaseAddress = new TI.LongInteger());
 			}

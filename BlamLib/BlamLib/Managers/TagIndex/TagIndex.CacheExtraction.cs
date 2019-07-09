@@ -93,7 +93,10 @@ namespace BlamLib.Managers
 			return cei;
 		}
 		/// <summary>Dispose of the last call to <see cref="ExtractionBegin"/></summary>
-		public void ExtractionEnd() { }
+		public void ExtractionEnd()
+		{
+			cacheFile.PrepareForExtractionEnd();
+		}
 		#endregion
 
 		#region Extract Extras
