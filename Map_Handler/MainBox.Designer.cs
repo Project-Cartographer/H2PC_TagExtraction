@@ -80,6 +80,8 @@
             this.label4 = new System.Windows.Forms.Label();
             this.clear_button = new System.Windows.Forms.Button();
             this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpTagListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpStringIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shaderEmulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createPluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dumpShadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -238,6 +240,8 @@
             this.resyncshadToolStripMenuItem,
             this.resyncStringIDsToolStripMenuItem,
             this.sndtagFixesToolStripMenuItem,
+            this.dumpTagListToolStripMenuItem,
+            this.dumpStringIDToolStripMenuItem,
             this.shaderEmulatorToolStripMenuItem});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(46, 20);
@@ -643,6 +647,20 @@
             this.clear_button.UseVisualStyleBackColor = true;
             this.clear_button.Click += new System.EventHandler(this.clear_button_Click);
             // 
+            // dumpTagListToolStripMenuItem
+            // 
+            this.dumpTagListToolStripMenuItem.Name = "dumpTagListToolStripMenuItem";
+            this.dumpTagListToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.dumpTagListToolStripMenuItem.Text = "Dump tag list";
+            this.dumpTagListToolStripMenuItem.Click += new System.EventHandler(this.dumpTagListToolStripMenuItem_Click);
+            // 
+            // dumpStringIDToolStripMenuItem
+            // 
+            this.dumpStringIDToolStripMenuItem.Name = "dumpStringIDToolStripMenuItem";
+            this.dumpStringIDToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
+            this.dumpStringIDToolStripMenuItem.Text = "Dump StringID";
+            this.dumpStringIDToolStripMenuItem.Click += new System.EventHandler(this.dumpStringIDToolStripMenuItem_Click);
+            // 
             // MainBox
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -728,6 +746,8 @@
         private System.Windows.Forms.ToolStripMenuItem createPluginsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dumpShadersToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem emulateShaderDumpToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dumpTagListToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem dumpStringIDToolStripMenuItem;
     }
 }
 
