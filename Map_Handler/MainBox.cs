@@ -1151,5 +1151,75 @@ namespace Map_Handler
                 else MessageBox.Show("Load a map first");
             }
         }
+
+        private void dumpTagListToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (map_loaded)
+            {
+                SaveFileDialog svd = new SaveFileDialog();
+
+                svd.FileName = map_name.Substring(map_name.LastIndexOf('\\') + 1) + "_tag_list.txt";
+                svd.Filter = "Text File|*.txt";
+
+                if (svd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    StreamWriter log = new StreamWriter(svd.FileName);
+
+                    var key_list = SID_list.Keys.ToList();
+
+                    for (int i = 0; i < key_list.Count; i++)
+                        log.WriteLine("0x" + key_list[i].ToString("X") + ',' + SID_list[key_list[i]]);
+
+                    log.Close();
+                }
+            }
+        }
+
+        private void dumpStringIDToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (map_loaded)
+            {
+                SaveFileDialog svd = new SaveFileDialog();
+
+                svd.FileName = map_name.Substring(map_name.LastIndexOf('\\') + 1) + "_StringID_list.txt";
+                svd.Filter = "Text File|*.txt";
+
+                if (svd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
+                {
+                    StreamWriter log = new StreamWriter(svd.FileName);
+
+                    List<StringID_info> StringID_list = new List<StringID_info>();
+
+                    int string_table_count = DATA_READ.ReadINT_LE(0x170, map_stream);
+                    int string_index_table_offset = DATA_READ.ReadINT_LE(0x178, map_stream);
+                    int string_table_offset = DATA_READ.ReadINT_LE(0x17C, map_stream);
+
+                    for (int index = 0; index < string_table_count; index++)
+                    {
+                        int table_off = DATA_READ.ReadINT_LE(string_index_table_offset + index * 0x4, map_stream) & 0xFFFF;
+                        string STRING = DATA_READ.ReadSTRING(string_table_offset + table_off, map_stream);
+
+                        if (STRING.Length > 0)
+                        {
+                            int SID = DATA_READ.Generate_SID(index, 0x0, STRING);//set is 0x0 cuz i couldnt figure out any other value
+
+                            StringID_info SIDI = new StringID_info();
+                            SIDI.string_index_table_index = string_index_table_offset + index * 0x4;
+                            SIDI.string_table_offset = table_off;
+                            SIDI.StringID = SID;
+                            SIDI.STRING = STRING;
+
+                            StringID_list.Add(SIDI);
+                        }
+                    }
+
+                    for (int i = 0; i < StringID_list.Count; i++)
+                        log.WriteLine("0x" + StringID_list[i].StringID.ToString("X") + ',' + StringID_list[i].STRING);
+
+                    log.Close();
+
+                }
+            }
+        }
     }
 }
