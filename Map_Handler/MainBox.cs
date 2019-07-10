@@ -720,6 +720,8 @@ namespace Map_Handler
 
                     string shadertemplate = Path.GetFileName(tagpaths[0]) + ".shader_template.txt";
 
+                    string[] material_name = File.ReadAllLines(Path.Combine(shaderpath, line));
+
                     string[] bitmap_labels = File.ReadAllLines(Path.Combine(workingdirectory, "plugins", "shaderstemplates", shadertemplate));
                     int parametercount = bitmap_labels.GetLength(0);
                     string tagname = Path.Combine(tagfolder, line.Substring(0, (line.Length - 4)) + ".shader");
@@ -737,6 +739,8 @@ namespace Map_Handler
 
                         bw.BaseStream.Seek(88, SeekOrigin.Begin);
                         bw.Write(Convert.ToInt32(tagpaths[0].Length));
+                        bw.BaseStream.Seek(99, SeekOrigin.Begin);
+                        bw.Write(Convert.ToInt32(material_name[1].Length));
                         bw.BaseStream.Seek(116, SeekOrigin.Begin);
                         bw.Write(Convert.ToInt32(parametercount));
 
@@ -744,6 +748,7 @@ namespace Map_Handler
 
                         bw.Write(Encoding.UTF8.GetBytes(tagpaths[0]));
                         bw.Write(Convert.ToByte(0));
+                        bw.Write(Encoding.UTF8.GetBytes(material_name[1]));
                         bw.Write(Encoding.UTF8.GetBytes("dfbt"));
                         bw.Write(Convert.ToInt32(0));
                         bw.Write(Convert.ToInt32(parametercount));
@@ -766,7 +771,7 @@ namespace Map_Handler
                             bw.Write(Convert.ToInt32(0));
                             bw.Write(Encoding.UTF8.GetBytes("mtib"));
                             bw.Write(Convert.ToInt32(0));
-                            bw.Write((Convert.ToInt32(tagpaths[i + 1].Length)));
+                            bw.Write((Convert.ToInt32(tagpaths[i + 2].Length)));
                             bw.Write(Convert.ToInt32(-1));
 
                             bw.Write(Convert.ToInt32(0));
@@ -784,7 +789,7 @@ namespace Map_Handler
                         for (int i = 0; i < parametercount; i++)
                         {
                             bw.Write(Encoding.UTF8.GetBytes(bitmap_labels[i]));
-                            bw.Write(Encoding.UTF8.GetBytes(tagpaths[i + 1]));
+                            bw.Write(Encoding.UTF8.GetBytes(tagpaths[i + 2]));
                             if (tagpaths[i + 1].Length > 0)
                             {
                                 bw.Write(Convert.ToByte(0));
