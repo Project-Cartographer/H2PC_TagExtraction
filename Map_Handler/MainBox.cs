@@ -466,6 +466,32 @@ namespace Map_Handler
 
                     StreamWriter log = new StreamWriter(tags_directory + '\\' + map_name.Substring(map_name.LastIndexOf('\\') + 1) + "_shad_logs.txt");
 
+                    //StringId list to dump maerial name
+                    List<StringID_info> StringID_list = new List<StringID_info>();
+
+                    int string_table_count = DATA_READ.ReadINT_LE(0x170, map_stream);
+                    int string_index_table_offset = DATA_READ.ReadINT_LE(0x178, map_stream);
+                    int string_table_offset = DATA_READ.ReadINT_LE(0x17C, map_stream);
+
+                    for (int index = 0; index < string_table_count; index++)
+                    {
+                        int table_off = DATA_READ.ReadINT_LE(string_index_table_offset + index * 0x4, map_stream) & 0xFFFF;
+                        string STRING = DATA_READ.ReadSTRING(string_table_offset + table_off, map_stream);
+
+                        if (STRING.Length > 0)
+                        {
+                            int SID = DATA_READ.Generate_SID(index, 0x0, STRING);//set is 0x0 cuz i couldnt figure out any other value
+
+                            StringID_info SIDI = new StringID_info();
+                            SIDI.string_index_table_index = string_index_table_offset + index * 0x4;
+                            SIDI.string_table_offset = table_off;
+                            SIDI.StringID = SID;
+                            SIDI.STRING = STRING;
+
+                            StringID_list.Add(SIDI);
+                        }
+                    }
+
                     foreach (TreeNode element in treeView1.Nodes["shad"].Nodes)
                     {
                         int table_ref = Int32.Parse(element.Name);
@@ -502,6 +528,18 @@ namespace Map_Handler
                                     sw.WriteLine(SID_list[stem_datum]);
                                 else sw.WriteLine("Couldnt find tag_path to index : 0x" + stem_datum.ToString("X"));
                             }
+                            //write the material name
+                            int mat_StringId = DATA_READ.ReadINT_LE(0x8, meta_data);
+                            for(int i=0;i<StringID_list.Count;i++)
+                            {
+                                if (StringID_list[i].StringID == mat_StringId)
+                                {
+                                    sw.WriteLine(StringID_list[i].STRING);
+                                    break;
+                                }
+                                else if (i == (StringID_list.Count - 1))
+                                    sw.WriteLine("");
+                            }             
                             for (int i = 0; i < bitmap_count; i++)
                             {
                                 int bitm_datum = DATA_READ.ReadINT_LE(bitmapB_off + i * 0xC, meta_data);
