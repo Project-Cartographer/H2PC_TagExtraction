@@ -790,7 +790,7 @@ namespace Map_Handler
                         {
                             bw.Write(Encoding.UTF8.GetBytes(bitmap_labels[i]));
                             bw.Write(Encoding.UTF8.GetBytes(tagpaths[i + 2]));
-                            if (tagpaths[i + 1].Length > 0)
+                            if (tagpaths[i + 2].Length > 0)
                             {
                                 bw.Write(Convert.ToByte(0));
                             }
