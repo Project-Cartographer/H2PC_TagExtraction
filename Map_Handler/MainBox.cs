@@ -758,9 +758,9 @@ namespace Map_Handler
                         {
                             bw.Write(Convert.ToInt16(0));
 
-                            if (tagpaths[i + 1] == " ")
+                            if (tagpaths[i + 2] == " ")
                             {
-                                tagpaths[i + 1] = "";
+                                tagpaths[i + 2] = "";
                             }
 
                             byte[] flip = new byte[2];
