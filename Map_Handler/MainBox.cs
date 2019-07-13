@@ -1184,30 +1184,23 @@ namespace Map_Handler
                                     else if (i == (StringID_list.Count - 1))
                                         sw.WriteLine("");
                                 }
-                                //write the flags
-                                int flags = DATA_READ.ReadINT_LE(0x16, meta_data);
-                                sw.WriteLine(flags);
-                                //write the depth bias offset
-                                int depth_bias_offset = DATA_READ.ReadINT_LE(0x54, meta_data);
-                                sw.WriteLine(0);
-                                //write the depth bias slope scale
-                                int depth_bias_slope_scale = DATA_READ.ReadINT_LE(0x58, meta_data);
-                                sw.WriteLine(0);
-                                //write the dynamic light specular type
-                                int dynamic_light_specular_type = DATA_READ.ReadINT_LE(0x3E, meta_data);
-                                sw.WriteLine(0);
-                                //write the lightmap type
-                                int lightmap_type = DATA_READ.ReadINT_LE(0x40, meta_data);
-                                sw.WriteLine(0);
-                                //write the lightmap specular brightness
-                                int lightmap_specular_brightness = DATA_READ.ReadINT_LE(0x44, meta_data);
-                                sw.WriteLine(0);
-                                //write the lightmap ambient bias
-                                int lightmap_ambient_bias = DATA_READ.ReadINT_LE(0x48, meta_data);
-                                sw.WriteLine(0);
-                                //write the shader lod bias
-                                int shader_lod_bias = DATA_READ.ReadINT_LE(0x3C, meta_data);
-                                sw.WriteLine(0);
+                                //write the flags                            
+                                sw.WriteLine(BitConverter.ToInt16(meta_data, 0x16));
+                                //write depth bias offset
+                                sw.WriteLine(BitConverter.ToSingle(meta_data, 0x54));
+                                //write depth bias slope scale
+                                sw.WriteLine(BitConverter.ToSingle(meta_data, 0x58));
+                                //write dynamic specular type
+                                sw.WriteLine(BitConverter.ToInt16(meta_data, 0x3E));
+                                //write Lightmap type
+                                sw.WriteLine(BitConverter.ToInt16(meta_data, 0x40));
+                                //write lightmap specular brightness
+                                sw.WriteLine(BitConverter.ToSingle(meta_data, 0x44));
+                                //write Lightmap Ambient Bias
+                                sw.WriteLine(BitConverter.ToSingle(meta_data, 0x48));
+                                //write Shader LOD Bias
+                                sw.WriteLine(BitConverter.ToInt16(meta_data, 0x3C));
+                                //dump the bitmap names    
                                 for (int i = 0; i < bitmap_count; i++)
                                 {
                                     int bitm_datum = DATA_READ.ReadINT_LE(bitmapB_off + i * 0xC, meta_data);
