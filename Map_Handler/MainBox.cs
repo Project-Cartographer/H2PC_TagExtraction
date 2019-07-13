@@ -720,6 +720,24 @@ namespace Map_Handler
 
                     string shadertemplate = Path.GetFileName(tagpaths[0]) + ".shader_template.txt";
 
+                    string[] material_name = File.ReadAllLines(Path.Combine(shaderpath, line));
+
+                    string[] Flags = File.ReadAllLines(Path.Combine(shaderpath, line));
+
+                    string[] depth_bias_offset = File.ReadAllLines(Path.Combine(shaderpath, line));
+
+                    string[] depth_bias_slope_scale = File.ReadAllLines(Path.Combine(shaderpath, line));
+
+                    string[] dynamic_light_specular_type = File.ReadAllLines(Path.Combine(shaderpath, line));
+
+                    string[] lightmap_type = File.ReadAllLines(Path.Combine(shaderpath, line));
+
+                    string[] lightmap_specular_brightness = File.ReadAllLines(Path.Combine(shaderpath, line));
+
+                    string[] lightmap_ambient_bias = File.ReadAllLines(Path.Combine(shaderpath, line));
+
+                    string[] shader_lod_bias = File.ReadAllLines(Path.Combine(shaderpath, line));
+
                     string[] bitmap_labels = File.ReadAllLines(Path.Combine(workingdirectory, "plugins", "shaderstemplates", shadertemplate));
                     int parametercount = bitmap_labels.GetLength(0);
                     string tagname = Path.Combine(tagfolder, line.Substring(0, (line.Length - 4)) + ".shader");
@@ -737,13 +755,30 @@ namespace Map_Handler
 
                         bw.BaseStream.Seek(88, SeekOrigin.Begin);
                         bw.Write(Convert.ToInt32(tagpaths[0].Length));
+                        bw.BaseStream.Seek(99, SeekOrigin.Begin);
+                        bw.Write(Convert.ToInt32(material_name[1].Length));          //Write material_name length
+                        bw.BaseStream.Seek(114, SeekOrigin.Begin);
+                        bw.Write(Convert.ToByte(Flags[2]));                          //Write Flags 1 byte = water 2 byte = sort first 4 byte = no active camo
                         bw.BaseStream.Seek(116, SeekOrigin.Begin);
                         bw.Write(Convert.ToInt32(parametercount));
+                        bw.BaseStream.Seek(172, SeekOrigin.Begin);
+                        bw.Write(Convert.ToByte(shader_lod_bias[9]));                //Write shader_lod_bias
+                        bw.BaseStream.Seek(174, SeekOrigin.Begin);
+                        bw.Write(Convert.ToByte(dynamic_light_specular_type[5]));    //Write dynamic_light_specular_type value
+                        bw.BaseStream.Seek(176, SeekOrigin.Begin);
+                        bw.Write(Convert.ToByte(lightmap_type[6]));                  //Write lightmap_type value
+                        bw.BaseStream.Seek(180, SeekOrigin.Begin);
+                        bw.Write(Convert.ToSingle(lightmap_specular_brightness[7])); //Write lightmap_specular_brightness value
+                        bw.Write(Convert.ToSingle(lightmap_ambient_bias[8]));        //Write lightmap_ambient_bias value
+                        bw.BaseStream.Seek(200, SeekOrigin.Begin);
+                        bw.Write(Convert.ToSingle(depth_bias_offset[3]));            //Write depth_bias_offset value
+                        bw.Write(Convert.ToSingle(depth_bias_slope_scale[4]));       //Write depth_bias_slope_scale value
 
                         bw.BaseStream.Seek(208, SeekOrigin.Begin);
 
                         bw.Write(Encoding.UTF8.GetBytes(tagpaths[0]));
                         bw.Write(Convert.ToByte(0));
+                        bw.Write(Encoding.UTF8.GetBytes(material_name[1]));          //Write material_name
                         bw.Write(Encoding.UTF8.GetBytes("dfbt"));
                         bw.Write(Convert.ToInt32(0));
                         bw.Write(Convert.ToInt32(parametercount));
@@ -753,9 +788,9 @@ namespace Map_Handler
                         {
                             bw.Write(Convert.ToInt16(0));
 
-                            if (tagpaths[i + 1] == " ")
+                            if (tagpaths[i + 10] == " ")
                             {
-                                tagpaths[i + 1] = "";
+                                tagpaths[i + 10] = "";
                             }
 
                             byte[] flip = new byte[2];
@@ -766,7 +801,7 @@ namespace Map_Handler
                             bw.Write(Convert.ToInt32(0));
                             bw.Write(Encoding.UTF8.GetBytes("mtib"));
                             bw.Write(Convert.ToInt32(0));
-                            bw.Write((Convert.ToInt32(tagpaths[i + 1].Length)));
+                            bw.Write((Convert.ToInt32(tagpaths[i + 10].Length)));
                             bw.Write(Convert.ToInt32(-1));
 
                             bw.Write(Convert.ToInt32(0));
@@ -784,8 +819,8 @@ namespace Map_Handler
                         for (int i = 0; i < parametercount; i++)
                         {
                             bw.Write(Encoding.UTF8.GetBytes(bitmap_labels[i]));
-                            bw.Write(Encoding.UTF8.GetBytes(tagpaths[i + 1]));
-                            if (tagpaths[i + 1].Length > 0)
+                            bw.Write(Encoding.UTF8.GetBytes(tagpaths[i + 10]));
+                            if (tagpaths[i + 10].Length > 0)
                             {
                                 bw.Write(Convert.ToByte(0));
                             }
@@ -1069,12 +1104,37 @@ namespace Map_Handler
 
                     MessageBox.Show("Select a directory to export the shader dump. Preferably an empty folder.");
 
-
                     if (fbd.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                     {
                         string tags_directory = fbd.SelectedPath;
 
                         StreamWriter log = new StreamWriter(tags_directory + '\\' + map_name.Substring(map_name.LastIndexOf('\\') + 1) + ".shader_log");
+
+                        //StringId list to dump maerial name
+                        List<StringID_info> StringID_list = new List<StringID_info>();
+
+                        int string_table_count = DATA_READ.ReadINT_LE(0x170, map_stream);
+                        int string_index_table_offset = DATA_READ.ReadINT_LE(0x178, map_stream);
+                        int string_table_offset = DATA_READ.ReadINT_LE(0x17C, map_stream);
+
+                        for (int index = 0; index < string_table_count; index++)
+                        {
+                            int table_off = DATA_READ.ReadINT_LE(string_index_table_offset + index * 0x4, map_stream) & 0xFFFF;
+                            string STRING = DATA_READ.ReadSTRING(string_table_offset + table_off, map_stream);
+
+                            if (STRING.Length > 0)
+                            {
+                                int SID = DATA_READ.Generate_SID(index, 0x0, STRING);//set is 0x0 cuz i couldnt figure out any other value
+
+                                StringID_info SIDI = new StringID_info();
+                                SIDI.string_index_table_index = string_index_table_offset + index * 0x4;
+                                SIDI.string_table_offset = table_off;
+                                SIDI.StringID = SID;
+                                SIDI.STRING = STRING;
+
+                                StringID_list.Add(SIDI);
+                            }
+                        }
 
                         foreach (TreeNode element in treeView1.Nodes["shad"].Nodes)
                         {
@@ -1112,6 +1172,35 @@ namespace Map_Handler
                                         sw.WriteLine(SID_list[stem_datum]);
                                     else sw.WriteLine("---");
                                 }
+                                //write the material name
+                                int mat_StringId = DATA_READ.ReadINT_LE(0x8, meta_data);
+                                for (int i = 0; i < StringID_list.Count; i++)
+                                {
+                                    if (StringID_list[i].StringID == mat_StringId)
+                                    {
+                                        sw.WriteLine(StringID_list[i].STRING);
+                                        break;
+                                    }
+                                    else if (i == (StringID_list.Count - 1))
+                                        sw.WriteLine("");
+                                }
+                                //write the flags                            
+                                sw.WriteLine(BitConverter.ToInt16(meta_data, 0x16));
+                                //write depth bias offset
+                                sw.WriteLine(BitConverter.ToSingle(meta_data, 0x54));
+                                //write depth bias slope scale
+                                sw.WriteLine(BitConverter.ToSingle(meta_data, 0x58));
+                                //write dynamic specular type
+                                sw.WriteLine(BitConverter.ToInt16(meta_data, 0x3E));
+                                //write Lightmap type
+                                sw.WriteLine(BitConverter.ToInt16(meta_data, 0x40));
+                                //write lightmap specular brightness
+                                sw.WriteLine(BitConverter.ToSingle(meta_data, 0x44));
+                                //write Lightmap Ambient Bias
+                                sw.WriteLine(BitConverter.ToSingle(meta_data, 0x48));
+                                //write Shader LOD Bias
+                                sw.WriteLine(BitConverter.ToInt16(meta_data, 0x3C));
+                                //dump the bitmap names    
                                 for (int i = 0; i < bitmap_count; i++)
                                 {
                                     int bitm_datum = DATA_READ.ReadINT_LE(bitmapB_off + i * 0xC, meta_data);
