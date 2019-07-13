@@ -539,7 +539,24 @@ namespace Map_Handler
                                 }
                                 else if (i == (StringID_list.Count - 1))
                                     sw.WriteLine("");
-                            }             
+                            }
+                            //write the flags                            
+                            sw.WriteLine(BitConverter.ToInt16(meta_data, 0x16));
+                            //write depth bias offset
+                            sw.WriteLine(BitConverter.ToSingle(meta_data, 0x54));
+                            //write depth bias slope scale
+                            sw.WriteLine(BitConverter.ToSingle(meta_data, 0x58));
+                            //write dynamic specular type
+                            sw.WriteLine(BitConverter.ToInt16(meta_data, 0x3E));
+                            //write Lightmap type
+                            sw.WriteLine(BitConverter.ToInt16(meta_data, 0x40));
+                            //write lightmap specular brightness
+                            sw.WriteLine(BitConverter.ToSingle(meta_data, 0x44));
+                            //write Lightmap Ambient Bias
+                            sw.WriteLine(BitConverter.ToSingle(meta_data, 0x48));
+                            //write Shader LOD Bias
+                            sw.WriteLine(BitConverter.ToInt16(meta_data, 0x3C));
+                            //dump the bitmap names          
                             for (int i = 0; i < bitmap_count; i++)
                             {
                                 int bitm_datum = DATA_READ.ReadINT_LE(bitmapB_off + i * 0xC, meta_data);
