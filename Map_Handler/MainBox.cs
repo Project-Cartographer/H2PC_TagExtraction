@@ -571,16 +571,13 @@ namespace Map_Handler
                             }
                             //write pixel constants with each A,R,G,B in seperate lines
                             for (int i = 0; i < pixel_const_count; i++)
-                            {
-                                //i read it as a LE integer so turns BGRA
+                            {                                
                                 uint colour = BitConverter.ToUInt32(meta_data, pixel_const_off + i * 0x4);
-                                sw.WriteLine(colour & 0xff);
-                                colour = colour >> 8;
-                                sw.WriteLine(colour & 0xff);
-                                colour = colour >> 8;
-                                sw.WriteLine(colour & 0xff);
-                                colour = colour >> 8;
-                                sw.WriteLine(colour & 0xff);
+
+                                sw.WriteLine(colour >> 24);
+                                sw.WriteLine((colour >> 16) & 0x000000ff);
+                                sw.WriteLine((colour >> 8) & 0x000000ff);                          
+                                sw.WriteLine(colour & 0x000000ff);
                             }
 
                             log.WriteLine("Dumped log 0x" + datum.ToString("X") + " : \\" + SID_list[datum]+".txt");
