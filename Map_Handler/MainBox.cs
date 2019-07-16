@@ -519,6 +519,8 @@ namespace Map_Handler
                             int stem_datum = DATA_READ.ReadINT_LE(PPB_off, meta_data);
                             int bitmap_count = DATA_READ.ReadINT_LE(PPB_off + 0x4, meta_data);
                             int bitmapB_off = DATA_READ.ReadINT_LE(PPB_off + 0x8, meta_data);
+                            int pixel_const_count = DATA_READ.ReadINT_LE(PPB_off + 0xC, meta_data);
+                            int pixel_const_off = DATA_READ.ReadINT_LE(PPB_off + 0x10, meta_data);
 
                             //write the stemp path
                             string out_temp;
@@ -566,6 +568,19 @@ namespace Map_Handler
                                         sw.WriteLine(SID_list[bitm_datum]);
                                     else sw.WriteLine("Couldnt find tag_path to index : 0x" + bitm_datum.ToString("X"));
                                 }
+                            }
+                            //write pixel constants with each A,R,G,B in seperate lines
+                            for (int i = 0; i < pixel_const_count; i++)
+                            {
+                                //i read it as a LE integer so turns BGRA
+                                uint colour = BitConverter.ToUInt32(meta_data, pixel_const_off + i * 0x4);
+                                sw.WriteLine(colour & 0xff);
+                                colour = colour >> 8;
+                                sw.WriteLine(colour & 0xff);
+                                colour = colour >> 8;
+                                sw.WriteLine(colour & 0xff);
+                                colour = colour >> 8;
+                                sw.WriteLine(colour & 0xff);
                             }
 
                             log.WriteLine("Dumped log 0x" + datum.ToString("X") + " : \\" + SID_list[datum]+".txt");
