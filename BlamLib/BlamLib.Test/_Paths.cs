@@ -9,7 +9,7 @@ namespace BlamLib.Test
 
 	partial class TestLibrary
 	{
-		public const string kTestResultsPath = @"C:\Mount\B\Projects\test_results\";
+		public const string kTestResultsPath = @"";
 
 		public const string kProgramFilesPath =
 			@"C:\Program Files (x86)\"
