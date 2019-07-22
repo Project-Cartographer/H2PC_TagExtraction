@@ -324,9 +324,9 @@ namespace BlamLib.Test
 			}
 
 			Program.Halo2.LoadPc(
-				kMapsDirectoryPc + @"mainmenu.map",
-				kMapsDirectoryPc + @"shared.map",
-				kMapsDirectoryPc + @"single_player_shared.map");
+				MapsDir + @"mainmenu.map",
+				MapsDir + @"shared.map",
+				MapsDir + @"single_player_shared.map");
 			Assert.IsNotNull(Program.Halo2.PcMainmenu);
 			Assert.IsNotNull(Program.Halo2.PcShared);
 			Assert.IsNotNull(Program.Halo2.PcCampaign);

@@ -617,7 +617,7 @@ namespace Map_Handler
 
 
             List<int> extract_list = ExtractList.Keys.ToList<int>();
-            MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, H2V_BaseMapsDirectory + "\\", mapName);
+            MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, map_path + "\\", mapName);
             /*
             progressBar1.Value = 0;
             progressBar1.Maximum = ExtractList.Count;
