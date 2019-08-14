@@ -1002,6 +1002,24 @@ namespace BlamLib.Blam.Halo2.Tags
 
 			GeometryBlockInfo.Value.ClearPostReconstruction();
 
+			if (RigidNode == -1) // idk what to do with ridge nodes
+			{
+				render_model_section_data_block data = SectionData[0];
+				foreach (global_visibility_bounds_block visibility_bounds in data.Section.Value.VisibilityBounds.Elements)
+				{
+					Int32 node_map_idx = data.NodeMap.Elements.FindIndex(node => node.NodeIndex == visibility_bounds.Node0.Value);
+					if (node_map_idx != -1)
+					{
+						visibility_bounds.Node0.Value = (byte)node_map_idx;
+					}
+					else
+					{
+						Debug.LogFile.WriteLine("Error unable to find visibility_bounds node0 in node map");
+						visibility_bounds.Node0.Value = 0xFF;
+					}
+
+				}
+			}
 			return result;
 		}
 		#endregion
