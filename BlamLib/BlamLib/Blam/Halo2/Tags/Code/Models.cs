@@ -200,6 +200,83 @@ namespace BlamLib.Blam.Halo2.Tags
 	};
 	#endregion
 
+	partial class animation_index_struct
+	{
+		public bool IsLocal()
+		{
+			return graph_index == -1 || animation == -1;
+		}
+	}
+
+	partial class animation_graph_contents_struct
+	{
+		partial class animation_mode_block
+		{
+			partial class weapon_class_block
+			{
+				partial class weapon_type_block
+				{
+					partial class animation_entry_block
+					{
+						public bool IsLocal()
+						{
+							return animation.Value.IsLocal();
+						}
+					}
+
+					partial class animation_transition_block
+					{
+						internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+						{
+							destinations.Elements.RemoveAll(destination => !destination.animation.Value.IsLocal());
+							return true;
+						}
+					}
+
+					partial class damage_animation_block
+					{
+						partial class damage_direction_block
+						{
+							internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+							{
+								Int32 first_non_local = regions.Elements.FindIndex(region => !region.animation.Value.IsLocal());
+								if (first_non_local == -1) // all are legal, do nothing
+									return true;
+
+								Debug.Warn.If(first_non_local == 0, "damage_direction_block contains a mixture of local and non-local animations, this is unexpected");
+
+								regions.Elements.RemoveRange(first_non_local, regions.Count - first_non_local);
+								return true;
+							}
+						}
+
+						internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+						{
+							int last_not_empty = directions.Elements.FindLastIndex(direction => !direction.regions.IsEmpty());
+							if (last_not_empty == -1)
+								directions.Elements.Clear();
+							else
+								directions.Elements.RemoveRange(last_not_empty + 1, directions.Count - last_not_empty - 1);
+							return true;
+						}
+					}
+
+					internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+					{
+						actions.Elements.RemoveAll(animation_entry => !animation_entry.IsLocal());
+						overlays.Elements.RemoveAll(animation_entry => !animation_entry.IsLocal());
+
+						transitions.Elements.RemoveAll(transition => transition.destinations.IsEmpty());
+						death_and_damage.Elements.RemoveAll(damage_anim => damage_anim.directions.IsEmpty());
+						return true;
+					}
+				}
+			}
+		}
+	}
+
+
+
 	#region model_animation_graph
 	partial class model_animation_graph_group
 	{

@@ -746,16 +746,18 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region animation_index_struct
 	[TI.Struct((int)StructGroups.Enumerated.ANII, 1, 4)]
-	public class animation_index_struct : TI.Definition
+	public partial class animation_index_struct : TI.Definition
 	{
 		#region Fields
+		public TI.ShortInteger graph_index;
+		public TI.BlockIndex animation;
 		#endregion
 
 		#region Ctor
 		public animation_index_struct() : base(2)
 		{
-			Add(/*graph index = */ new TI.ShortInteger());
-			Add(/*animation = */ new TI.BlockIndex()); // 1 animation_pool_block
+			Add(graph_index = new TI.ShortInteger());
+			Add(animation = new TI.BlockIndex()); // 1 animation_pool_block
 		}
 		#endregion
 	}
@@ -763,7 +765,7 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region animation_graph_contents_struct
 	[TI.Struct((int)StructGroups.Enumerated.MAgc, 1, 36)]
-	public class animation_graph_contents_struct : TI.Definition
+	public partial class animation_graph_contents_struct : TI.Definition
 	{
 		#region animation_ik_block
 		[TI.Definition(1, 8)]
@@ -784,28 +786,29 @@ namespace BlamLib.Blam.Halo2.Tags
 
 		#region animation_mode_block
 		[TI.Definition(1, 28)]
-		public class animation_mode_block : TI.Definition
+		public partial class animation_mode_block : TI.Definition
 		{
 			#region weapon_class_block
 			[TI.Definition(1, 28)]
-			public class weapon_class_block : TI.Definition
+			public partial class weapon_class_block : TI.Definition
 			{
 				#region weapon_type_block
 				[TI.Definition(1, 76)]
-				public class weapon_type_block : TI.Definition
+				public partial class weapon_type_block : TI.Definition
 				{
 					#region animation_entry_block
 					[TI.Definition(1, 8)]
-					public class animation_entry_block : TI.Definition
+					public partial class animation_entry_block : TI.Definition
 					{
 						#region Fields
+						public TI.Struct<animation_index_struct> animation;
 						#endregion
 
 						#region Ctor
 						public animation_entry_block() : base(2)
 						{
 							Add(/*label = */ new TI.StringId());
-							Add(/*animation = */ new TI.Struct<animation_index_struct>(this));
+							Add(animation = new TI.Struct<animation_index_struct>(this));
 						}
 						#endregion
 					}
@@ -813,48 +816,51 @@ namespace BlamLib.Blam.Halo2.Tags
 
 					#region damage_animation_block
 					[TI.Definition(1, 16)]
-					public class damage_animation_block : TI.Definition
+					public partial class damage_animation_block : TI.Definition
 					{
 						#region damage_direction_block
 						[TI.Definition(1, 12)]
-						public class damage_direction_block : TI.Definition
+						public partial class damage_direction_block : TI.Definition
 						{
 							#region damage_region_block
 							[TI.Definition(1, 4)]
 							public class damage_region_block : TI.Definition
 							{
 								#region Fields
+								public TI.Struct<animation_index_struct> animation;
 								#endregion
 
 								#region Ctor
 								public damage_region_block() : base(1)
 								{
-									Add(/*animation = */ new TI.Struct<animation_index_struct>(this));
+									Add(animation = new TI.Struct<animation_index_struct>(this));
 								}
 								#endregion
 							}
 							#endregion
 
 							#region Fields
+							public TI.Block<damage_region_block> regions;
 							#endregion
 
 							#region Ctor
 							public damage_direction_block() : base(1)
 							{
-								Add(/*regions = */ new TI.Block<damage_region_block>(this, 11));
+								Add(regions = new TI.Block<damage_region_block>(this, 11));
 							}
 							#endregion
 						}
 						#endregion
 
 						#region Fields
+						public TI.Block<damage_direction_block> directions;
 						#endregion
 
 						#region Ctor
 						public damage_animation_block() : base(2)
 						{
 							Add(/*label = */ new TI.StringId());
-							Add(/*directions = */ new TI.Block<damage_direction_block>(this, 4));
+							Add(directions = new TI.Block<damage_direction_block>(this, 4));
 						}
 						#endregion
 					}
@@ -865,6 +871,7 @@ namespace BlamLib.Blam.Halo2.Tags
 					public class animation_transition_destination_block : TI.Definition
 					{
 						#region Fields
+						public TI.Struct<animation_index_struct> animation;
 						#endregion
 
 						#region Ctor
@@ -873,7 +880,7 @@ namespace BlamLib.Blam.Halo2.Tags
 							Add(/*full name = */ new TI.StringId());
 							Add(/*mode = */ new TI.StringId());
 							Add(/*state info = */ new TI.Struct<animation_destination_state_struct>(this));
-							Add(/*animation = */ new TI.Struct<animation_index_struct>(this));
+							Add(animation = new TI.Struct<animation_index_struct>(this));
 						}
 						#endregion
 					}
@@ -881,9 +888,10 @@ namespace BlamLib.Blam.Halo2.Tags
 
 					#region animation_transition_block
 					[TI.Definition(1, 24)]
-					public class animation_transition_block : TI.Definition
+					public partial class animation_transition_block : TI.Definition
 					{
 						#region Fields
+						public TI.Block<animation_transition_destination_block> destinations;
 						#endregion
 
 						#region Ctor
@@ -891,7 +899,7 @@ namespace BlamLib.Blam.Halo2.Tags
 						{
 							Add(/*full name = */ new TI.StringId());
 							Add(/*state info = */ new TI.Struct<animation_transition_state_struct>(this));
-							Add(/*destinations = */ new TI.Block<animation_transition_destination_block>(this, 32));
+							Add(destinations = new TI.Block<animation_transition_destination_block>(this, 32));
 						}
 						#endregion
 					}
@@ -914,16 +922,21 @@ namespace BlamLib.Blam.Halo2.Tags
 					#endregion
 
 					#region Fields
+					public TI.StringId label;
+					public TI.Block<animation_entry_block> actions;
+					public TI.Block<animation_entry_block> overlays;
+					public TI.Block<damage_animation_block> death_and_damage;
+					public TI.Block<animation_transition_block> transitions;
 					#endregion
 
 					#region Ctor
 					public weapon_type_block() : base(7)
 					{
-						Add(/*label = */ new TI.StringId());
-						Add(/*actions = */ new TI.Block<animation_entry_block>(this, 256));
-						Add(/*overlays = */ new TI.Block<animation_entry_block>(this, 256));
-						Add(/*death and damage = */ new TI.Block<damage_animation_block>(this, 8));
-						Add(/*transitions = */ new TI.Block<animation_transition_block>(this, 256));
+						Add(label = new TI.StringId());
+						Add(actions = new TI.Block<animation_entry_block>(this, 256));
+						Add(overlays = new TI.Block<animation_entry_block>(this, 256));
+						Add(death_and_damage = new TI.Block<damage_animation_block>(this, 8));
+						Add(transitions =  new TI.Block<animation_transition_block>(this, 256));
 						Add(/*high precache = */ new TI.Block<precache_list_block>(this, 1024));
 						Add(/*low precache = */ new TI.Block<precache_list_block>(this, 1024));
 					}
@@ -964,13 +977,14 @@ namespace BlamLib.Blam.Halo2.Tags
 		public class vehicle_suspension_block : TI.Definition
 		{
 			#region Fields
+			public TI.Struct<animation_index_struct> animation;
 			#endregion
 
 			#region Ctor
 			public vehicle_suspension_block() : base(10)
 			{
 				Add(/*label = */ new TI.StringId());
-				Add(/*animation = */ new TI.Struct<animation_index_struct>(this));
+				Add(animation = new TI.Struct<animation_index_struct>(this));
 				Add(/*marker name = */ new TI.StringId());
 				Add(/*mass point offset = */ new TI.Real());
 				Add(/*full extension ground_depth = */ new TI.Real());
@@ -989,13 +1003,14 @@ namespace BlamLib.Blam.Halo2.Tags
 		public class object_animation_block : TI.Definition
 		{
 			#region Fields
+			public TI.Struct<animation_index_struct> animation;
 			#endregion
 
 			#region Ctor
 			public object_animation_block() : base(6)
 			{
 				Add(/*label = */ new TI.StringId());
-				Add(/*animation = */ new TI.Struct<animation_index_struct>(this));
+				Add(animation = new TI.Struct<animation_index_struct>(this));
 				Add(new TI.Pad(2));
 				Add(/*function controls = */ new TI.Enum());
 				Add(/*function = */ new TI.StringId());
