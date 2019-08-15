@@ -270,8 +270,34 @@ namespace BlamLib.Blam.Halo2.Tags
 						death_and_damage.Elements.RemoveAll(damage_anim => damage_anim.directions.IsEmpty());
 						return true;
 					}
+
+					public bool IsEmpty()
+					{
+						return actions.IsEmpty() && overlays.IsEmpty() && death_and_damage.IsEmpty() && transitions.IsEmpty() &&
+							high_precache.IsEmpty() && low_precache.IsEmpty();
+					}
+				}
+
+				internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+				{
+					weapon_type.Elements.RemoveAll(type => type.IsEmpty());
+					return true;
 				}
 			}
+
+			internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+			{
+				weapon_class.Elements.RemoveAll(weapon_class =>
+					weapon_class.weapon_ik.IsEmpty() && weapon_class.weapon_type.IsEmpty()
+				);
+				return true;
+			}
+		}
+
+		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+		{
+			modes.Elements.RemoveAll(mode => mode.mode_ik.IsEmpty() && mode.weapon_class.IsEmpty());
+			return true;
 		}
 	}
 

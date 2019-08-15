@@ -927,6 +927,8 @@ namespace BlamLib.Blam.Halo2.Tags
 					public TI.Block<animation_entry_block> overlays;
 					public TI.Block<damage_animation_block> death_and_damage;
 					public TI.Block<animation_transition_block> transitions;
+					public TI.Block<precache_list_block> high_precache;
+					public TI.Block<precache_list_block> low_precache;
 					#endregion
 
 					#region Ctor
@@ -937,36 +939,42 @@ namespace BlamLib.Blam.Halo2.Tags
 						Add(overlays = new TI.Block<animation_entry_block>(this, 256));
 						Add(death_and_damage = new TI.Block<damage_animation_block>(this, 8));
 						Add(transitions =  new TI.Block<animation_transition_block>(this, 256));
-						Add(/*high precache = */ new TI.Block<precache_list_block>(this, 1024));
-						Add(/*low precache = */ new TI.Block<precache_list_block>(this, 1024));
+						Add(high_precache = new TI.Block<precache_list_block>(this, 1024));
+						Add(low_precache = new TI.Block<precache_list_block>(this, 1024));
 					}
 					#endregion
 				}
 				#endregion
 
 				#region Fields
+				public TI.StringId label;
+				public TI.Block<weapon_type_block> weapon_type;
+				public TI.Block<animation_ik_block> weapon_ik;
 				#endregion
 
 				#region Ctor
 				public weapon_class_block() : base(3)
 				{
-					Add(/*label = */ new TI.StringId());
-					Add(/*weapon type = */ new TI.Block<weapon_type_block>(this, 64));
-					Add(/*weapon ik = */ new TI.Block<animation_ik_block>(this, 8));
+					Add(label = new TI.StringId());
+					Add(weapon_type = new TI.Block<weapon_type_block>(this, 64));
+					Add(weapon_ik = new TI.Block<animation_ik_block>(this, 8));
 				}
 				#endregion
 			}
 			#endregion
 
 			#region Fields
+			public TI.StringId label;
+			public TI.Block<weapon_class_block> weapon_class;
+			public TI.Block<animation_ik_block> mode_ik;
 			#endregion
 
 			#region Ctor
 			public animation_mode_block() : base(3)
 			{
-				Add(/*label = */ new TI.StringId());
-				Add(/*weapon class = */ new TI.Block<weapon_class_block>(this, 64));
-				Add(/*mode ik = */ new TI.Block<animation_ik_block>(this, 8));
+				Add(label = new TI.StringId());
+				Add(weapon_class = new TI.Block<weapon_class_block>(this, 64));
+				Add(mode_ik = new TI.Block<animation_ik_block>(this, 8));
 			}
 			#endregion
 		}
@@ -1021,12 +1029,13 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Fields
+		TI.Block<animation_mode_block> modes;
 		#endregion
 
 		#region Ctor
 		public animation_graph_contents_struct() : base(3)
 		{
-			Add(/*modes = */ new TI.Block<animation_mode_block>(this, 512));
+			Add(modes =  new TI.Block<animation_mode_block>(this, 512));
 			Add(/*vehicle suspension = */ new TI.Block<vehicle_suspension_block>(this, 32));
 			Add(/*object overlays = */ new TI.Block<object_animation_block>(this, 32));
 		}
