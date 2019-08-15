@@ -215,6 +215,11 @@ namespace BlamLib.TagInterface
 		public int Count { get { return elements.Count; } }
 
 		/// <summary>
+		/// Is the tag block empty?
+		/// </summary>
+		public bool IsEmpty() { return elements.Count == 0; }
+
+		/// <summary>
 		/// Get a <typeparamref name="T"/> enumerator to enumerate through
 		/// this block's elements
 		/// </summary>
