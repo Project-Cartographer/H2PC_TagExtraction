@@ -808,21 +808,24 @@ namespace Map_Handler
                             Array.Reverse(flip);
 
                             bw.Write(BitConverter.ToInt16(flip, 0));
-                            bw.Write(Convert.ToInt32(0));
-                            bw.Write(Encoding.UTF8.GetBytes("mtib"));
-                            bw.Write(Convert.ToInt32(0));
-                            bw.Write((Convert.ToInt32(0)));
-                            bw.Write(Convert.ToInt32(-1));
 
                             #region Shader Specific Fixes
 
-                            double b = 0.00392156862;
+                            float b = 0.00392156862f;
 
                             #region Active Camo Opaque
                             if (ShaderTemplate == "active_camo_opaque.shader_template.txt")
                             {
                                 if (PixelLabels[i] == "refraction_bump_amount")     //vertex constant index 2 x value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -831,6 +834,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "refraction_geometry_amount") //vertex constant index 3 y value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -845,6 +856,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "refraction_bump_amount")     //vertex constant index 2 x value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -853,6 +872,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "refraction_geometry_amount") //vertex constant index 3 y value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -867,6 +894,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color")        //pixel constant index 0 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -875,6 +910,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_color") //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -883,6 +926,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_power") //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -897,6 +948,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "meter_gradient_min") //pixel constants index 1 value - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));          //A
                                     bw.Write(Convert.ToSingle(0));          //R
                                     bw.Write(Convert.ToSingle(0));          //G
@@ -905,6 +964,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "meter_gradient_max") //pixel constants index 2 value - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));          //A
                                     bw.Write(Convert.ToSingle(0));          //R
                                     bw.Write(Convert.ToSingle(0));          //G
@@ -913,6 +980,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "meter_empty_color")  //pixel constants index 3 value - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));          //A
                                     bw.Write(Convert.ToSingle(0));          //R
                                     bw.Write(Convert.ToSingle(0));          //G
@@ -921,6 +996,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "meter_amount")       //pixel constants index 0 value - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));          //A
                                     bw.Write(Convert.ToSingle(0));          //R
                                     bw.Write(Convert.ToSingle(0));          //G
@@ -935,6 +1018,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "lightmap_emissive_color") //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -943,6 +1034,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_power") //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -951,6 +1050,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "bloom")                   //pixel constant index 0 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -965,6 +1072,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")          //vertex constant index 0 x,y,z rgb floats - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -973,6 +1088,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color") //vertex constant index 1 x,y,z rgb floats - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -981,6 +1104,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")          //vertex constant index 2 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -989,6 +1120,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness") //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -997,6 +1136,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")          //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -1005,6 +1152,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")          //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));               //A
                                     bw.Write(Convert.ToSingle(0));               //R
                                     bw.Write(Convert.ToSingle(0));               //G
@@ -1019,6 +1174,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")             //vertex constant index 0 x,y,z rgb floats - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -1027,6 +1190,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")    //vertex constant index 1 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -1035,6 +1206,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")             //vertex constant index 2 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -1043,6 +1222,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")    //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -1051,6 +1238,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")             //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -1059,6 +1254,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")             //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -1067,6 +1270,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_translucent_color") //runtime properites tag block lightmap transparent colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -1075,6 +1286,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_translucent_alpha") //runtime properties tag block lightmap transparent alpha - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                  //A
                                     bw.Write(Convert.ToSingle(0));                  //R
                                     bw.Write(Convert.ToSingle(0));                  //G
@@ -1089,6 +1308,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //vertex constant index 0 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0));  //G
@@ -1097,6 +1324,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //vertex constant index 1 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0));  //G
@@ -1105,6 +1340,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //vertex constant index 2 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1113,6 +1356,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1121,6 +1372,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1129,6 +1388,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1143,6 +1410,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //vertex constant index 0 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0));  //G
@@ -1151,6 +1426,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //vertex constant index 1 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0));  //G
@@ -1159,6 +1442,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //vertex constant index 2 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1167,6 +1458,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1175,6 +1474,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1183,6 +1490,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1191,6 +1506,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "mask_color0")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1199,6 +1522,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "mask_color1")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1207,6 +1538,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "mask_color2")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1221,6 +1560,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //vertex constant index 0 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0));  //G
@@ -1229,6 +1576,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //vertex constant index 1 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0));  //G
@@ -1237,6 +1592,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //vertex constant index 2 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1245,6 +1608,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1253,6 +1624,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1261,6 +1640,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1275,6 +1662,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "flat_environment_color")                                         //vertex constant index 0 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0));  //G
@@ -1283,6 +1678,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_color")                                //vertex constant index 1 x,y,z rgb floats - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0));  //G
@@ -1291,6 +1694,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_opacity")                                         //vertex constant index 2 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));  //A
                                     bw.Write(Convert.ToSingle(0));  //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1299,6 +1710,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "tint_color")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1307,6 +1726,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_tint_color")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1315,6 +1742,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "brightness")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1323,6 +1758,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_brightness")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1331,6 +1774,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "color_wide")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1339,6 +1790,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "color_medium")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1347,6 +1806,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "color_sharp")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1355,6 +1822,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "perpendicular_brightness")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1363,6 +1838,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "fade_bias")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1371,6 +1854,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "bloom")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1379,6 +1870,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_tint_color")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1387,6 +1886,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1395,6 +1902,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                //vertex constant index 3 w value - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1403,6 +1918,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                         //runtime properites tag block lightmap emissive colors value - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1411,6 +1934,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1419,6 +1950,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color")                                         //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0)); //A
                                     bw.Write(Convert.ToSingle(0)); //R
                                     bw.Write(Convert.ToSingle(0)); //G
@@ -1433,6 +1972,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "refraction_bump_amount")                                        //unused? moved from the shad file to some other file on package? Only used on lighting and thrown away on package? - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                                             //A
                                     bw.Write(Convert.ToSingle(0));                                             //R
                                     bw.Write(Convert.ToSingle(0));                                             //G
@@ -1441,6 +1988,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "refraction_geometry_amount")                                        //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -1449,6 +2004,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "refraction_x_offset")                               //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -1463,6 +2026,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color")                             //pixel constant index 0 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1471,6 +2042,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_color")                      //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -1479,6 +2058,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_power")                      //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1493,6 +2080,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color")                             //pixel constant index 0 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1501,6 +2096,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_color")                      //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -1509,6 +2112,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_power")                      //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1517,6 +2128,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "bloom")                                        //pixel constant index 1 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1531,6 +2150,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color")                             //pixel constant index 0 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1539,6 +2166,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_color")                      //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -1547,6 +2182,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_power")                      //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1561,6 +2204,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color")                             //pixel constant index 0 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1569,6 +2220,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_color")                      //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -1577,6 +2236,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emissive_power")                      //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1591,6 +2258,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color")                             //pixel constant index 0 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1599,6 +2274,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "tint_color")                                   //vertex constant index 2 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[8]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[9]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[10]))); //G
@@ -1607,6 +2290,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_tint_color")                          //vertex constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[12]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[13]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[14]))); //G
@@ -1615,6 +2306,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "brightness")                                   //vertex constant index 4 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[16]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[17]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[18]))); //G
@@ -1623,6 +2322,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_brightness")                          //vertex constant index 5 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[20]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[21]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[22]))); //G
@@ -1631,6 +2338,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emmisive_color")                      //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -1639,6 +2354,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_emmisive_power")                      //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1653,6 +2376,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color")                             //pixel constant index 0 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1661,6 +2392,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "tint_color")                                   //vertex constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1669,6 +2408,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_tint_color")                          //vertex constant index 5 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1677,6 +2424,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "brightness")                                   //vertex constant index 6 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1685,6 +2440,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_brightness")                          //vertex constant index 7 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1699,6 +2462,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "environment_color")                             //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -1707,6 +2478,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_color")                            //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -1715,6 +2494,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_opacity")                          //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -1723,6 +2510,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color")                             //pixel constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -1731,6 +2526,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "tint_color")                                          //vertex constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[0]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[1])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[2])));  //G
@@ -1739,6 +2542,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_tint_color")                                 //vertex constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[4]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[5]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[6]))); //G
@@ -1747,6 +2558,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "brightness")                                          //vertex constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[8]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[9]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[10]))); //G
@@ -1755,6 +2574,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_brightness")                                 //vertex constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[12]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[13]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[14]))); //G
@@ -1763,6 +2590,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                      //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -1771,6 +2606,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                      //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1785,6 +2628,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "environment_color")                             //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -1793,6 +2644,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_color")                            //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -1801,6 +2660,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_opacity")                          //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -1809,6 +2676,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color")                             //pixel constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -1817,6 +2692,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "tint_color")                                          //vertex constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[0]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[1])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[2])));  //G
@@ -1825,6 +2708,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_tint_color")                                 //vertex constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[4]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[5]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[6]))); //G
@@ -1833,6 +2724,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "brightness")                                          //vertex constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[8]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[9]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[10]))); //G
@@ -1841,6 +2740,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_brightness")                                 //vertex constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[12]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[13]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[14]))); //G
@@ -1849,6 +2756,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                      //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                                     //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -1857,6 +2772,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                      //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0));                                     //R
                                     bw.Write(Convert.ToInt32(0));                                     //G
@@ -1871,6 +2794,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "ambient_factor")                                        //unused? moved from the shad file to some other file on package? Only used on lighting and thrown away on package? - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(0));                                             //A
                                     bw.Write(Convert.ToSingle(0));                                             //R
                                     bw.Write(Convert.ToSingle(0));                                             //G
@@ -1879,6 +2810,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                        //pixel constant index 0 - written as rgb float in mitb block
                                 {
+
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -1887,6 +2826,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                               //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -1901,6 +2848,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b));  //G
@@ -1909,6 +2864,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b));  //G
@@ -1917,6 +2880,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -1925,6 +2896,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //pixel constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -1933,6 +2912,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[16]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[17]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[18]) * b)); //G
@@ -1941,6 +2928,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[20]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[21]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[22]) * b)); //G
@@ -1955,6 +2950,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b));  //G
@@ -1963,6 +2966,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b));  //G
@@ -1971,6 +2982,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -1979,6 +2998,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //pixel constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -1987,6 +3014,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[16]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[17]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[18]) * b)); //G
@@ -1995,6 +3030,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[20]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[21]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[22]) * b)); //G
@@ -2009,6 +3052,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b));  //G
@@ -2017,6 +3068,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b));  //G
@@ -2025,6 +3084,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2033,6 +3100,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //pixel constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -2041,6 +3116,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor") //Not written to packaged shad tag? - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                 //A
                                     bw.Write(Convert.ToInt32(0));                 //R
                                     bw.Write(Convert.ToInt32(0));                 //G
@@ -2049,6 +3132,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color") //Not written to packaged shad tag? - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));                //A
                                     bw.Write(Convert.ToInt32(0));                //R
                                     bw.Write(Convert.ToInt32(0));                //G
@@ -2057,6 +3148,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 6 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2065,6 +3164,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -2073,6 +3180,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //pixel constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -2081,6 +3196,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[16]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[17]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[18]) * b)); //G
@@ -2089,6 +3212,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[20]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[21]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[22]) * b)); //G
@@ -2103,6 +3234,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //pixel constant index 10 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[40]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[41]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[42]) * b));  //G
@@ -2111,6 +3250,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //pixel constant index 11 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[44]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[45]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[46]) * b));  //G
@@ -2119,6 +3266,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //pixel constant index 12 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[48]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[49]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[50]) * b)); //G
@@ -2127,6 +3282,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //pixel constant index 13 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[52]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[53]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[54]) * b)); //G
@@ -2135,6 +3298,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor") //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2143,6 +3314,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color") //pixel constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -2151,6 +3330,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_a_color") //pixel constant index 6 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2159,6 +3346,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_a_brightness") //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2167,6 +3362,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_b_color") //pixel constant index 7 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2175,6 +3378,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_b_brightness") //pixel constant index 5 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2183,6 +3394,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_c_color") //pixel constant index 8 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2191,6 +3410,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_c_brightness") //pixel constant index 9 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2199,6 +3426,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -2207,6 +3442,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //pixel constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -2215,6 +3458,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -2223,6 +3474,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -2237,6 +3496,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b));  //G
@@ -2245,6 +3512,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b));  //G
@@ -2253,6 +3528,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2261,6 +3544,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //pixel constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -2269,6 +3560,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor") //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2277,6 +3576,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color") //pixel constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2285,6 +3592,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_a_color") //pixel constant index 6 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2293,6 +3608,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_a_brightness") //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2301,6 +3624,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_b_color") //pixel constant index 7 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2309,6 +3640,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_b_brightness") //pixel constant index 5 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2317,6 +3656,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_c_color") //pixel constant index 8 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2325,6 +3672,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_c_brightness") //pixel constant index 9 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2333,6 +3688,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -2341,6 +3704,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //pixel constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -2349,6 +3720,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[16]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[17]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[18]) * b)); //G
@@ -2357,6 +3736,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[20]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[21]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[22]) * b)); //G
@@ -2371,6 +3758,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //pixel constant index 13 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[52]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[53]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[54]) * b));  //G
@@ -2379,6 +3774,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //pixel constant index 14 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[56]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[57]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[58]) * b));  //G
@@ -2387,6 +3790,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //pixel constant index 15 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[60]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[61]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[62]) * b)); //G
@@ -2395,6 +3806,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //pixel constant index 16 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[64]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[65]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[66]) * b)); //G
@@ -2403,6 +3822,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor") //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2411,6 +3838,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color") //pixel constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -2419,6 +3854,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_a_color") //pixel constant index 6 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2427,6 +3870,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_a_brightness") //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2435,6 +3886,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_b_color") //pixel constant index 8 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2443,6 +3902,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_b_brightness") //pixel constant index 5 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2451,6 +3918,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_c_color") //pixel constant index 8 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2459,6 +3934,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_c_brightness") //pixel constant index 7 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2467,6 +3950,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "occlusion_a_color") //pixel constant index 10 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2475,6 +3966,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "occlusion_b_color") //pixel constant index 11 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2483,6 +3982,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "occlusion_c_color") //pixel constant index 12 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2491,6 +3998,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -2499,6 +4014,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //pixel constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -2507,6 +4030,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -2515,6 +4046,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -2529,6 +4068,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b));  //G
@@ -2537,6 +4084,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b));  //G
@@ -2545,6 +4100,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2553,6 +4116,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //pixel constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -2561,6 +4132,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor") //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2569,6 +4148,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color") //pixel constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2577,6 +4164,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 6 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2585,6 +4180,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -2593,6 +4196,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //runtime properties tag block lightmap emissive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -2601,6 +4212,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[16]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[17]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[18]) * b)); //G
@@ -2609,6 +4228,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[20]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[21]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[22]) * b)); //G
@@ -2623,6 +4250,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "detail_map_value_scale")                                 //pixel constant index 6 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2631,6 +4266,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "burn_scale")                                             //pixel constant index 0 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b));  //G
@@ -2639,6 +4282,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 5 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2647,6 +4298,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //runtime properties tag block lightmap half life - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[4]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -2655,6 +4314,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -2663,6 +4330,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_tint_color")                                         //vertex constant index 6 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[24])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[25])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[26])));  //G
@@ -2671,6 +4346,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                                //vertex constant index 7 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[28])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[29])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[30])));  //G
@@ -2679,6 +4362,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                         //vertex constant index 8 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[32])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[33])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[34]))); //G
@@ -2687,6 +4378,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                                //vertex constant index 9 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[36]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[37]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[38]))); //G
@@ -2695,6 +4394,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor") //pixel constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -2703,6 +4410,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color") //pixel constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[16]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[17]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[18]) * b)); //G
@@ -2711,6 +4426,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -2719,6 +4442,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 2 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2733,6 +4464,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "ambient_factor")   //Not written to shad file - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2741,6 +4480,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2749,6 +4496,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_tint_color")                                       //vertex constant index 4 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[16])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[17])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[18])));  //G
@@ -2757,6 +4512,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                              //vertex constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[20])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[21])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[22])));  //G
@@ -2765,6 +4528,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                      //vertex constant index 6 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[24]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[25]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[26]))); //G
@@ -2773,6 +4544,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                             //vertex constant index 7 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[28]))); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[29]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[30]))); //G
@@ -2781,6 +4560,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor") //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2789,6 +4576,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color") //pixel constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -2797,6 +4592,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -2805,6 +4608,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -2819,6 +4630,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "env_tint_color")                                       //vertex constant index 5 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[20]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[21]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[22]) * b));  //G
@@ -2827,6 +4646,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_tint_color")                              //vertex constant index 6 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[24]) * b));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[25]) * b));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[26]) * b));  //G
@@ -2835,6 +4662,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_brightness")                                      //vertex constant index 7 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[28]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[29]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[30]) * b)); //G
@@ -2843,6 +4678,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_glancing_brightness")                             //vertex constant index 8 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[32]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[33]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[34]) * b)); //G
@@ -2851,6 +4694,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_factor") //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2859,6 +4710,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "env_midrange_tint_color") //pixel constant index 3 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[12]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[13]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[14]) * b)); //G
@@ -2867,6 +4726,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2875,6 +4742,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -2883,6 +4758,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //runtime properties tag block lightmap emmisive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -2891,6 +4774,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -2899,6 +4790,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -2913,6 +4812,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 3 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2921,6 +4828,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //runtime properties tag block lightmap emmisive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -2929,6 +4844,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -2937,6 +4860,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -2945,6 +4876,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -2959,6 +4898,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 1 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2967,6 +4914,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -2975,6 +4930,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 2 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -2989,6 +4952,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 2 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -2997,6 +4968,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                                //runtime properties tag block lightmap emmisive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -3005,6 +4984,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -3013,6 +5000,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "bloom") //pixel constant index 3 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3021,6 +5016,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -3029,6 +5032,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -3043,6 +5054,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "meter_on_color")   //pixel constant index 3 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3051,6 +5070,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "meter_off_color")  //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3059,6 +5086,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "meter_value")      //pixel constant index 2 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3067,6 +5102,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -3075,6 +5118,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -3089,6 +5140,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "channel_a_color")  //pixel constant index 5 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3097,6 +5156,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_b_color")  //pixel constant index 3 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3105,6 +5172,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "channel_c_color")  //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3113,6 +5188,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "time")             //pixel constant index 2 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3121,6 +5204,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                               //runtime properties tag block lightmap emmisive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -3129,6 +5220,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -3137,6 +5236,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_color")                                         //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -3145,6 +5252,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "specular_glancing_color")                                //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -3159,6 +5274,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "environment_color")  //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -3167,6 +5290,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_color")  //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -3175,6 +5306,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_opacity")  //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -3183,6 +5322,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3191,6 +5338,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "tint_color")  //vertex constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[0])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[1])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[2])));  //G
@@ -3199,6 +5354,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_tint_color")             //vertex constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[4])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[5])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[6])));  //G
@@ -3207,6 +5370,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "brightness")  //vertex constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[8])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[9])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[10])));  //G
@@ -3215,6 +5386,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_brightness")             //vertex constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[12])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[13])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[14])));  //G
@@ -3223,6 +5402,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -3231,6 +5418,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                               //runtime properties tag block lightmap emmisive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -3245,6 +5440,14 @@ namespace Map_Handler
                             {
                                 if (PixelLabels[i] == "environment_color")  //pixel constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[0]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[1]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[2]) * b)); //G
@@ -3253,6 +5456,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_color")  //pixel constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[4]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[5]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[6]) * b)); //G
@@ -3261,6 +5472,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "alpha_blend_opacity")  //pixel constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[8]) * b)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[9]) * b)); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionPixelConstant[10]) * b)); //G
@@ -3269,6 +5488,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "self_illum_color") //pixel constant index 4 - Written as hex color value in a dfbt next to parameter name
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0));         //A
                                     bw.Write(Convert.ToInt32(0));         //R
                                     bw.Write(Convert.ToInt32(0));         //G
@@ -3277,6 +5504,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "tint_color")  //vertex constant index 0 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[0])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[1])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[2])));  //G
@@ -3285,6 +5520,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_tint_color")             //vertex constant index 1 - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[4])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[5])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[6])));  //G
@@ -3293,6 +5536,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "brightness")  //vertex constant index 2 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[8])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[9])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[10])));  //G
@@ -3301,6 +5552,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "glancing_brightness")             //vertex constant index 3 - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[12])));  //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[13])));  //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionVertexConstant[14])));  //G
@@ -3309,6 +5568,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_translucent_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[6]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[7]))); //G
@@ -3317,6 +5584,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "lightmap_translucent_alpha")                               //runtime properties tag block lightmap emmisive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[5]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -3325,6 +5600,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_color")                               //runtime properties tag block lightmap emissive color - written as rgb float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(2));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToInt32(0)); //A
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[1]))); //R
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[2]))); //G
@@ -3333,6 +5616,14 @@ namespace Map_Handler
                                 }
                                 if (PixelLabels[i] == "emissive_power")                               //runtime properties tag block lightmap emmisive power - written as alpha float in mitb block
                                 {
+                                    bw.Write(Convert.ToByte(1));                    //Unknown Value
+                                    bw.Write(Convert.ToByte(0));
+                                    bw.Write(Convert.ToInt16(0));
+                                    bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                    bw.Write(Convert.ToInt32(0));
+                                    bw.Write((Convert.ToInt32(0)));
+                                    bw.Write(Convert.ToInt32(-1));
+
                                     bw.Write(Convert.ToSingle(Convert.ToSingle(sectionLightmap[0]))); //A
                                     bw.Write(Convert.ToInt32(0)); //R
                                     bw.Write(Convert.ToInt32(0)); //G
@@ -3344,6 +5635,14 @@ namespace Map_Handler
 
                             if (!SupportedShaders.Contains(ShaderTemplate))
                             {
+                                bw.Write(Convert.ToByte(0));                    //Unknown Value
+                                bw.Write(Convert.ToByte(0));
+                                bw.Write(Convert.ToInt16(0));
+                                bw.Write(Encoding.UTF8.GetBytes("mtib"));
+                                bw.Write(Convert.ToInt32(0));
+                                bw.Write((Convert.ToInt32(0)));
+                                bw.Write(Convert.ToInt32(-1));
+
                                 bw.Write(Convert.ToInt32(0));
                                 bw.Write(Convert.ToInt32(0));
                                 bw.Write(Convert.ToInt32(0));
