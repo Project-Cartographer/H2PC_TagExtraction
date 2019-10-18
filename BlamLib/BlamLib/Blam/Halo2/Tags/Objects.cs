@@ -2130,6 +2130,7 @@ namespace BlamLib.Blam.Halo2.Tags
 		#endregion
 
 		#region Fields
+		public TI.Real gravity_scale;
 		public TI.Block<vehicle_phantom_shape_block> shape_phantom_shape;
 		#endregion
 
@@ -2146,7 +2147,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(new TI.Pad(16));
 			Add(/*anti_gravity_bank_lift = */ new TI.Real());
 			Add(/*steering_bank_reaction_scale = */ new TI.Real());
-			Add(/*gravity scale = */ new TI.Real());
+			Add(gravity_scale = new TI.Real());
 			Add(/*radius = */ new TI.Real());
 			Add(/*anti gravity points = */ new TI.Block<anti_gravity_point_definition_block>(this, 16));
 			Add(/*friction points = */ new TI.Block<friction_point_definition_block>(this, 16));

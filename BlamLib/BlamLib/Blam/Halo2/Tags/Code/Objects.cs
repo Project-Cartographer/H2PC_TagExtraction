@@ -56,6 +56,14 @@ namespace BlamLib.Blam.Halo2.Tags
 		#region Reconstruct
 		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 		{
+			/*
+				If gravity scale is set to 0 then it is turned into a 1 on package.
+				0.001 should turn into a 0 on package instead of a 1
+			*/
+			if (gravity_scale.Value == 0)
+			{
+				gravity_scale.Value = 0.001f;
+			}
 			shape_phantom_shape.DeleteAll();
 			return true;
 		}

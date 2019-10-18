@@ -447,6 +447,17 @@ namespace BlamLib.Blam.Halo2.Tags
 		};
 		#endregion
 
+		#region havok shape base block
+		partial class havok_shape_base_block
+		{
+			internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+			{
+				Phantom.Value = -1;
+				return true;
+			}
+		};
+		#endregion
+
 		void ReconstructRigidBodyShapeData()
 		{
 			foreach (var rb in RigidBodies)
@@ -458,6 +469,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			//ReconstructRigidBodyShapeData();
 			int Object_Count = Spheres.Count + MultiSpheres.Count + Pills.Count + Boxes.Count + Triangles.Count + Polyhedra.Count;
 			MassDistributions.Resize(Object_Count);//TODO: Find a proper way to generate values for this. This fix will only go so far.
+			Phantoms.DeleteAll();
 
 			return true;
 		}
