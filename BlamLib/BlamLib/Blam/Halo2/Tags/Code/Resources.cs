@@ -23,6 +23,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 			{
 				LowDetailMipmapCount.Value = 0;
+				Flags.Value &= 0xf;
 				return true;
 			}
 

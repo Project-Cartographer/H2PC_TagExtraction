@@ -1454,7 +1454,7 @@ namespace BlamLib.Blam.Halo2.Tags
 
 		// I made this up. Up this made I. Not a real definition.
 		#region havok_shape_base_block
-		public abstract class havok_shape_base_block : TI.Definition
+		public partial class havok_shape_base_block : TI.Definition
 		{
 			public TI.StringId Name;
 			public TI.BlockIndex Material;

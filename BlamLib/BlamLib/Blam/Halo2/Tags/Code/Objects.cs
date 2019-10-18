@@ -56,6 +56,10 @@ namespace BlamLib.Blam.Halo2.Tags
 		#region Reconstruct
 		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 		{
+			if (gravity_scale.Value == 0)
+			{
+				gravity_scale.Value = 0.001f;
+			}
 			shape_phantom_shape.DeleteAll();
 			return true;
 		}
