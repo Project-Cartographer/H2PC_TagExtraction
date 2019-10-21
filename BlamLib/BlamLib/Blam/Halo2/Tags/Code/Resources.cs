@@ -23,7 +23,8 @@ namespace BlamLib.Blam.Halo2.Tags
 			internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
 			{
 				LowDetailMipmapCount.Value = 0;
-				Flags.Value &= 0xf;
+				// remove extra flags that will make the HEK think the tag is invalid
+				Flags.Value &= 0xff;
 				return true;
 			}
 
