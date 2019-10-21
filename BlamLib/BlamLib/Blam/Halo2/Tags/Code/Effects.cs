@@ -9,6 +9,20 @@ using TI = BlamLib.TagInterface;
 
 namespace BlamLib.Blam.Halo2.Tags
 {
+	#region particle_group
+	partial class particle_group
+	{
+		internal override bool Reconstruct(BlamLib.Blam.CacheFile c)
+		{
+			bool result = true;
+
+			shader_postprocess_definition.DeleteAll();
+
+			return result;
+		}
+		#endregion
+	}
+
 	#region weather_system
 	partial class weather_system_group
 	{
