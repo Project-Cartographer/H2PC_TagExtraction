@@ -882,9 +882,11 @@ namespace BlamLib.Blam.Halo2.Tags
 
 	#region particle
 	[TI.TagGroup((int)TagGroups.Enumerated.prt3, 1, 248)]
-	public class particle_group : TI.Definition
+	public partial class particle_group : TI.Definition
 	{
 		#region Fields
+		public TI.Struct<particle_property_scalar_struct_new> frame_index;
+		public TI.Block<shader_postprocess_definition_new_block> shader_postprocess_definition;
 		#endregion
 
 		#region Ctor
@@ -905,12 +907,12 @@ namespace BlamLib.Blam.Halo2.Tags
 			Add(/*alpha = */ new TI.Struct<particle_property_scalar_struct_new>(this));
 			Add(/*scale = */ new TI.Struct<particle_property_scalar_struct_new>(this));
 			Add(/*rotation = */ new TI.Struct<particle_property_scalar_struct_new>(this));
-			Add(/*frame index = */ new TI.Struct<particle_property_scalar_struct_new>(this));
+			Add(frame_index = new TI.Struct<particle_property_scalar_struct_new>(this));
 			Add(/*collision effect = */ new TI.TagReference(this)); // effe,snd!,foot,
 			Add(/*death effect = */ new TI.TagReference(this)); // effe,snd!,foot,
 			Add(/*locations = */ new TI.Block<effect_locations_block>(this, 32));
 			Add(/*attached particle systems = */ new TI.Block<particle_system_definition_block_new>(this, 32));
-			Add(/* = */ new TI.Block<shader_postprocess_definition_new_block>(this, 1));
+			Add(shader_postprocess_definition = new TI.Block<shader_postprocess_definition_new_block>(this, 1));
 			Add(new TI.Pad(8));
 			Add(new TI.Pad(16));
 			Add(new TI.Pad(16));
