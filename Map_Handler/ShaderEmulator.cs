@@ -249,12 +249,7 @@ namespace Map_Handler
                                     SectiomItems[i] = "";
                                 }
 
-                                if (SectiomItemLength[i] == " "
-                                    || SectiomItemLength[i] == "rasterizer\\linear_corner_fade"
-                                    || SectiomItemLength[i] == "rasterizer\\default_2d"
-                                    || SectiomItemLength[i] == "shaders\\default_bitmaps\\bitmaps\\default_additive"
-                                    || SectiomItemLength[i] == "shaders\\default_bitmaps\\bitmaps\\default_vector"
-                                    || SectiomItemLength[i] == "shaders\\default_bitmaps\\bitmaps\\default_multiplicative")
+                                if (i >= ShaderParameterCount)
                                 {
                                     SectiomItemLength[i] = "";
                                 }
@@ -15358,12 +15353,7 @@ namespace Map_Handler
                                     SectiomItems[i] = "";
                                 }
 
-                                if (SectiomItemLength[i] == " "
-                                    || SectiomItemLength[i] == "rasterizer\\linear_corner_fade"
-                                    || SectiomItemLength[i] == "rasterizer\\default_2d"
-                                    || SectiomItemLength[i] == "shaders\\default_bitmaps\\bitmaps\\default_additive"
-                                    || SectiomItemLength[i] == "shaders\\default_bitmaps\\bitmaps\\default_vector"
-                                    || SectiomItemLength[i] == "shaders\\default_bitmaps\\bitmaps\\default_multiplicative")
+                                if (i >= ShaderParameterCount)
                                 {
                                     SectiomItemLength[i] = "";
                                 }
