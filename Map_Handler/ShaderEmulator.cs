@@ -4192,8 +4192,8 @@ namespace Map_Handler
                                         anim_block_part2(anim_type: 1);
                                         anim_block_part2(anim_type: 2);
                                         anim_block_part2(anim_type: 13);
-                                        anim_block_part3_bitmap(anim_type: 28, function_type: 1, range_flag: 0, anim_value_x: Convert.ToSingle(sectionVertexConstant[16]), anim_value_y: 1);
                                         anim_block_part3_bitmap(anim_type: 28, function_type: 1, range_flag: 0, anim_value_x: Convert.ToSingle(sectionVertexConstant[19]), anim_value_y: 1);
+                                        anim_block_part3_bitmap(anim_type: 28, function_type: 1, range_flag: 0, anim_value_x: Convert.ToSingle(sectionVertexConstant[16]), anim_value_y: 1);
                                         anim_block_part3_bitmap(anim_type: 28, function_type: 1, range_flag: 0, anim_value_x: Convert.ToSingle(sectionBitmapIndex[4]), anim_value_y: 1);
                                     }
                                     if (SectiomItems[i] == "self_illum_map")
