@@ -1163,6 +1163,14 @@ namespace Map_Handler
                                 }
                                 sw.WriteLine("### BITMAPS END ###");
                                 sw.WriteLine("");
+                                sw.WriteLine("### BITMAPS INDEX ###");
+                                //dump the bitmap index 
+                                for (int i = 0; i < bitmap_count; i++)
+                                {
+                                    sw.WriteLine(BitConverter.ToInt32(meta_data, (bitmapB_off + (i * 0xC)) + 0x4)); //Write bitmap index
+                                }
+                                sw.WriteLine("### BITMAPS INDEX END ###");
+                                sw.WriteLine("");
                                 sw.WriteLine("### LIGHTMAP ###");
                                 sw.WriteLine(BitConverter.ToSingle(meta_data, RTP_off + 0x1C)); //A - Write lightmap emmisive power
                                 sw.WriteLine(BitConverter.ToSingle(meta_data, RTP_off + 0x10)); //R - Write lightmap emmisive color
