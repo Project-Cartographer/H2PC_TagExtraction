@@ -3,6 +3,7 @@
 
 	See license\BlamLib\BlamLib for specific license information
 */
+using BlamLib.Managers;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -931,7 +932,16 @@ namespace BlamLib.Blam.Halo2
 			base.ExtractionDispose();
 		}
 
-		internal override bool ExtractionTagReferenceChange(TagInterface.TagReference tr)
+        protected override bool ReconstructSound(Blam.CacheExtractionInfo cei, TagManager cache_sound_tag, TagManager reconstruct_sound, ref bool error)
+        {
+            Tags.sound_group sound_data = reconstruct_sound.TagDefinition as Tags.sound_group;
+            sound_data.FromCache(cacheFile as CacheFile, cache_sound_tag.TagDefinition as Tags.cache_file_sound_group);
+
+            return true;
+        }
+
+
+        internal override bool ExtractionTagReferenceChange(TagInterface.TagReference tr)
 		{
 			bool changed = false;
 

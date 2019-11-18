@@ -1262,7 +1262,7 @@ namespace BlamLib.TagInterface
 		/// that modifies the result won't be modifying our data
 		/// </summary>
 		/// <returns></returns>
-		public object Clone()
+		virtual public object Clone()
 		{
 			Definition def = (Definition)State.DefaultCtor.Invoke(null);
 
@@ -1272,14 +1272,14 @@ namespace BlamLib.TagInterface
 			return def;
 		}
 
-		/// <summary>
-		/// Performs a deep-copy of this Definition, so everything in this and 
-		/// any data this object references is completely copied so something
-		/// that modifies the result won't be modifying our data
-		/// </summary>
-		/// <param name="owner"></param>
-		/// <returns></returns>
-		public object Clone(IStructureOwner owner)
+        /// <summary>
+        /// Performs a deep-copy of this Definition, so everything in this and 
+        /// any data this object references is completely copied so something
+        /// that modifies the result won't be modifying our data
+        /// </summary>
+        /// <param name="owner"></param>
+        /// <returns></returns>
+        virtual public object Clone(IStructureOwner owner)
 		{
 			Definition def = (Definition)State.DefaultCtor.Invoke(null);
 

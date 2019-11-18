@@ -62,7 +62,14 @@ namespace BlamLib.Blam.Halo2.Tags
 
 			return true;
 		}
-	};
+
+        public override object Clone(TI.IStructureOwner owner)
+        {
+            sound_permutation_chunk_block clone = base.Clone(owner) as sound_permutation_chunk_block;
+            clone.Data = this.Data.Clone() as byte[];
+            return clone;
+        }
+    };
 	#endregion
 
 	#region sound_permutations_block
@@ -191,12 +198,52 @@ namespace BlamLib.Blam.Halo2.Tags
 			raw.Convert(perm);
 		}
 	};
-	#endregion
+    #endregion
 
-	#region sound_encoded_dialogue_section_block
-	partial class sound_encoded_dialogue_section_block
-	{
-		internal bool Reconstruct(geometry_block_info_struct gbi)
+    #region sound_encoded_dialogue_section_block
+    partial class sound_encoded_dialogue_section_block
+    {
+        private enum dialog_resource_type
+        {
+            lipsync,
+            mouth
+        }
+        private byte[] get_dialogue_data(dialog_resource_type type, int permuation_index)
+        {
+            if (permuation_index < 0 || SoundDialogueInfo.Count <= permuation_index)
+                return null;
+            sound_permutation_dialogue_info_block permuation = SoundDialogueInfo[permuation_index];
+            int offset = 0;
+            int length = 0;
+            switch (type)
+            {
+                case dialog_resource_type.lipsync:
+                    offset = permuation.lipsync_data_offset;
+                    length = permuation.lipsync_data_length;
+                    break;
+                case dialog_resource_type.mouth:
+                    offset = permuation.mouth_data_offset;
+                    length = permuation.mouth_data_length;
+                    break;
+            }
+            if (length == 0)
+                return null;
+            byte[] data = new byte[length];
+            Array.Copy(EncodedData.Value, offset, data, 0, length);
+            return data;
+        }
+
+        internal byte[] get_lipsync_data(int permuation_index)
+        {
+            return get_dialogue_data(dialog_resource_type.lipsync, permuation_index);
+        }
+
+        internal byte[] get_mouth_data(int permuation_index)
+        {
+            return get_dialogue_data(dialog_resource_type.mouth, permuation_index);
+        }
+
+        internal bool Reconstruct(geometry_block_info_struct gbi)
 		{
 			int index = 0;
 			byte[][] data = gbi.GeometryBlock;
@@ -310,12 +357,12 @@ namespace BlamLib.Blam.Halo2.Tags
 					as sound_playback_parameters_struct;
 
 			index = snd.ScaleIndex.Value;
-			if (index != -1)
+			if (index != 255)
 				this.Scale.Value = gestalt.Scales[index].Scale.Value.Clone(this) 
 					as sound_scale_modifiers_struct;
 
 			index = snd.PromotionIndex.Value;
-			if (index != -1)
+			if (index != 255)
 				this.Promotion.Value = gestalt.Promotions[index].Promotion.Value.Clone(this)
 					as sound_promotion_parameters_struct;
 
@@ -331,7 +378,7 @@ namespace BlamLib.Blam.Halo2.Tags
 			}
 
 			index = snd.CustomPlaybackIndex.Value;
-			if (index != -1)
+			if (index != 255)
 			{
 				sound_platform_sound_playback_block param;
 				this.PlatformParameters.Add(out param);
@@ -340,11 +387,44 @@ namespace BlamLib.Blam.Halo2.Tags
 					as simple_platform_sound_playback_struct;
 			}
 
-			index = snd.ExtraInfoIndex.Value;
-			if (index != -1)
-				ExtraInfo.AddElement(gestalt.ExtraInfos[index].Clone(this) 
-					as sound_extra_info_block);
+            ExtraInfo.Resize(1);
+            sound_extra_info_block extra_info = ExtraInfo[0];
 
+            index = snd.ExtraInfoIndex.Value;
+            sound_gestalt_extra_info_block gestalt_extra_info = null;
+            if (index != -1)
+                gestalt_extra_info = gestalt.ExtraInfos[index];
+
+            int raw_permuation_index = 0;
+            foreach (sound_pitch_range_block pitch_range in PitchRanges)
+            {
+                foreach (sound_permutations_block permuation in pitch_range.Permutations)
+                {
+                    sound_definition_language_permutation_info_block language_permutation;
+                    extra_info.LanguagePermutationInfo.Add(out language_permutation);
+
+                    sound_permutation_raw_info_block raw_info;
+                    language_permutation.RawInfoBlock.Add(out raw_info);
+
+                    raw_info.Samples.Value = new byte[permuation.SamplesSize];
+                    int sample_offset = 0;
+                    foreach (sound_permutation_chunk_block chunk in permuation.Chunks)
+                    {
+                        Array.Copy(chunk.Data, 0, raw_info.Samples.Value, sample_offset, chunk.Data.Length);
+                        sample_offset += chunk.Data.Length;
+                    }
+                    permuation.Chunks.DeleteAll();
+                    permuation.RawInfo.Value = raw_permuation_index++;
+
+                    if (gestalt_extra_info != null && gestalt_extra_info.EncodedPermutationSection.Count > 0)
+                    {
+                        sound_encoded_dialogue_section_block encoded_data = gestalt_extra_info.EncodedPermutationSection[0];
+                        raw_info.LipsyncData.Value = encoded_data.get_lipsync_data(raw_permuation_index);
+                        raw_info.MouthData.Value = encoded_data.get_mouth_data(raw_permuation_index);
+                    }
+                }
+            }
+            // calculated in tags on load
 			//snd.MaximumPlayTime.Value?
 		}
 

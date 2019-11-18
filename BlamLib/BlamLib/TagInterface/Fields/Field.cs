@@ -481,7 +481,7 @@ namespace BlamLib.TagInterface
 		{
 			Debug.Assert.If(field.fieldType == this.fieldType, "field was of another type, {0}. Should be {1}", field.fieldType, this.fieldType);
 			// TODO: why did I have this following statement: ?
-			//field.FieldValue = this.FieldValue;
+			field.FieldValue = this.FieldValue;
 		}
 		#endregion
 

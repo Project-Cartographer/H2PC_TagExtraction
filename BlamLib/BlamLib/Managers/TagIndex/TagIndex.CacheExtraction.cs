@@ -217,9 +217,39 @@ namespace BlamLib.Managers
 
 			return true;
 		}
-		#endregion
+        #endregion
 
-		#region Extract
+        #region Extract
+        /// <summary>Reconstruct and extract a sound tag</summary>
+        /// <param name="cei"></param>
+        /// <param name="cache_sound_tag">TagManager for cache file sound</param>
+        /// <param name="reconstruct_sound">TagManager for tag to write reconstruction to</param>
+        /// <param name="error">Was the extraction successful?</param>
+        /// <returns>True if sound extraction is implemented</returns>
+        protected virtual bool ReconstructSound(Blam.CacheExtractionInfo cei, TagManager cache_sound_tag, TagManager reconstruct_sound, ref bool error)
+        {
+            return false;
+        }
+
+
+        TagManager CreateSoundTagForExtraction(Blam.DatumIndex tag_datum)
+        {
+            Debug.Assert.If(tag_datum.IsNull == false);
+
+            Blam.CacheIndex.Item i = cacheFile.Index.Tags[tag_datum.Index];
+
+            Debug.Assert.If(i.GroupTag.TagToString() == "snd!");
+            Debug.Assert.If(IsLoaded(cacheFile.GetReferenceName(i), i.GroupTag) == Blam.DatumIndex.Null);
+
+            TagManager tm = new TagManager(this);
+            tm.ReferenceName = References.Add(tm, i.GroupTag, cacheFile.GetReferenceName(i));
+            tm.Manage(i.GroupTag); // setup the tag group
+            //tm.TagIndex = Array.Add(tm);
+
+            base.OnEventOpen(new TagIndexEventArgs(this, tm));
+            return tm;
+        }
+
 		bool Extract(Blam.CacheExtractionInfo cei, Blam.DatumIndex tag_datum, bool remove_from_state)
 		{
 			if (remove_from_state)
@@ -238,10 +268,20 @@ namespace BlamLib.Managers
 			{
 				// we're about to extract, update our depth level
 				cei.ExtractionDepth++;
-				TagManager tm = Array[handle];
+                TagManager tm = null;
+                TagManager cache_tag = Array[handle];
+                if (cache_tag.GroupTag.TagToString() == "$#!+")
+                {
+                    TagManager reconstructed_tag = CreateSoundTagForExtraction(tag_datum);
+                    if (ReconstructSound(cei, cache_tag, reconstructed_tag, ref error))
+                        tm = reconstructed_tag;
+                }
 
-				#region read the tag from the cache
-				try { tm.OpenForExtract(cei.Arguments.OutputDirectory, null); }
+                if (tm is null)
+                    tm = cache_tag;
+
+                #region read the tag from the cache
+                try { tm.OpenForExtract(cei.Arguments.OutputDirectory, null); }
 				catch (Exception ex) { extractionTrace.WriteLine("Failed to read tag, aborting extraction...'{0}.{1}'{2}{3}", tm.Name, tm.GroupTag.Name, Program.NewLine, ex); error = true; }
 				#endregion
 

@@ -33,13 +33,16 @@ namespace BlamLib.Blam.Cache.Tags
 		[TI.Definition(1, 16)]
 		public class sound_permutation_dialogue_info_block : TI.Definition
 		{
-
-			public sound_permutation_dialogue_info_block() : base(4)
+            public TI.LongInteger mouth_data_offset;
+            public TI.LongInteger mouth_data_length;
+            public TI.LongInteger lipsync_data_offset;
+            public TI.LongInteger lipsync_data_length;
+            public sound_permutation_dialogue_info_block() : base(4)
 			{
-				Add(/*mouth data offset = */ new TI.LongInteger());
-				Add(/*mouth data length = */ new TI.LongInteger());
-				Add(/*lipsync data offset = */ new TI.LongInteger());
-				Add(/*lipsync data length = */ new TI.LongInteger());
+				Add(mouth_data_offset = new TI.LongInteger());
+				Add(mouth_data_length = new TI.LongInteger());
+				Add(lipsync_data_offset = new TI.LongInteger());
+				Add(lipsync_data_length = new TI.LongInteger());
 			}
 		}
 		#endregion
