@@ -414,7 +414,7 @@ namespace BlamLib.Blam.Halo2.Tags
                         sample_offset += chunk.Data.Length;
                     }
                     permuation.Chunks.DeleteAll();
-                    permuation.RawInfo.Value = raw_permuation_index++;
+                    permuation.RawInfo.Value = raw_permuation_index;
 
                     if (gestalt_extra_info != null && gestalt_extra_info.EncodedPermutationSection.Count > 0)
                     {
@@ -422,6 +422,7 @@ namespace BlamLib.Blam.Halo2.Tags
                         raw_info.LipsyncData.Value = encoded_data.get_lipsync_data(raw_permuation_index);
                         raw_info.MouthData.Value = encoded_data.get_mouth_data(raw_permuation_index);
                     }
+                    raw_permuation_index++;
                 }
             }
             // calculated in tags on load
