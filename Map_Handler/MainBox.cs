@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
@@ -72,6 +73,11 @@ namespace Map_Handler
 
             if (map_file.ShowDialog() == DialogResult.OK)
             {
+                if (map_loaded)
+                {
+                    map_stream.Close();
+                    map_loaded = false;
+                }
                 map_stream = new StreamReader(map_file.FileName);
                 SID_list = new Dictionary<int, string>();//initialise our SIDs
                 AllTagList = new Dictionary<int, string>();
@@ -89,6 +95,7 @@ namespace Map_Handler
                 map_path = Path.GetDirectoryName(map_name);
                 textBox1.Text = "Map Loaded -  " + map_name;
                 textBox4.Text = "0 Tags Selected";
+                label4.Text = "";
                 initialize_treeview();
                 map_loaded = true;
                 TagToolStripMenu.Visible = true;
@@ -233,6 +240,11 @@ namespace Map_Handler
 
         public static void ReOpenMap()
         {
+            if (map_loaded)
+            {
+                map_stream.Close();
+                map_loaded = false;
+            }
             if (!map_loaded)
             {
                 map_stream = new StreamReader(map_name);
@@ -339,6 +351,8 @@ namespace Map_Handler
             textBox1.Text = "";
             textBox2.Text = "";
             textBox3.Text = "";
+            label4.Text = "";
+            current_tag_status.Text = "";
             richTextBox1.Text = "";
             TagToolStripMenu.Visible = false;
             metaToolStripMenuItem.Visible = false;
@@ -520,50 +534,92 @@ namespace Map_Handler
 
         private void extract_button_Click(object sender, EventArgs e)
         {
-            isRecursive = recursive_radio_.Checked;
-            isOverrideOn = override_tags_.Checked;
-            isOutDBOn = output_db_.Checked;
-
-            DestinationFolder = textBox3.Text;
-
-            string mapName = DATA_READ.Read_File_from_file_location(MainBox.map_name);
-            int TotalTags = AddList.Count;
-            current_tag_status.Visible = true;
-
-            if (DestinationFolder == "")
+            new Thread(() => 
             {
-                current_tag_status.Text = "Select a Destination Folder Please";
-                return;
-            }
+                Thread.CurrentThread.IsBackground = true;
+                clear_button.Invoke(new MethodInvoker(() => clear_button.Enabled = false));
+                extract_button.Invoke(new MethodInvoker(() => extract_button.Enabled = false));
 
-            current_tag_status.Text = "Initializing Decompiler";
-            MainBox.CloseMap();
+                this.BeginInvoke(new MethodInvoker(delegate ()
+                {
+                    fileToolStripMenuItem.Enabled = false;
+                }
+                ));
 
-            List<int> extract_list = ExtractList.Keys.ToList<int>();
-            MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, map_path + "\\", mapName);
-            /*
-            progressBar1.Value = 0;
-            progressBar1.Maximum = ExtractList.Count;
-            int index = 0;
-            foreach (int i in ExtractList.Keys)
-            {
-                
-                current_tag_status.Text = "Extracting Objects : " + ExtractList.Values.ElementAt(index);
-                MainBox.H2Test.Halo2_ExtractTagCache(i, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, H2V_BaseMapsDirectory + "\\", mapName);
-                progressBar1.Value++; //update the progress bar
-                index++;
-            }
-            */
+                button1.Invoke(new MethodInvoker(() => button1.Enabled = false));
+                button2.Invoke(new MethodInvoker(() => button2.Enabled = false));
+                button3.Invoke(new MethodInvoker(() => button3.Enabled = false));
+                button4.Invoke(new MethodInvoker(() => button4.Enabled = false));
+                treeView1.Invoke(new MethodInvoker(() => treeView1.Enabled = false));
+                isRecursive = recursive_radio_.Checked;
+                isOverrideOn = override_tags_.Checked;
+                isOutDBOn = output_db_.Checked;
 
-            current_tag_status.Text = "Extraction Complete!";
-            if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
-            {
-                MainBox.ReOpenMap();
-            }
-            clear_button.Enabled = false;
-            extract_button.Enabled = false;
-            ExtractList.Clear();
-            richTextBox1.Text = "";
+                DestinationFolder = textBox3.Text;
+
+                string mapName = DATA_READ.Read_File_from_file_location(MainBox.map_name);
+                int TotalTags = AddList.Count;
+                current_tag_status.Invoke(new MethodInvoker(() => current_tag_status.Visible = true));
+
+                if (DestinationFolder == "")
+                {
+                    current_tag_status.Invoke(new MethodInvoker(() => current_tag_status.Text = "Select a Destination Folder Please"));
+                    return;
+                }
+
+                current_tag_status.Invoke(new MethodInvoker(() => current_tag_status.Text = "Initializing Decompiler"));
+                MainBox.CloseMap();
+
+                progressBar1.Invoke(new MethodInvoker(() => progressBar1.Minimum = 0));
+                progressBar1.Invoke(new MethodInvoker(() => progressBar1.Maximum = TotalTags));
+                progressBar1.Invoke(new MethodInvoker(() => progressBar1.Value = 0));
+
+                string file_name = mapName;
+                string slash = "";
+                string mainmenu = "mainmenu.map";
+                string shared = "shared.map";
+                string single_player_shared = "single_player_shared.map";
+
+                bool a = file_name == mainmenu;
+                bool b = file_name == shared;
+                bool c = file_name == single_player_shared;
+                bool result = (a == b) || (b == c);
+
+                if (result)
+                {
+                    slash = "//";
+                }
+                else
+                {
+                    slash = "";
+                }
+
+                List<int> extract_list = ExtractList.Keys.ToList<int>();
+                current_tag_status.Invoke(new MethodInvoker(() => current_tag_status.Text = "Extracting Objects"));
+                MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, map_path + slash, mapName);
+
+                current_tag_status.Invoke(new MethodInvoker(() => current_tag_status.Text = "Extraction Complete!"));
+                if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
+                {
+                    MainBox.ReOpenMap();
+                }
+                clear_button.Invoke(new MethodInvoker(() => clear_button.Enabled = true));
+                extract_button.Invoke(new MethodInvoker(() => extract_button.Enabled = true));
+
+                this.BeginInvoke(new MethodInvoker(delegate ()
+                {
+                    fileToolStripMenuItem.Enabled = true;
+                }
+                ));
+
+                button1.Invoke(new MethodInvoker(() => button1.Enabled = true));
+                button2.Invoke(new MethodInvoker(() => button2.Enabled = true));
+                button3.Invoke(new MethodInvoker(() => button3.Enabled = true));
+                button4.Invoke(new MethodInvoker(() => button4.Enabled = true));
+                treeView1.Invoke(new MethodInvoker(() => treeView1.Enabled = true));
+                ExtractList.Clear();
+                richTextBox1.Invoke(new MethodInvoker(() => richTextBox1.Text = ""));
+            }).Start();
         }
 
         private void clear_button_Click(object sender, EventArgs e)
@@ -573,6 +629,7 @@ namespace Map_Handler
             ExtractList.Clear();
             richTextBox1.Text = "";
             label4.Text = "";
+            current_tag_status.Text = "";
         }
 
         private void MainBox_Load(object sender, EventArgs e)

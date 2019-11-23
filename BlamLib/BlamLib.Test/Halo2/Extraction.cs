@@ -10,7 +10,6 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-
 namespace BlamLib.Test
 {
 	partial class Halo2
@@ -314,6 +313,8 @@ namespace BlamLib.Test
 
 			string MapsDir = "";
 
+			string file_name = map_names[0];
+
 			if (MapPath != "")
 			{
 				MapsDir = MapPath;
@@ -323,14 +324,26 @@ namespace BlamLib.Test
 				MapsDir = kMapsDirectoryPc;
 			}
 
+			string mainmenu = "mainmenu.map";
+			string shared = "shared.map";
+			string single_player_shared = "single_player_shared.map";
+
 			Program.Halo2.LoadPc(
 				MapsDir + @"mainmenu.map",
 				MapsDir + @"shared.map",
 				MapsDir + @"single_player_shared.map");
-			Assert.IsNotNull(Program.Halo2.PcMainmenu);
-			Assert.IsNotNull(Program.Halo2.PcShared);
-			Assert.IsNotNull(Program.Halo2.PcCampaign);
 
+			bool a = file_name == mainmenu;
+			bool b = file_name == shared;
+			bool c = file_name == single_player_shared;
+			bool result = (a == b) || (b == c);
+
+			if (result)
+			{
+				Assert.IsNotNull(Program.Halo2.PcMainmenu);
+				Assert.IsNotNull(Program.Halo2.PcShared);
+				Assert.IsNotNull(Program.Halo2.PcCampaign);
+			}
 
 			(Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
 			(Program.GetManager(game) as Managers.IVertexBufferController)
