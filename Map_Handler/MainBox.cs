@@ -544,23 +544,17 @@ namespace Map_Handler
 
         private void extract_button_Click(object sender, EventArgs e)
         {
+            clear_button.Enabled = false;
+            extract_button.Enabled = false;
+            fileToolStripMenuItem.Enabled = false;
+            button1.Enabled = false;
+            button2.Enabled = false;
+            button3.Enabled = false;
+            button4.Enabled = false;
+            treeView1.Enabled = false;
             new Thread(() => 
             {
                 Thread.CurrentThread.IsBackground = true;
-                clear_button.Invoke(new MethodInvoker(() => clear_button.Enabled = false));
-                extract_button.Invoke(new MethodInvoker(() => extract_button.Enabled = false));
-
-                this.BeginInvoke(new MethodInvoker(delegate ()
-                {
-                    fileToolStripMenuItem.Enabled = false;
-                }
-                ));
-
-                button1.Invoke(new MethodInvoker(() => button1.Enabled = false));
-                button2.Invoke(new MethodInvoker(() => button2.Enabled = false));
-                button3.Invoke(new MethodInvoker(() => button3.Enabled = false));
-                button4.Invoke(new MethodInvoker(() => button4.Enabled = false));
-                treeView1.Invoke(new MethodInvoker(() => treeView1.Enabled = false));
                 isRecursive = recursive_radio_.Checked;
                 isOverrideOn = override_tags_.Checked;
                 isOutDBOn = output_db_.Checked;
