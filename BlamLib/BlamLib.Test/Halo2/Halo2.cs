@@ -175,17 +175,17 @@ namespace BlamLib.Test
 		static readonly ModelTestDefinition[] LightmapTestDefinitions = new ModelTestDefinition[]
 		{
 			new ModelTestDefinition("LTMP", LTMPPath,
-			    Blam.Halo2.TagGroups.ltmp)
+				Blam.Halo2.TagGroups.ltmp)
 		};
 		static readonly ModelTestDefinition[] BSPTestDefinitions = new ModelTestDefinition[]
 		{
 			new ModelTestDefinition("SBSP", SBSPPath,
-			    Blam.Halo2.TagGroups.sbsp)
+				Blam.Halo2.TagGroups.sbsp)
 		};
 		static readonly ModelTestDefinition[] RenderModelTestDefinitions = new ModelTestDefinition[]
 		{
 			new ModelTestDefinition("MODE", MODEPath,
-			    Blam.Halo2.TagGroups.mode)
+				Blam.Halo2.TagGroups.mode)
 		};
 
 		[TestMethod]

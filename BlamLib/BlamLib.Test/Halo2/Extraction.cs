@@ -14,12 +14,12 @@ namespace BlamLib.Test
 {
 	partial class Halo2
 	{
-        public static string LTMPPath;
-        public static string SBSPPath;
-        public static string MODEPath;
+		public static string LTMPPath;
+		public static string SBSPPath;
+		public static string MODEPath;
 
-        #region ImportInfoExtraction
-        static void ExtractImportInfo(Blam.Halo2.Tags.global_tag_import_info_block tii, string out_path)
+		#region ImportInfoExtraction
+		static void ExtractImportInfo(Blam.Halo2.Tags.global_tag_import_info_block tii, string out_path)
 		{
 			if (tii != null) foreach (var b in tii.Files)
 			{
@@ -331,11 +331,11 @@ namespace BlamLib.Test
 				MapsDir + @"shared.map",
 				MapsDir + @"single_player_shared.map");
 
-            Assert.IsNotNull(Program.Halo2.PcMainmenu);
-            Assert.IsNotNull(Program.Halo2.PcShared);
-            Assert.IsNotNull(Program.Halo2.PcCampaign);
+			Assert.IsNotNull(Program.Halo2.PcMainmenu);
+			Assert.IsNotNull(Program.Halo2.PcShared);
+			Assert.IsNotNull(Program.Halo2.PcCampaign);
 
-            (Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
+			(Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
 			(Program.GetManager(game) as Managers.IVertexBufferController)
 				.VertexBufferCacheOpen(game);
 

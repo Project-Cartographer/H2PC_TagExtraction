@@ -88,13 +88,13 @@ namespace BlamLib.Test
 		public readonly string Directory;
 		public readonly string MapName;
 		readonly string mapPath;
-        public Blam.DatumIndex DatumIndex;
-        public bool Recursive = false;
-        public string ExtractDirectory="";
-        public bool Output_DB;
-        public bool Overrite;
+		public Blam.DatumIndex DatumIndex;
+		public bool Recursive = false;
+		public string ExtractDirectory="";
+		public bool Output_DB;
+		public bool Overrite;
 
-        public CacheFileOutputInfoArgs(TestContext tc, BlamVersion g, string d, string m)
+		public CacheFileOutputInfoArgs(TestContext tc, BlamVersion g, string d, string m)
 		{
 			TestContext = tc;
 			Game = g;
@@ -102,21 +102,21 @@ namespace BlamLib.Test
 			MapName = m;
 			mapPath = System.IO.Path.Combine(Directory, MapName);
 		}
-        public CacheFileOutputInfoArgs(TestContext tc, BlamVersion g, string d, Blam.DatumIndex D,bool R, bool DB, bool Ov,string Ex,string m)
-        {
-            TestContext = tc;
-            Game = g;
-            Directory = d;
-            MapName = m;
-            DatumIndex = D;
-            Recursive = R;
-            Output_DB = DB;
-            Overrite = Ov;
-            mapPath = System.IO.Path.Combine(Directory, MapName);
-            ExtractDirectory = Ex;
-        }
+		public CacheFileOutputInfoArgs(TestContext tc, BlamVersion g, string d, Blam.DatumIndex D,bool R, bool DB, bool Ov,string Ex,string m)
+		{
+			TestContext = tc;
+			Game = g;
+			Directory = d;
+			MapName = m;
+			DatumIndex = D;
+			Recursive = R;
+			Output_DB = DB;
+			Overrite = Ov;
+			mapPath = System.IO.Path.Combine(Directory, MapName);
+			ExtractDirectory = Ex;
+		}
 
-        public string MapPath { get { return mapPath; } }
+		public string MapPath { get { return mapPath; } }
 
 		public string TestResultsPath
 		{ get {
@@ -159,36 +159,36 @@ namespace BlamLib.Test
 
 			return args;
 		}
-        static List<CacheFileOutputInfoArgs> TestMethodBuildArgs(TestContext tc,
-         BlamVersion game, string dir, Blam.DatumIndex DatumIndex,bool Recursive, bool OutputDB, bool Overrite,string Ext_Dir , params string[] map_names)
-        {
-            var args = new List<CacheFileOutputInfoArgs>(map_names.Length);
-            for (int x = 0; x < map_names.Length; x++)
-            {
-                var arg = new CacheFileOutputInfoArgs(tc, game, dir, DatumIndex,Recursive, OutputDB,Overrite,Ext_Dir, map_names[x]);
+		static List<CacheFileOutputInfoArgs> TestMethodBuildArgs(TestContext tc,
+		 BlamVersion game, string dir, Blam.DatumIndex DatumIndex,bool Recursive, bool OutputDB, bool Overrite,string Ext_Dir , params string[] map_names)
+		{
+			var args = new List<CacheFileOutputInfoArgs>(map_names.Length);
+			for (int x = 0; x < map_names.Length; x++)
+			{
+				var arg = new CacheFileOutputInfoArgs(tc, game, dir, DatumIndex,Recursive, OutputDB,Overrite,Ext_Dir, map_names[x]);
 
-                if (arg.ValidateReadyStatus())
-                    args.Add(arg);
-            }
+				if (arg.ValidateReadyStatus())
+					args.Add(arg);
+			}
 
-            return args;
-        }
-        public static void TestMethodThreaded(TestContext tc, WaitCallback method,
+			return args;
+		}
+		public static void TestMethodThreaded(TestContext tc, WaitCallback method,
 			BlamVersion game, string dir, params string[] map_names)
 		{
 			var args = TestMethodBuildArgs(tc, game, dir, map_names);
 
 			TestLibrary.TestMethodThreaded(method, args.ToArray());
 		}
-        public static void TestThreadedMethod(TestContext tc, WaitCallback method,
-             BlamVersion game, string dir, Blam.DatumIndex Datum,bool Recursive ,bool OutputDB, bool Overrite ,string Ext_Dir, params string[] map_names)
-        {
-            var args = TestMethodBuildArgs(tc, game, dir, Datum,Recursive,OutputDB,Overrite, Ext_Dir, map_names);
+		public static void TestThreadedMethod(TestContext tc, WaitCallback method,
+			 BlamVersion game, string dir, Blam.DatumIndex Datum,bool Recursive ,bool OutputDB, bool Overrite ,string Ext_Dir, params string[] map_names)
+		{
+			var args = TestMethodBuildArgs(tc, game, dir, Datum,Recursive,OutputDB,Overrite, Ext_Dir, map_names);
 
-            TestLibrary.TestMethodThreaded(method, args.ToArray());
-        }
+			TestLibrary.TestMethodThreaded(method, args.ToArray());
+		}
 
-        public static void TestMethodSerial(TestContext tc, WaitCallback method,
+		public static void TestMethodSerial(TestContext tc, WaitCallback method,
 			BlamVersion game, string dir, params string[] map_names)
 		{
 			var args = TestMethodBuildArgs(tc, game, dir, map_names);
@@ -341,12 +341,12 @@ namespace BlamLib.Test
 		public string TypeString;
 		public string Name;
 		public TagInterface.TagGroup Group;
-        public static string Tagfile;
+		public static string Tagfile;
 
-        public ModelTestDefinition(string type, string name, TagInterface.TagGroup group)
+		public ModelTestDefinition(string type, string name, TagInterface.TagGroup group)
 		{
 			TypeString = type;
-            Tagfile = name;
+			Tagfile = name;
 			Group = group;
 		}
 
