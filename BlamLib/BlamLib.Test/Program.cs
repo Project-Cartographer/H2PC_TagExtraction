@@ -336,23 +336,24 @@ namespace BlamLib.Test
 	};
 
 	/// <summary>Utility class for COLLADA nonsense</summary>
-	class ModelTestDefinition
+	public class ModelTestDefinition
 	{
 		public string TypeString;
 		public string Name;
 		public TagInterface.TagGroup Group;
+        public static string Tagfile;
 
-		public ModelTestDefinition(string type, string name, TagInterface.TagGroup group)
+        public ModelTestDefinition(string type, string name, TagInterface.TagGroup group)
 		{
 			TypeString = type;
-			Name = name;
+            Tagfile = name;
 			Group = group;
 		}
 
 		public Blam.DatumIndex TagIndex = Blam.DatumIndex.Null;
 		public void Open(Managers.TagIndex tag_index)
 		{
-			TagIndex = tag_index.Open(Name, Group, IO.ITagStreamFlags.LoadDependents);
+			TagIndex = tag_index.Open(Tagfile, Group, IO.ITagStreamFlags.LoadDependents);
 			Assert.IsFalse(TagIndex.IsNull);
 		}
 		public void Close(Managers.TagIndex tag_index)

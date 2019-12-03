@@ -46,6 +46,9 @@ namespace Map_Handler
         int scnr_off;
         public static string map_name = "";//name of the map along woth destination
         public static string map_path = "";//path of the mapfile above, where we look for shared/ui etc.
+        public static string ltmp_name = "";//name of the structure_bsp along with destination
+        public static string sbsp_name = "";//name of the structure_bsp along with destination
+        public static string mode_name = "";//name of the structure_bsp along with destination
         List<int> datum_list = new List<int>();
         string settings_path = Path.Combine(Environment.GetFolderPath(
         Environment.SpecialFolder.ApplicationData), "H2_PCHandlerSettings.txt");
@@ -392,25 +395,32 @@ namespace Map_Handler
 
         void DumpTagList()
         {
-            if (treeView1.SelectedNode.Nodes.Count != 0)
+            if (!map_loaded)
             {
-                string[] x = new string[treeView1.SelectedNode.Nodes.Count];
-                int i = 0;
-                foreach (TreeNode tn in treeView1.SelectedNode.Nodes)
-                {
-                    int tag_table_ref = Int32.Parse(tn.Name);
-                    int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4, map_stream);
-
-                    string Name = System.IO.Path.GetFileNameWithoutExtension(tn.Text);
-
-                    x[i++] = Name + "," + "0x" + datum_index.ToString("X"); ;
-                }
-
-                File.WriteAllLines(Application.StartupPath + @"\AddList.txt", x);
+                MessageBox.Show("Load A Map First", "Error", MessageBoxButtons.OK);
             }
             else
             {
-                MessageBox.Show("Select Tag Nodes First", "Error", MessageBoxButtons.OK);
+                if (treeView1.SelectedNode.Nodes.Count != 0)
+                {
+                    string[] x = new string[treeView1.SelectedNode.Nodes.Count];
+                    int i = 0;
+                    foreach (TreeNode tn in treeView1.SelectedNode.Nodes)
+                    {
+                        int tag_table_ref = Int32.Parse(tn.Name);
+                        int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4, map_stream);
+
+                        string Name = System.IO.Path.GetFileNameWithoutExtension(tn.Text);
+
+                        x[i++] = Name + "," + "0x" + datum_index.ToString("X"); ;
+                    }
+
+                    File.WriteAllLines(Application.StartupPath + @"\AddList.txt", x);
+                }
+                else
+                {
+                    MessageBox.Show("Select Tag Nodes First", "Error", MessageBoxButtons.OK);
+                }
             }
         }
 
@@ -574,29 +584,9 @@ namespace Map_Handler
                 progressBar1.Invoke(new MethodInvoker(() => progressBar1.Maximum = TotalTags));
                 progressBar1.Invoke(new MethodInvoker(() => progressBar1.Value = 0));
 
-                string file_name = mapName;
-                string slash = "";
-                string mainmenu = "mainmenu.map";
-                string shared = "shared.map";
-                string single_player_shared = "single_player_shared.map";
-
-                bool a = file_name == mainmenu;
-                bool b = file_name == shared;
-                bool c = file_name == single_player_shared;
-                bool result = (a == b) || (b == c);
-
-                if (result)
-                {
-                    slash = "//";
-                }
-                else
-                {
-                    slash = "";
-                }
-
                 List<int> extract_list = ExtractList.Keys.ToList<int>();
                 current_tag_status.Invoke(new MethodInvoker(() => current_tag_status.Text = "Extracting Objects"));
-                MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, map_path + slash, mapName);
+                MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, map_path + "//", mapName);
 
                 current_tag_status.Invoke(new MethodInvoker(() => current_tag_status.Text = "Extraction Complete!"));
                 if (MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK) == DialogResult.OK)
@@ -1347,6 +1337,54 @@ namespace Map_Handler
                     log.Close();
 
                 }
+            }
+        }
+
+        private void extractLTMPCOLLADAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog ltmp_file = new OpenFileDialog();
+            ltmp_file.Filter = "scenario_structure_lightmap (*.scenario_structure_lightmap)|*.scenario_structure_lightmap";
+            if (ltmp_file.ShowDialog() == DialogResult.OK)
+            {
+                ltmp_name = ltmp_file.FileName;
+                ltmp_name = ltmp_name.Replace("C:\\Program Files (x86)\\Microsoft Games\\Halo 2 Map Editor\\tags\\", "");
+                ltmp_name = ltmp_name.Replace(".scenario_structure_lightmap", "");
+                BlamLib.Test.Halo2.LTMPPath = ltmp_name;
+                BlamLib.Test.ModelTestDefinition.Tagfile = ltmp_name;
+                H2Test.Halo2TestCOLLADALightmapExport();
+                MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK);
+            }
+        }
+
+        private void extractSBSPCOLLADAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog sbsp_file = new OpenFileDialog();
+            sbsp_file.Filter = "scenario_structure_bsp (*.scenario_structure_bsp)|*.scenario_structure_bsp";
+            if (sbsp_file.ShowDialog() == DialogResult.OK)
+            {
+                sbsp_name = sbsp_file.FileName;
+                sbsp_name = sbsp_name.Replace("C:\\Program Files (x86)\\Microsoft Games\\Halo 2 Map Editor\\tags\\", "");
+                sbsp_name = sbsp_name.Replace(".scenario_structure_bsp", "");
+                BlamLib.Test.Halo2.SBSPPath = sbsp_name;
+                BlamLib.Test.ModelTestDefinition.Tagfile = sbsp_name;
+                H2Test.Halo2TestCOLLADABSPExport();
+                MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK);
+            }
+        }
+
+        private void extractMODECOLLADAToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog mode_file = new OpenFileDialog();
+            mode_file.Filter = "render_model (*.render_model)|*.render_model";
+            if (mode_file.ShowDialog() == DialogResult.OK)
+            {
+                mode_name = mode_file.FileName;
+                mode_name = mode_name.Replace("C:\\Program Files (x86)\\Microsoft Games\\Halo 2 Map Editor\\tags\\", "");
+                mode_name = mode_name.Replace(".render_model", "");
+                BlamLib.Test.Halo2.MODEPath = mode_name;
+                BlamLib.Test.ModelTestDefinition.Tagfile = mode_name;
+                H2Test.Halo2TestCOLLADARenderModelExport();
+                MessageBox.Show("Extraction Done!", "Progress", MessageBoxButtons.OK);
             }
         }
     }

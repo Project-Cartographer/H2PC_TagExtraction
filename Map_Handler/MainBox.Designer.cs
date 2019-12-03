@@ -51,6 +51,13 @@
             this.getTagStructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resyncshadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resyncStringIDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpTagListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpStringIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.shaderEmulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.createPluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.dumpShadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.emulateShaderDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultMaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -79,13 +86,9 @@
             this.button6 = new System.Windows.Forms.Button();
             this.label4 = new System.Windows.Forms.Label();
             this.clear_button = new System.Windows.Forms.Button();
-            this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dumpTagListToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dumpStringIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.shaderEmulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.createPluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.dumpShadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.emulateShaderDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extractLTMPCOLLADAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extractSBSPCOLLADAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.extractMODECOLLADAToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.menuStrip1.SuspendLayout();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.splitContainer1)).BeginInit();
@@ -147,9 +150,12 @@
             this.extractImportInfoToolStripMenuItem,
             this.convertToolStripMenuItem,
             this.dumpSelectedTagsListToolStripMenuItem,
-            this.tests1ToolStripMenuItem});
+            this.tests1ToolStripMenuItem,
+            this.extractLTMPCOLLADAToolStripMenuItem,
+            this.extractSBSPCOLLADAToolStripMenuItem,
+            this.extractMODECOLLADAToolStripMenuItem});
             this.testToolStripMenuItem.Name = "testToolStripMenuItem";
-            this.testToolStripMenuItem.Size = new System.Drawing.Size(41, 20);
+            this.testToolStripMenuItem.Size = new System.Drawing.Size(39, 20);
             this.testToolStripMenuItem.Text = "Test";
             // 
             // extractImportInfoToolStripMenuItem
@@ -213,7 +219,7 @@
             this.extractTagToolStripMenuItem,
             this.decompileMapToolStripMenuItem});
             this.TagToolStripMenu.Name = "TagToolStripMenu";
-            this.TagToolStripMenu.Size = new System.Drawing.Size(39, 20);
+            this.TagToolStripMenu.Size = new System.Drawing.Size(37, 20);
             this.TagToolStripMenu.Text = "Tag";
             this.TagToolStripMenu.Visible = false;
             // 
@@ -250,37 +256,89 @@
             // extractMetaToolStripMenuItem
             // 
             this.extractMetaToolStripMenuItem.Name = "extractMetaToolStripMenuItem";
-            this.extractMetaToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.extractMetaToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.extractMetaToolStripMenuItem.Text = "Extract meta";
             this.extractMetaToolStripMenuItem.Click += new System.EventHandler(this.extractMetaToolStripMenuItem_Click);
             // 
             // injectMetaToolStripMenuItem
             // 
             this.injectMetaToolStripMenuItem.Name = "injectMetaToolStripMenuItem";
-            this.injectMetaToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.injectMetaToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.injectMetaToolStripMenuItem.Text = "Compile meta";
             this.injectMetaToolStripMenuItem.Click += new System.EventHandler(this.CompileMetaToolStripMenuItem_Click);
             // 
             // getTagStructureToolStripMenuItem
             // 
             this.getTagStructureToolStripMenuItem.Name = "getTagStructureToolStripMenuItem";
-            this.getTagStructureToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.getTagStructureToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.getTagStructureToolStripMenuItem.Text = "Get Tag Structure";
             this.getTagStructureToolStripMenuItem.Click += new System.EventHandler(this.getTagStructureToolStripMenuItem_Click);
             // 
             // resyncshadToolStripMenuItem
             // 
             this.resyncshadToolStripMenuItem.Name = "resyncshadToolStripMenuItem";
-            this.resyncshadToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.resyncshadToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.resyncshadToolStripMenuItem.Text = "Resync tagRefs";
             this.resyncshadToolStripMenuItem.Click += new System.EventHandler(this.resyncshadToolStripMenuItem_Click);
             // 
             // resyncStringIDsToolStripMenuItem
             // 
             this.resyncStringIDsToolStripMenuItem.Name = "resyncStringIDsToolStripMenuItem";
-            this.resyncStringIDsToolStripMenuItem.Size = new System.Drawing.Size(166, 22);
+            this.resyncStringIDsToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
             this.resyncStringIDsToolStripMenuItem.Text = "Resync StringIDs";
             this.resyncStringIDsToolStripMenuItem.Click += new System.EventHandler(this.resyncStringIDsToolStripMenuItem_Click);
+            // 
+            // sndtagFixesToolStripMenuItem
+            // 
+            this.sndtagFixesToolStripMenuItem.Name = "sndtagFixesToolStripMenuItem";
+            this.sndtagFixesToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.sndtagFixesToolStripMenuItem.Text = "snd!_tag Fixes";
+            this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
+            // 
+            // dumpTagListToolStripMenuItem
+            // 
+            this.dumpTagListToolStripMenuItem.Name = "dumpTagListToolStripMenuItem";
+            this.dumpTagListToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.dumpTagListToolStripMenuItem.Text = "Dump tag list";
+            this.dumpTagListToolStripMenuItem.Click += new System.EventHandler(this.dumpTagListToolStripMenuItem_Click);
+            // 
+            // dumpStringIDToolStripMenuItem
+            // 
+            this.dumpStringIDToolStripMenuItem.Name = "dumpStringIDToolStripMenuItem";
+            this.dumpStringIDToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.dumpStringIDToolStripMenuItem.Text = "Dump StringID";
+            this.dumpStringIDToolStripMenuItem.Click += new System.EventHandler(this.dumpStringIDToolStripMenuItem_Click);
+            // 
+            // shaderEmulatorToolStripMenuItem
+            // 
+            this.shaderEmulatorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
+            this.createPluginsToolStripMenuItem,
+            this.dumpShadersToolStripMenuItem,
+            this.emulateShaderDumpToolStripMenuItem});
+            this.shaderEmulatorToolStripMenuItem.Name = "shaderEmulatorToolStripMenuItem";
+            this.shaderEmulatorToolStripMenuItem.Size = new System.Drawing.Size(164, 22);
+            this.shaderEmulatorToolStripMenuItem.Text = "Shader Emulator";
+            // 
+            // createPluginsToolStripMenuItem
+            // 
+            this.createPluginsToolStripMenuItem.Name = "createPluginsToolStripMenuItem";
+            this.createPluginsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.createPluginsToolStripMenuItem.Text = "Create Shader Plugins";
+            this.createPluginsToolStripMenuItem.Click += new System.EventHandler(this.CreatePluginsToolStripMenuItem_Click);
+            // 
+            // dumpShadersToolStripMenuItem
+            // 
+            this.dumpShadersToolStripMenuItem.Name = "dumpShadersToolStripMenuItem";
+            this.dumpShadersToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.dumpShadersToolStripMenuItem.Text = "Export Shader Dump";
+            this.dumpShadersToolStripMenuItem.Click += new System.EventHandler(this.DumpShadersToolStripMenuItem_Click);
+            // 
+            // emulateShaderDumpToolStripMenuItem
+            // 
+            this.emulateShaderDumpToolStripMenuItem.Name = "emulateShaderDumpToolStripMenuItem";
+            this.emulateShaderDumpToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
+            this.emulateShaderDumpToolStripMenuItem.Text = "Process Shader Dump";
+            this.emulateShaderDumpToolStripMenuItem.Click += new System.EventHandler(this.EmulateShaderDumpToolStripMenuItem_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -309,44 +367,6 @@
             this.treeView1.Size = new System.Drawing.Size(406, 619);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
-            // 
-            // sndtagFixesToolStripMenuItem
-            // 
-            this.sndtagFixesToolStripMenuItem.Name = "sndtagFixesToolStripMenuItem";
-            this.sndtagFixesToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.sndtagFixesToolStripMenuItem.Text = "snd!_tag Fixes";
-            this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
-            // 
-            // shaderEmulatorToolStripMenuItem
-            // 
-            this.shaderEmulatorToolStripMenuItem.DropDownItems.AddRange(new System.Windows.Forms.ToolStripItem[] {
-            this.createPluginsToolStripMenuItem,
-            this.dumpShadersToolStripMenuItem,
-            this.emulateShaderDumpToolStripMenuItem});
-            this.shaderEmulatorToolStripMenuItem.Name = "shaderEmulatorToolStripMenuItem";
-            this.shaderEmulatorToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
-            this.shaderEmulatorToolStripMenuItem.Text = "Shader Emulator";
-            // 
-            // createPluginsToolStripMenuItem
-            // 
-            this.createPluginsToolStripMenuItem.Name = "createPluginsToolStripMenuItem";
-            this.createPluginsToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.createPluginsToolStripMenuItem.Text = "Create Shader Plugins";
-            this.createPluginsToolStripMenuItem.Click += new System.EventHandler(this.CreatePluginsToolStripMenuItem_Click);
-            // 
-            // dumpShadersToolStripMenuItem
-            // 
-            this.dumpShadersToolStripMenuItem.Name = "dumpShadersToolStripMenuItem";
-            this.dumpShadersToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.dumpShadersToolStripMenuItem.Text = "Export Shader Dump";
-            this.dumpShadersToolStripMenuItem.Click += new System.EventHandler(this.DumpShadersToolStripMenuItem_Click);
-            // 
-            // emulateShaderDumpToolStripMenuItem
-            // 
-            this.emulateShaderDumpToolStripMenuItem.Name = "emulateShaderDumpToolStripMenuItem";
-            this.emulateShaderDumpToolStripMenuItem.Size = new System.Drawing.Size(189, 22);
-            this.emulateShaderDumpToolStripMenuItem.Text = "Process Shader Dump";
-            this.emulateShaderDumpToolStripMenuItem.Click += new System.EventHandler(this.EmulateShaderDumpToolStripMenuItem_Click);
             // 
             // textBox1
             // 
@@ -647,19 +667,26 @@
             this.clear_button.UseVisualStyleBackColor = true;
             this.clear_button.Click += new System.EventHandler(this.clear_button_Click);
             // 
-            // dumpTagListToolStripMenuItem
+            // extractLTMPCOLLADAToolStripMenuItem
             // 
-            this.dumpTagListToolStripMenuItem.Name = "dumpTagListToolStripMenuItem";
-            this.dumpTagListToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.dumpTagListToolStripMenuItem.Text = "Dump tag list";
-            this.dumpTagListToolStripMenuItem.Click += new System.EventHandler(this.dumpTagListToolStripMenuItem_Click);
+            this.extractLTMPCOLLADAToolStripMenuItem.Name = "extractLTMPCOLLADAToolStripMenuItem";
+            this.extractLTMPCOLLADAToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.extractLTMPCOLLADAToolStripMenuItem.Text = "Extract LTMP COLLADA";
+            this.extractLTMPCOLLADAToolStripMenuItem.Click += new System.EventHandler(this.extractLTMPCOLLADAToolStripMenuItem_Click);
             // 
-            // dumpStringIDToolStripMenuItem
+            // extractSBSPCOLLADAToolStripMenuItem
             // 
-            this.dumpStringIDToolStripMenuItem.Name = "dumpStringIDToolStripMenuItem";
-            this.dumpStringIDToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.dumpStringIDToolStripMenuItem.Text = "Dump StringID";
-            this.dumpStringIDToolStripMenuItem.Click += new System.EventHandler(this.dumpStringIDToolStripMenuItem_Click);
+            this.extractSBSPCOLLADAToolStripMenuItem.Name = "extractSBSPCOLLADAToolStripMenuItem";
+            this.extractSBSPCOLLADAToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.extractSBSPCOLLADAToolStripMenuItem.Text = "Extract SBSP COLLADA";
+            this.extractSBSPCOLLADAToolStripMenuItem.Click += new System.EventHandler(this.extractSBSPCOLLADAToolStripMenuItem_Click);
+            // 
+            // extractMODECOLLADAToolStripMenuItem
+            // 
+            this.extractMODECOLLADAToolStripMenuItem.Name = "extractMODECOLLADAToolStripMenuItem";
+            this.extractMODECOLLADAToolStripMenuItem.Size = new System.Drawing.Size(203, 22);
+            this.extractMODECOLLADAToolStripMenuItem.Text = "Extract MODE COLLADA";
+            this.extractMODECOLLADAToolStripMenuItem.Click += new System.EventHandler(this.extractMODECOLLADAToolStripMenuItem_Click);
             // 
             // MainBox
             // 
@@ -748,6 +775,9 @@
         private System.Windows.Forms.ToolStripMenuItem emulateShaderDumpToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dumpTagListToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dumpStringIDToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extractLTMPCOLLADAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extractSBSPCOLLADAToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem extractMODECOLLADAToolStripMenuItem;
     }
 }
 

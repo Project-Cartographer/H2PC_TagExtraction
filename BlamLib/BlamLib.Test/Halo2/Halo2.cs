@@ -174,44 +174,18 @@ namespace BlamLib.Test
 		#region COLLADA tests
 		static readonly ModelTestDefinition[] LightmapTestDefinitions = new ModelTestDefinition[]
 		{
-			new ModelTestDefinition("LTMP", @"scenarios\multi\example\example_example_lightmap",
+			new ModelTestDefinition("LTMP", LTMPPath,
 			    Blam.Halo2.TagGroups.ltmp)
 		};
 		static readonly ModelTestDefinition[] BSPTestDefinitions = new ModelTestDefinition[]
 		{
-			new ModelTestDefinition("SBSP", @"scenarios\multi\example\example",
-			    Blam.Halo2.TagGroups.sbsp),
-			new ModelTestDefinition("SBSP", @"scenarios\solo\03a_oldmombasa\earthcity_3b",
-			    Blam.Halo2.TagGroups.sbsp),
-			new ModelTestDefinition("SBSP", @"scenarios\solo\03b_newmombasa\earthcity_4",
-			    Blam.Halo2.TagGroups.sbsp),
-			new ModelTestDefinition("SBSP", @"scenarios\solo\07a_highcharity\high_0",
-			    Blam.Halo2.TagGroups.sbsp),
-			new ModelTestDefinition("SBSP", @"scenarios\multi\backwash\backwash",
+			new ModelTestDefinition("SBSP", SBSPPath,
 			    Blam.Halo2.TagGroups.sbsp)
 		};
 		static readonly ModelTestDefinition[] RenderModelTestDefinitions = new ModelTestDefinition[]
 		{
-			new ModelTestDefinition("MODE", @"objects\characters\elite\elite",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"objects\characters\masterchief\masterchief",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"objects\vehicles\wraith\wraith",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"objects\characters\elite\fp_body\fp_body",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"scenarios\skies\multi\halo\coagulation\coagulation",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"objects\vehicles\wraith\turrets\minigun\minigun",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"objects\vehicles\warthog\warthog",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"objects\vehicles\warthog\turrets\gauss\gauss",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"objects\characters\masterchief\fp\fp",
-			    Blam.Halo2.TagGroups.mode),
-			new ModelTestDefinition("MODE", @"objects\characters\elite\fp_arms\fp_arms",
-			    Blam.Halo2.TagGroups.mode),
+			new ModelTestDefinition("MODE", MODEPath,
+			    Blam.Halo2.TagGroups.mode)
 		};
 
 		[TestMethod]
