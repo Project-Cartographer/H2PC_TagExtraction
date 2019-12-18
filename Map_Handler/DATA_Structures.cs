@@ -14,7 +14,7 @@ namespace DATA_STRUCTURES
     /// </summary>
     struct StringID_info
     {
-        public int  string_index_table_index;
+        public int string_index_table_index;
         public int string_table_offset;
         public int StringID;
         public string STRING;
@@ -81,7 +81,7 @@ namespace DATA_STRUCTURES
 
         List<plugins_field> reflexive;
 
-        public plugins_field(string name,int off,int entry_size)
+        public plugins_field(string name, int off, int entry_size)
         {
             //initialse some stuff
             this.name = name;
@@ -156,15 +156,15 @@ namespace DATA_STRUCTURES
         {
             TreeNode ret = new TreeNode();
 
-            ret.Text = name+":"+offset.ToString("X")+":"+entry_size.ToString("X");
-            
+            ret.Text = name + ":" + offset.ToString("X") + ":" + entry_size.ToString("X");
+
             List<int> Temp_keys;//some temp variable
 
             //let add the tag_refs
             Temp_keys = Tag_refs.Keys.ToList<int>();
-            foreach(int key in Temp_keys)
+            foreach (int key in Temp_keys)
             {
-                ret.Nodes.Add(Tag_refs[key]+":"+key.ToString("X"));
+                ret.Nodes.Add(Tag_refs[key] + ":" + key.ToString("X"));
             }
 
             //Lets add the data refs
@@ -192,6 +192,177 @@ namespace DATA_STRUCTURES
             }
 
             return ret;
+        }
+    }
+    /// <summary>
+    /// A class dealing with RAW data(resource) stored outside of the actual meta
+    /// </summary>
+    class RAW_data
+    {
+        List<int> ref_RAW_offset;//a list containing the offsets in the meta where the raw blocks have been referenced
+        List<int> list_RAW_size;//a list containing the sizes of various RAW_blocks
+
+        byte[] RAW_resource;
+
+        byte[] meta;
+        string type;
+        int mem_off;
+        StreamReader map_stream;
+        StreamReader mp_shared_stream;
+        StreamReader sp_shared_stream;
+        StreamReader mainmenu_stream;
+        /// <summary>
+        /// use to load resources when tag is loaded from a map
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="type"></param>
+        /// <param name="mem_off"></param>
+        /// <param name="map_stream"></param>
+
+        public RAW_data(byte[] data, string type, int mem_off, StreamReader map_stream, StreamReader mp_shared_stream, StreamReader sp_shared_stream, StreamReader mainmenu_stream)
+        {
+            ref_RAW_offset = new List<int>();
+            list_RAW_size = new List<int>();
+
+            this.meta = data;
+            this.type = type;
+            this.mem_off = mem_off;
+
+            //initialise all stuff         
+            this.map_stream = map_stream;
+            this.mp_shared_stream = mp_shared_stream;
+            this.sp_shared_stream = sp_shared_stream;
+            this.mainmenu_stream = mainmenu_stream;
+
+            Load_RAW();
+        }
+        /// <summary>
+        /// use to load reources when tag is loaded from the disk,mem_off(virtual base)=0
+        /// assumed that the tag also contains the RAW data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="type"></param>
+        public RAW_data(byte[] data, string type)
+        {
+            ref_RAW_offset = new List<int>();
+            list_RAW_size = new List<int>();
+
+            this.meta = data;
+            this.type = type;
+            this.mem_off = 0x0;
+
+            //initialise all stuff         
+            this.map_stream = null;
+            this.mp_shared_stream = null;
+            this.sp_shared_stream = null;
+            this.mainmenu_stream = null;
+
+            Load_RAW();
+        }
+        /// <summary>
+        /// -_-
+        /// </summary>
+        private void Load_RAW()
+        {
+            switch (type)
+            {
+                case "mode":
+                    int section_count = DATA_READ.ReadINT_LE(0x24, meta);
+                    int section_off = DATA_READ.ReadINT_LE(0x28, meta) - mem_off;
+                    for (int i = 0; i < section_count; i++)
+                    {
+                        ref_RAW_offset.Add(section_off + i * 0x5C + 0x38);
+                        list_RAW_size.Add(DATA_READ.ReadINT_LE((section_off + i * 0x5C + 0x3C), meta));
+                    }
+                    break;
+                case "bitm":
+                    int bitm_count = DATA_READ.ReadINT_LE(0x44, meta);
+                    int bitm_off = DATA_READ.ReadINT_LE(0x48, meta) - mem_off;
+                    for (int i = 0; i < bitm_count; i++)
+                    {
+                        ref_RAW_offset.Add(bitm_off + i * 0x74 + 0x1C);
+                        list_RAW_size.Add(DATA_READ.ReadINT_LE((bitm_off + i * 0x74 + 0x34), meta));
+                    }
+                    break;
+            }
+
+            RAW_resource = new byte[get_total_RAW_size()];
+            int t_off = 0;
+            for (int i = 0; i < ref_RAW_offset.Count; i++)
+            {
+                int t_block_off = DATA_READ.ReadINT_LE(ref_RAW_offset[i], meta);
+                int block_off = t_block_off & 0x3FFFFFFF;
+
+                StreamReader sr = map_stream;
+
+                switch (get_resource_type((uint)t_block_off))
+                {
+                    case 1:
+                        sr = mainmenu_stream;
+                        break;
+                    case 2:
+                        sr = mp_shared_stream;
+                        break;
+                    case 3:
+                        sr = sp_shared_stream;
+                        break;
+                }
+
+                if (sr != null)
+                {
+                    //reading from map
+                    sr.BaseStream.Position = block_off;
+                    sr.BaseStream.Read(RAW_resource, t_off, list_RAW_size[i]);
+                }
+                else
+                {
+                    //reading from file(its contained in the meta array)
+                    DATA_READ.ArrayCpy(RAW_resource, meta, t_off, block_off, list_RAW_size[i]);
+                }
+                t_off += list_RAW_size[i];
+            }
+        }
+        /// <summary>
+        /// returns the type of reource Internal,Main menu,Shared,SP Shared
+        /// </summary>
+        /// <param name="block_off"></param>
+        /// <returns></returns>
+        private uint get_resource_type(uint block_off)
+        {
+            uint ret = block_off >> 30;
+            return ret;
+        }
+        /// <summary>
+        /// returns the total size of RAW data associated with concerned meta
+        /// </summary>
+        /// <returns></returns>
+        public int get_total_RAW_size()
+        {
+            int t_size = 0;
+            foreach (var i in list_RAW_size)
+                t_size += i;
+
+            return t_size;
+        }
+        /// <summary>
+        /// retargets the associated RAW data to newer offset(file)
+        /// </summary>
+        /// <param name="mem_off"></param>
+        public void rebase_RAW_data(int new_off)
+        {
+            for (int i = 0; i < ref_RAW_offset.Count; i++)
+            {
+                DATA_READ.WriteINT_LE(new_off, ref_RAW_offset[i], meta);
+                new_off += list_RAW_size[i];
+            }
+        }
+        /// <summary>
+        /// returns the raw_data associated with the concerned meta
+        /// </summary>
+        /// <returns></returns>
+        public byte[] get_RAW_data()
+        {
+            return RAW_resource;
         }
     }
     /// <summary>
@@ -229,7 +400,7 @@ namespace DATA_STRUCTURES
         /// <param name="count"></param>
         /// <param name="plugin"></param>
         /// <param name="sr"></param>
-        public extended_meta(int mem_address,int size,int count,plugins_field plugin,StreamReader sr)
+        public extended_meta(int mem_address, int size, int count, plugins_field plugin, StreamReader sr)
         {
             this.mem_off = mem_address;
             this.size = size;
@@ -358,7 +529,7 @@ namespace DATA_STRUCTURES
                                 }
                                 //we dont need to look into them as extended meta does it for us
                             }
-                        }                        
+                        }
                     }
 
                 }
@@ -489,7 +660,7 @@ namespace DATA_STRUCTURES
             }
             //update the base to which meta has been compiled
             mem_off = new_base;
-                
+
         }
         /// <summary>
         /// returns the total size of the meta along with all extended meta sizes
@@ -628,7 +799,7 @@ namespace DATA_STRUCTURES
     class meta
     {
         string type;
-        int datum_index;       
+        int datum_index;
         int mem_off;// the memory address to which the tag is designed to be loaded at
         int size;
 
@@ -637,7 +808,7 @@ namespace DATA_STRUCTURES
         byte[] data;
         StreamReader map_stream;
         plugins_field plugin;
-       
+
 
         List<int> ref_reflexive;// a list containing the offset to the location where the reflexive fields are refered in the meta
         List<int> ref_tags;//a list containing the offsets to the locations where other tags (datum_indexes) are refered in the meta
@@ -655,7 +826,7 @@ namespace DATA_STRUCTURES
         /// <param name="datum_index">the datum index of the tag</param>
         /// <param name="sr">the path of the tag.eg: characters/elite/elite_mp</param>
         /// <param name="sr">the stream object</param>
-        public meta(int datum_index,string path,StreamReader sr)
+        public meta(int datum_index, string path, StreamReader sr)
         {
             //initialise some stuff
             this.datum_index = datum_index;
@@ -663,15 +834,15 @@ namespace DATA_STRUCTURES
             map_stream = sr;
 
             //some meta reading prologue
-            int table_off =DATA_READ.ReadINT_LE(0x10,map_stream);
-            int table_size = DATA_READ.ReadINT_LE(0x14,map_stream);
-            int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4,map_stream) + 0x20;
+            int table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
+            int table_size = DATA_READ.ReadINT_LE(0x14, map_stream);
+            int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;
             int scnr_off = table_off + table_size;
-            int scnr_memaddr = DATA_READ.ReadINT_LE(table_start + 0x8,map_stream);//scnr tag index is 0x0(mostly)
+            int scnr_memaddr = DATA_READ.ReadINT_LE(table_start + 0x8, map_stream);//scnr tag index is 0x0(mostly)
 
             //steps concerned with the specified meta
             type = DATA_READ.ReadTAG_TYPE(table_start + (0xFFFF & datum_index) * 0x10, map_stream);
-            mem_off = DATA_READ.ReadINT_LE(table_start + ((0xFFFF & datum_index) * 0x10) + 0x8, map_stream);        
+            mem_off = DATA_READ.ReadINT_LE(table_start + ((0xFFFF & datum_index) * 0x10) + 0x8, map_stream);
 
             size = DATA_READ.ReadINT_LE(table_start + ((0xFFFF & datum_index) * 0x10) + 0xC, map_stream);
 
@@ -718,7 +889,7 @@ namespace DATA_STRUCTURES
         /// <param name="type"></param>
         /// <param name="size"></param>
         /// <param name="path"></param>
-        public meta(byte[] meta, string type, int size,string path)
+        public meta(byte[] meta, string type, int size, string path)
         {
             data = meta;
             this.type = type;
@@ -739,7 +910,7 @@ namespace DATA_STRUCTURES
 
             if (size == 0)
                 return;
-            
+
             List_deps(0x0, plugin);
         }
         /// <summary>
@@ -750,7 +921,7 @@ namespace DATA_STRUCTURES
         /// <param name="size"></param>
         /// <param name="path"></param>
         /// <param name="mem_off"></param>
-        public meta(byte[] meta, string type, int size,string path,int mem_off)
+        public meta(byte[] meta, string type, int size, string path, int mem_off)
         {
             data = meta;
             this.type = type;
@@ -778,12 +949,12 @@ namespace DATA_STRUCTURES
         /// </summary>
         /// <param name="off">the starting offset where the stuff is being read</param>
         /// <param name="fields">the concerned field(s) in that section</param>
-        void List_deps(int off,plugins_field fields)
+        void List_deps(int off, plugins_field fields)
         {
             List<int> temp = fields.Get_tag_ref_list();
-            
+
             //first we look for tag_refs and add them
-            foreach(int i in temp)
+            foreach (int i in temp)
             {
                 int Toff = off + i;//it contains type
                 //we add this off to the list if it doesnt contain the off already
@@ -796,7 +967,7 @@ namespace DATA_STRUCTURES
             //but they have some issue,some dataref refers data outside of the tag
             //so we have to be a bit carefull
             temp = fields.Get_data_ref_list();
-            foreach(int i in temp)
+            foreach (int i in temp)
             {
                 int Toff = off + i;
 
@@ -805,7 +976,7 @@ namespace DATA_STRUCTURES
 
                 int field_off = field_memaddr - mem_off;//its the offset of the field from the starting of the meta data
 
-                if(length!=0)
+                if (length != 0)
                 {
                     //now we check whether its inside meta or a case of extended meta
                     if ((field_memaddr >= mem_off) && (field_off < size))
@@ -864,7 +1035,7 @@ namespace DATA_STRUCTURES
             }
             //now we look into reflexive fields and extended meta and add them accordingly
             List<plugins_field> Ptemp = fields.Get_reflexive_list();
-            foreach(plugins_field i_Pfield in Ptemp)
+            foreach (plugins_field i_Pfield in Ptemp)
             {
                 int Toff = off + i_Pfield.Get_offset();//field table off contains count
 
@@ -950,7 +1121,7 @@ namespace DATA_STRUCTURES
                 DATA_READ.WriteINT_LE(new_mem_addr, off + 4, data);
             }
             //then we rebase all the dataref fields
-            foreach(int off in ref_data)
+            foreach (int off in ref_data)
             {
                 int old_mem_addr = DATA_READ.ReadINT_LE(off + 4, data);
                 int new_mem_addr = new_base + (old_mem_addr - mem_off);
@@ -1060,8 +1231,8 @@ namespace DATA_STRUCTURES
         {
             //first null all my string ids
             foreach (int temp_off in ref_stringID)
-            {                
-                DATA_READ.WriteINT_LE(0x0, temp_off, data);               
+            {
+                DATA_READ.WriteINT_LE(0x0, temp_off, data);
             }
 
             if (list_extended != null)
@@ -1112,13 +1283,13 @@ namespace DATA_STRUCTURES
             }
             //listing the WCtagRefs
             //we can only do this when we are reading from a map
-            if(map_stream!=null)
+            if (map_stream != null)
             {
                 //some meta reading prologue
                 int table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
-                int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;                
+                int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;
 
-                foreach(int temp_off in ref_WCtags)
+                foreach (int temp_off in ref_WCtags)
                 {
                     int temp_datum = DATA_READ.ReadINT_LE(temp_off, data);//we read it from meta data
                     if (temp_datum != -1)
@@ -1176,7 +1347,7 @@ namespace DATA_STRUCTURES
                     //next we try to link the tags by using tag type
                     string type = DATA_READ.ReadTAG_TYPE(temp_off, data);
 
-                    foreach(UnisonRefs temp_uni in type_ref_list)
+                    foreach (UnisonRefs temp_uni in type_ref_list)
                     {
                         if (type == temp_uni.type && temp_old_datum != -1)
                         {
@@ -1188,7 +1359,7 @@ namespace DATA_STRUCTURES
                     if (!sucess)
                         log += "\nCouldnot find reference to " + temp_old_datum.ToString("X");
                 }
-                
+
             }
             //Updating WCtagRefs
             foreach (int temp_off in ref_WCtags)
@@ -1233,7 +1404,7 @@ namespace DATA_STRUCTURES
         {
             string log = "\nUPDATE StringID : " + path;
 
-            foreach(int temp_off in ref_stringID)
+            foreach (int temp_off in ref_stringID)
             {
 
                 int temp_old_SID = DATA_READ.ReadINT_LE(temp_off, data);

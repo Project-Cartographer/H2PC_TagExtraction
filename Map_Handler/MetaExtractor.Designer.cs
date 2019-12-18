@@ -41,9 +41,10 @@
             // extract_button
             // 
             this.extract_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.extract_button.Location = new System.Drawing.Point(266, 54);
+            this.extract_button.Location = new System.Drawing.Point(353, 76);
+            this.extract_button.Margin = new System.Windows.Forms.Padding(4);
             this.extract_button.Name = "extract_button";
-            this.extract_button.Size = new System.Drawing.Size(176, 40);
+            this.extract_button.Size = new System.Drawing.Size(235, 49);
             this.extract_button.TabIndex = 3;
             this.extract_button.Text = "Extract";
             this.extract_button.UseVisualStyleBackColor = true;
@@ -52,27 +53,30 @@
             // textBox1
             // 
             this.textBox1.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Left | System.Windows.Forms.AnchorStyles.Right)));
-            this.textBox1.Location = new System.Drawing.Point(79, 12);
+            this.textBox1.Location = new System.Drawing.Point(105, 25);
+            this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(218, 20);
+            this.textBox1.Size = new System.Drawing.Size(287, 22);
             this.textBox1.TabIndex = 4;
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(12, 19);
+            this.label2.Location = new System.Drawing.Point(16, 23);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(48, 13);
+            this.label2.Size = new System.Drawing.Size(62, 17);
             this.label2.TabIndex = 5;
             this.label2.Text = "Location";
             // 
             // button2
             // 
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button2.Location = new System.Drawing.Point(324, 13);
+            this.button2.Location = new System.Drawing.Point(430, 26);
+            this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(110, 27);
+            this.button2.Size = new System.Drawing.Size(147, 33);
             this.button2.TabIndex = 6;
             this.button2.Text = "Select Directory";
             this.button2.UseVisualStyleBackColor = true;
@@ -81,9 +85,10 @@
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
-            this.radioButton1.Location = new System.Drawing.Point(15, 21);
+            this.radioButton1.Location = new System.Drawing.Point(20, 26);
+            this.radioButton1.Margin = new System.Windows.Forms.Padding(4);
             this.radioButton1.Name = "radioButton1";
-            this.radioButton1.Size = new System.Drawing.Size(74, 17);
+            this.radioButton1.Size = new System.Drawing.Size(93, 21);
             this.radioButton1.TabIndex = 7;
             this.radioButton1.Text = "Recursive";
             this.radioButton1.UseVisualStyleBackColor = true;
@@ -91,11 +96,12 @@
             // checkBox1
             // 
             this.checkBox1.AutoSize = true;
-            this.checkBox1.Location = new System.Drawing.Point(109, 21);
+            this.checkBox1.Location = new System.Drawing.Point(145, 26);
+            this.checkBox1.Margin = new System.Windows.Forms.Padding(4);
             this.checkBox1.Name = "checkBox1";
-            this.checkBox1.Size = new System.Drawing.Size(85, 17);
+            this.checkBox1.Size = new System.Drawing.Size(111, 21);
             this.checkBox1.TabIndex = 8;
-            this.checkBox1.Text = "nullStringIDs";
+            this.checkBox1.Text = "NullStringIDs";
             this.checkBox1.UseVisualStyleBackColor = true;
             // 
             // groupBox1
@@ -103,26 +109,29 @@
             this.groupBox1.Controls.Add(this.checkBox1);
             this.groupBox1.Controls.Add(this.radioButton1);
             this.groupBox1.FlatStyle = System.Windows.Forms.FlatStyle.Popup;
-            this.groupBox1.Location = new System.Drawing.Point(12, 46);
+            this.groupBox1.Location = new System.Drawing.Point(16, 57);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(200, 58);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(262, 83);
             this.groupBox1.TabIndex = 20;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Flags :";
             // 
             // MetaExtractor
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(454, 116);
+            this.ClientSize = new System.Drawing.Size(603, 153);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.textBox1);
             this.Controls.Add(this.extract_button);
-            this.MaximumSize = new System.Drawing.Size(9999, 154);
-            this.MinimumSize = new System.Drawing.Size(470, 154);
+            this.Margin = new System.Windows.Forms.Padding(4);
+            this.MaximumSize = new System.Drawing.Size(13326, 200);
+            this.MinimumSize = new System.Drawing.Size(621, 200);
             this.Name = "MetaExtractor";
             this.Text = "Meta Extractor";
             this.groupBox1.ResumeLayout(false);

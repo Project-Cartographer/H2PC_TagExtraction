@@ -89,8 +89,8 @@ class DATA_READ
         {
             char c = (char)map_stream.Read();
 
-            if(c=='\\')
-                text+='\\';
+            if (c == '\\')
+                text += '\\';
 
             if (c == '\0')
                 break;
@@ -200,13 +200,13 @@ class DATA_READ
 
         return null;
     }
-   /// <summary>
-   /// reads the specified plugin to generate the structure of the plugin
-   /// </summary>
-   /// <param name="type">the type of the tag</param>
+    /// <summary>
+    /// reads the specified plugin to generate the structure of the plugin
+    /// </summary>
+    /// <param name="type">the type of the tag</param>
     public static plugins_field Get_Tag_stucture_from_plugin(string type)
     {
-        
+
         //Plugin Search Stuff
         string plugin_loc = Application.StartupPath + "\\plugins\\" + type + ".xml";
 
@@ -219,7 +219,7 @@ class DATA_READ
             //the number of element and end_element should be same in the plugin file
             int element = 0;
             int end_element = 0;
-            while(xr.Read())
+            while (xr.Read())
             {
                 if ((xr.NodeType == XmlNodeType.Element))
                 {
@@ -232,7 +232,7 @@ class DATA_READ
                     }
 
                 }
-                if (xr.NodeType == XmlNodeType.EndElement )
+                if (xr.NodeType == XmlNodeType.EndElement)
                 {
                     switch (xr.Name.ToLower())
                     {
@@ -246,13 +246,13 @@ class DATA_READ
             xr.Dispose();
             fs.Dispose();
 
-            if (element==end_element)
+            if (element == end_element)
             {
                 //recreating newer streams
                 fs = new FileStream(plugin_loc, FileMode.Open, FileAccess.Read, FileShare.Read);
                 xr = new XmlTextReader(fs);
 
-                return Get_nodes(type,0x0,0x0,xr, false);//well we do have a base size for the tables inside the meta,but i simply dont care
+                return Get_nodes(type, 0x0, 0x0, xr, false);//well we do have a base size for the tables inside the meta,but i simply dont care
             }
             else throw new Exception("Plugin structure invalid " + type + ".xml");
 
@@ -270,7 +270,7 @@ class DATA_READ
     /// <param name="xr">the xmlTextReader object</param>
     /// <param name="child">a flag to denote whether the field being read is a child field or not</param>
     /// <returns></returns>
-    public static plugins_field Get_nodes(string name,int off,int entry_size,XmlTextReader xr,bool child)
+    public static plugins_field Get_nodes(string name, int off, int entry_size, XmlTextReader xr, bool child)
     {
         plugins_field ret = new plugins_field(name, off, entry_size);
 
@@ -287,7 +287,7 @@ class DATA_READ
                         {
                             ret.Add_tag_ref(Int32.Parse(xr.GetAttribute("offset").Substring(2), NumberStyles.HexNumber), xr.GetAttribute("name"));
                         }
-                        else if(xr.AttributeCount==4)
+                        else if (xr.AttributeCount == 4)
                         {
                             ret.Add_WCtag_ref(Int32.Parse(xr.GetAttribute("offset").Substring(2), NumberStyles.HexNumber), xr.GetAttribute("name"));
                         }
@@ -318,7 +318,7 @@ class DATA_READ
                         break;
                 }
             }
-        }       
+        }
 
         return ret;
     }
@@ -335,7 +335,7 @@ class DATA_READ
         {
             int r = S % 0x100;
             meta[offset + i] = (byte)r;
-            S = S>>8;
+            S = S >> 8;
         }
     }
     /// <summary>
@@ -358,11 +358,25 @@ class DATA_READ
     /// <param name="src"></param>
     /// <param name="dest_start">the starting postion from where the data is to copied to</param>
     /// <param name="length">the length of the source array</param>
-    public static void ArrayCpy(byte[] dest,byte[] src,int dest_start,int length)
+    public static void ArrayCpy(byte[] dest, byte[] src, int dest_start, int length)
     {
-        for(int i=0;i<length;i++)
+        for (int i = 0; i < length; i++)
         {
             dest[dest_start + i] = src[i];
+        }
+    }
+    /// <summary>
+    /// a function to copy array into another array
+    /// </summary>
+    /// <param name="dest"></param>
+    /// <param name="src"></param>
+    /// <param name="dest_start">the starting postion from where the data is to copied to</param>
+    /// <param name="length">the length of the source array</param>
+    public static void ArrayCpy(byte[] dest, byte[] src, int dest_start, int src_start, int length)
+    {
+        for (int i = 0; i < length; i++)
+        {
+            dest[dest_start + i] = src[src_start + i];
         }
     }
     /// <summary>
@@ -382,7 +396,7 @@ class DATA_READ
     public static string Get_map_from_scenario(string scenario)
     {
         string map_name;
-        map_name=scenario.Substring(scenario.LastIndexOf('\\') + 1)+".map";
+        map_name = scenario.Substring(scenario.LastIndexOf('\\') + 1) + ".map";
         return map_name;
     }
     /// <summary>
@@ -391,7 +405,7 @@ class DATA_READ
     /// <param name="table_index"></param>
     /// <param name="STRING"></param>
     /// <returns></returns>
-    public static int Generate_SID(int table_index,int set,string STRING)
+    public static int Generate_SID(int table_index, int set, string STRING)
     {
         int l = (STRING.Length & 0xFF) << 24;
         int s = (set & 0xFF) << 16;

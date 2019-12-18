@@ -88,7 +88,7 @@ namespace Map_Handler
                 isOutDBOn = output_db_.Checked;
 
                 DestinationFolder = textBox1.Text;
-                MapsFolder = MainBox.map_path;
+                MapsFolder = MainBox.map_dir;
                 
                 string mapName = DATA_READ.Read_File_from_file_location(MainBox.map_name);
                 int TotalTags = TagsList.Count;
