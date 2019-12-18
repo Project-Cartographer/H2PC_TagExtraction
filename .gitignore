@@ -217,3 +217,5 @@ obj/Debug
 *.csproj.GenerateResource.Cache
 *.csprojResolveAssemblyReference.cache
 *.cache
+/Map_Handler.VC.VC.opendb
+/Map_Handler.VC.db
