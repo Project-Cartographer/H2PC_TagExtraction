@@ -1297,5 +1297,10 @@ namespace Map_Handler
                 }
             }
         }
+        private void injectMetaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MetaInjector meta_inj_obj = new MetaInjector();
+            meta_inj_obj.Show();
+        }
     }
 }

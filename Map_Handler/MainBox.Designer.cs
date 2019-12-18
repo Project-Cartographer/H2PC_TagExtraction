@@ -58,7 +58,8 @@
             this.shaderEmulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createPluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dumpShadersToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.emulateShaderDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();            
+            this.emulateShaderDumpToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
+            this.injectMetaToolStripMenuItem1 = new System.Windows.Forms.ToolStripMenuItem();
             this.settingsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.defaultMaToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.treeView1 = new System.Windows.Forms.TreeView();
@@ -260,7 +261,8 @@
             this.resyncStringIDsToolStripMenuItem,
             this.sndtagFixesToolStripMenuItem,
             this.dumpStringIDToolStripMenuItem,
-            this.shaderEmulatorToolStripMenuItem,});
+            this.shaderEmulatorToolStripMenuItem,
+            this.injectMetaToolStripMenuItem1});
             this.metaToolStripMenuItem.Name = "metaToolStripMenuItem";
             this.metaToolStripMenuItem.Size = new System.Drawing.Size(55, 24);
             this.metaToolStripMenuItem.Text = "Meta";
@@ -345,6 +347,13 @@
             this.emulateShaderDumpToolStripMenuItem.Size = new System.Drawing.Size(228, 26);
             this.emulateShaderDumpToolStripMenuItem.Text = "Process Shader Dump";
             this.emulateShaderDumpToolStripMenuItem.Click += new System.EventHandler(this.EmulateShaderDumpToolStripMenuItem_Click);
+            // 
+            // injectMetaToolStripMenuItem1
+            // 
+            this.injectMetaToolStripMenuItem1.Name = "injectMetaToolStripMenuItem1";
+            this.injectMetaToolStripMenuItem1.Size = new System.Drawing.Size(197, 26);
+            this.injectMetaToolStripMenuItem1.Text = "Inject meta";
+            this.injectMetaToolStripMenuItem1.Click += new System.EventHandler(this.injectMetaToolStripMenuItem1_Click);
             // 
             // settingsToolStripMenuItem
             // 
@@ -790,6 +799,7 @@
         private System.Windows.Forms.ToolStripMenuItem dumpStringIDToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem selectedTagsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem allTagsToolStripMenuItem;
+        private System.Windows.Forms.ToolStripMenuItem injectMetaToolStripMenuItem1;
     }
 }
 

@@ -90,6 +90,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaInjector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MetaInjector.Designer.cs">
+      <DependentUpon>MetaInjector.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShaderEmulator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -137,6 +143,9 @@
     <Compile Include="tag_refs.cs" />
     <EmbeddedResource Include="MainBox.resx">
       <DependentUpon>MainBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MetaInjector.resx">
+      <DependentUpon>MetaInjector.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MetaExtractor.resx">
       <DependentUpon>MetaExtractor.cs</DependentUpon>
