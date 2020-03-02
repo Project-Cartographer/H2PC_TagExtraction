@@ -195,6 +195,177 @@ namespace DATA_STRUCTURES
         }
     }
     /// <summary>
+    /// A class dealing with RAW data(resource) stored outside of the actual meta
+    /// </summary>
+    class RAW_data
+    {
+        List<int> ref_RAW_offset;//a list containing the offsets in the meta where the raw blocks have been referenced
+        List<int> list_RAW_size;//a list containing the sizes of various RAW_blocks
+
+        byte[] RAW_resource;
+
+        byte[] meta;
+        string type;
+        int mem_off;
+        StreamReader map_stream;
+        StreamReader mp_shared_stream;
+        StreamReader sp_shared_stream;
+        StreamReader mainmenu_stream;
+        /// <summary>
+        /// use to load resources when tag is loaded from a map
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="type"></param>
+        /// <param name="mem_off"></param>
+        /// <param name="map_stream"></param>
+
+        public RAW_data(byte[] data, string type, int mem_off, StreamReader map_stream, StreamReader mp_shared_stream, StreamReader sp_shared_stream, StreamReader mainmenu_stream)
+        {
+            ref_RAW_offset = new List<int>();
+            list_RAW_size = new List<int>();
+
+            this.meta = data;
+            this.type = type;
+            this.mem_off = mem_off;
+
+            //initialise all stuff         
+            this.map_stream = map_stream;
+            this.mp_shared_stream = mp_shared_stream;
+            this.sp_shared_stream = sp_shared_stream;
+            this.mainmenu_stream = mainmenu_stream;
+
+            Load_RAW();
+        }
+        /// <summary>
+        /// use to load reources when tag is loaded from the disk,mem_off(virtual base)=0
+        /// assumed that the tag also contains the RAW data
+        /// </summary>
+        /// <param name="data"></param>
+        /// <param name="type"></param>
+        public RAW_data(byte[] data, string type)
+        {
+            ref_RAW_offset = new List<int>();
+            list_RAW_size = new List<int>();
+
+            this.meta = data;
+            this.type = type;
+            this.mem_off = 0x0;
+
+            //initialise all stuff         
+            this.map_stream = null;
+            this.mp_shared_stream = null;
+            this.sp_shared_stream = null;
+            this.mainmenu_stream = null;
+
+            Load_RAW();
+        }
+        /// <summary>
+        /// -_-
+        /// </summary>
+        private void Load_RAW()
+        {
+            switch(type)
+            {
+                case "mode":
+                    int section_count = DATA_READ.ReadINT_LE(0x24, meta);
+                    int section_off = DATA_READ.ReadINT_LE(0x28, meta) - mem_off;
+                    for (int i = 0; i < section_count; i++)
+                    {
+                        ref_RAW_offset.Add(section_off + i * 0x5C + 0x38);
+                        list_RAW_size.Add(DATA_READ.ReadINT_LE((section_off + i * 0x5C + 0x3C), meta));
+                    }
+                    break;
+                case "bitm":
+                    int bitm_count = DATA_READ.ReadINT_LE(0x44, meta);
+                    int bitm_off = DATA_READ.ReadINT_LE(0x48, meta) - mem_off;
+                    for (int i = 0; i < bitm_count; i++)
+                    {
+                        ref_RAW_offset.Add(bitm_off + i * 0x74 + 0x1C);
+                        list_RAW_size.Add(DATA_READ.ReadINT_LE((bitm_off + i * 0x74 + 0x34), meta));
+                    }
+                    break;                
+            }
+
+            RAW_resource = new byte[get_total_RAW_size()];
+            int t_off = 0;
+            for (int i = 0; i < ref_RAW_offset.Count; i++)
+            {
+                int t_block_off = DATA_READ.ReadINT_LE(ref_RAW_offset[i], meta);
+                int block_off = t_block_off & 0x3FFFFFFF;
+
+                StreamReader sr = map_stream;
+
+                switch (get_resource_type((uint)t_block_off))
+                {
+                    case 1:
+                        sr = mainmenu_stream;
+                        break;
+                    case 2:
+                        sr = mp_shared_stream;
+                        break;
+                    case 3:
+                        sr = sp_shared_stream;
+                        break;
+                }
+
+                if (sr != null)
+                {
+                    //reading from map
+                    sr.BaseStream.Position = block_off;
+                    sr.BaseStream.Read(RAW_resource, t_off, list_RAW_size[i]);
+                }
+                else
+                {
+                    //reading from file(its contained in the meta array)
+                    DATA_READ.ArrayCpy(RAW_resource, meta, t_off, block_off, list_RAW_size[i]);
+                }
+                t_off += list_RAW_size[i];
+            }
+        }
+        /// <summary>
+        /// returns the type of reource Internal,Main menu,Shared,SP Shared
+        /// </summary>
+        /// <param name="block_off"></param>
+        /// <returns></returns>
+        private uint get_resource_type(uint block_off)
+        {
+            uint ret = block_off >> 30;
+            return ret;
+        }
+        /// <summary>
+        /// returns the total size of RAW data associated with concerned meta
+        /// </summary>
+        /// <returns></returns>
+        public int get_total_RAW_size()
+        {
+            int t_size = 0;
+            foreach (var i in list_RAW_size)
+                t_size += i;
+
+            return t_size;
+        }
+        /// <summary>
+        /// retargets the associated RAW data to newer offset(file)
+        /// </summary>
+        /// <param name="mem_off"></param>
+        public void rebase_RAW_data(int new_off)
+        {
+            for (int i = 0; i < ref_RAW_offset.Count; i++)
+            {
+                DATA_READ.WriteINT_LE(new_off, ref_RAW_offset[i], meta);
+                new_off += list_RAW_size[i];
+            }
+        }
+        /// <summary>
+        /// returns the raw_data associated with the concerned meta
+        /// </summary>
+        /// <returns></returns>
+        public byte[] get_RAW_data()
+        {            
+            return RAW_resource;
+        }
+    }
+    /// <summary>
     /// a class containing the data that aren't contained in tags but are reffered by them
     /// i decided to use the memory address of the extended_meta as an identity
     /// </summary>

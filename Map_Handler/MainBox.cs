@@ -13,11 +13,6 @@ using System.Globalization;
 using BlamLib;
 using DATA_STRUCTURES;
 
-/*
-Created and developed by Himanshu01 in H2PC Project Cartographer Team
-Also uses BlamLib by Kornner Studios for tag extraction 
-<3 Hamp
-*/
 
 namespace Map_Handler
 {
@@ -25,41 +20,40 @@ namespace Map_Handler
     {
         #region EXTRACTION_RELATED_VARS 
 
-        // For tag extraction
-        Dictionary<int, string> AddList = new Dictionary<int, string>();
-        Dictionary<int, string> ExtractList = new Dictionary<int, string>();
+        //For BlamLib tag extraction
+        Dictionary<int, string> AddList;
+        Dictionary<int, string> ExtractList;
 
-        static string DestinationFolder = "";
-        static bool isRecursive;
-        static bool isOverrideOn;
-        static bool isOutDBOn;
-
-        static StreamReader map_stream;//stream reader
-        int table_off;//offset of the table
-        int table_start;//start of the Actual Tables
-        int table_size;//size of the table
-        int file_table_offset;//file table offset from where the strings begin
+        static StreamReader map_stream;//current map stream reader
+        //as the name suggests
+        static StreamReader mp_shared_stream;
+        static StreamReader sp_shared_stream;
+        static StreamReader mainmenu_stream;
+        Dictionary<int, string> debug_tag_names;//a list containing tag path stuff :P
 
         static bool map_loaded = false;//is the map loaded
-        int scnr_memaddr;
-        int scnr_off;
+
         public static string map_name = "";//name of the map along woth destination
-        public static string map_path = "";//path of the mapfile above, where we look for shared/ui etc.
-        List<int> datum_list = new List<int>();
+        public static string map_dir = "";//path of the mapfile above, where we look for shared/ui etc.
+
         string settings_path = Path.Combine(Environment.GetFolderPath(
         Environment.SpecialFolder.ApplicationData), "H2_PCHandlerSettings.txt");
-        public static BlamLib.Test.Halo2 H2Test = new BlamLib.Test.Halo2(); //Blam Lib Tests project
-        public static BlamLib.Blam.Halo2.Converter H2Convert = new BlamLib.Blam.Halo2.Converter();
 
-        Dictionary<int, string> SID_list;//a list containing tag path stuff :P
+        public static BlamLib.Test.Halo2 H2Test = new BlamLib.Test.Halo2(); //Blam Lib Tests project
+
+
         public static Dictionary<int, string> AllTagList;
         public static string H2V_BaseMapsDirectory;
+
 
         #endregion
 
         public MainBox()
         {
             InitializeComponent();
+
+            AddList = new Dictionary<int, string>();
+            ExtractList = new Dictionary<int, string>();
         }
 
         #region NON_BLAM_LIB_EXTRACTION
@@ -72,34 +66,35 @@ namespace Map_Handler
 
             if (map_file.ShowDialog() == DialogResult.OK)
             {
+                LoadResourceMaps();
                 map_stream = new StreamReader(map_file.FileName);
-                SID_list = new Dictionary<int, string>();//initialise our SIDs
+
+                debug_tag_names = new Dictionary<int, string>();//initialise our SIDs
                 AllTagList = new Dictionary<int, string>();
 
-                table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
-                table_size = DATA_READ.ReadINT_LE(0x14, map_stream);
-                file_table_offset = DATA_READ.ReadINT_LE(0x2D0, map_stream);
+                int table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
+                int table_size = DATA_READ.ReadINT_LE(0x14, map_stream);
+                int file_table_offset = DATA_READ.ReadINT_LE(0x2D0, map_stream);
 
-                table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;
-
-                scnr_off = table_off + table_size;
-                scnr_memaddr = DATA_READ.ReadINT_LE(table_start + 0x8, map_stream);//scnr tag index is 0x0
+                int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;
 
                 map_name = map_file.FileName;
-                map_path = Path.GetDirectoryName(map_name);
+                map_dir = Path.GetDirectoryName(map_name);
                 textBox1.Text = "Map Loaded -  " + map_name;
                 textBox4.Text = "0 Tags Selected";
-                initialize_treeview();
+                initialize_treeview(table_start, table_size, file_table_offset);
                 map_loaded = true;
                 TagToolStripMenu.Visible = true;
                 metaToolStripMenuItem.Visible = true;
+                dumpTagsListToolStripMenuItem.Visible = true;
+                dumpStringIDToolStripMenuItem.Visible = true;
             }
         }
 
         /// <summary>
         /// Initialises tree view upon opening a map file
         /// </summary>
-        void initialize_treeview()
+        void initialize_treeview(int table_start,int table_size,int file_table_offset)
         {
             treeView1.Nodes.Clear();
 
@@ -135,7 +130,7 @@ namespace Map_Handler
                     treeView1.Nodes[index].Nodes.Add(tag_table_REF.ToString(), "- " + path);
 
                     //add this stuff to the SID list
-                    SID_list.Add(datum_index, path);
+                    debug_tag_names.Add(datum_index, path);
 
                     //ugh! is basically the last tag
                     if (type.CompareTo("ugh!") == 0)
@@ -158,11 +153,11 @@ namespace Map_Handler
                     int tag_table_ref = Int32.Parse(treeView1.SelectedNode.Name);
                     string type = DATA_READ.ReadTAG_TYPE(tag_table_ref, map_stream);
                     int datum_index = DATA_READ.ReadINT_LE(tag_table_ref + 4, map_stream);
-
+        
                     //Meta Extractor
                     MetaExtractor meta_extract;
-                    meta_extract = new MetaExtractor(datum_index, type, SID_list, map_stream);
-                    meta_extract.Show();
+                    meta_extract = new MetaExtractor(datum_index, type, map_stream, mp_shared_stream, sp_shared_stream, mainmenu_stream);
+                    meta_extract.Show();                   
 
                 }
                 else MessageBox.Show("Select a TAG", "Hint");
@@ -172,7 +167,22 @@ namespace Map_Handler
                 MessageBox.Show("Select a map First", "Hint");
             }
         }
+        private static void LoadResourceMaps()
+        {
+            string mainmenu = H2V_BaseMapsDirectory + "\\mainmenu.map";
+            string shared = H2V_BaseMapsDirectory + "\\shared.map";
+            string spshared = H2V_BaseMapsDirectory + "\\single_player_shared.map";
 
+            mainmenu_stream = new StreamReader(mainmenu);
+            mp_shared_stream = new StreamReader(shared);
+            sp_shared_stream = new StreamReader(spshared);
+        }
+        private static void UnLoadResourceMaps()
+        {
+            mainmenu_stream.Close();
+            mp_shared_stream.Close();
+            sp_shared_stream.Close();
+        }
         //function display the tag structure
         private void getTagStructureToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -226,6 +236,7 @@ namespace Map_Handler
         {
             if (map_loaded)
             {
+                UnLoadResourceMaps();
                 map_stream.Close();
                 map_loaded = false;
             }
@@ -235,6 +246,7 @@ namespace Map_Handler
         {
             if (!map_loaded)
             {
+                LoadResourceMaps();
                 map_stream = new StreamReader(map_name);
                 map_loaded = true;
             }
@@ -323,12 +335,7 @@ namespace Map_Handler
             }
             extract_button.Enabled = true;
             clear_button.Enabled = true;
-        }
-
-        private void sbspltmpHaxToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            H2Test.sbsptoltmp_cluster_block_copy(@"C:\Program Files (x86)\Microsoft Games\Halo 2 Map Editor\tags\scenarios\multi\example\example_example_lightmap.scenario_structure_lightmap", @"C:\Program Files (x86)\Microsoft Games\Halo 2 Map Editor\tags\scenarios\multi\example\example.scenario_structure_bsp");
-        }
+        }       
 
         #endregion
 
@@ -340,9 +347,10 @@ namespace Map_Handler
             textBox2.Text = "";
             textBox3.Text = "";
             richTextBox1.Text = "";
-            TagToolStripMenu.Visible = false;
-            metaToolStripMenuItem.Visible = false;
+            TagToolStripMenu.Visible = false;            
             progressBar1.Value = 0;
+            dumpTagsListToolStripMenuItem.Visible = false;
+            dumpStringIDToolStripMenuItem.Visible = false;
         }
 
         private void exitToolStripMenuItem_Click(object sender, EventArgs e)
@@ -520,14 +528,11 @@ namespace Map_Handler
 
         private void extract_button_Click(object sender, EventArgs e)
         {
-            isRecursive = recursive_radio_.Checked;
-            isOverrideOn = override_tags_.Checked;
-            isOutDBOn = output_db_.Checked;
 
-            DestinationFolder = textBox3.Text;
+            string DestinationFolder = textBox3.Text;
 
             string mapName = DATA_READ.Read_File_from_file_location(MainBox.map_name);
-            int TotalTags = AddList.Count;
+
             current_tag_status.Visible = true;
 
             if (DestinationFolder == "")
@@ -540,7 +545,7 @@ namespace Map_Handler
             MainBox.CloseMap();
 
             List<int> extract_list = ExtractList.Keys.ToList<int>();
-            MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, map_path + "\\", mapName);
+            MainBox.H2Test.Halo2_ExtractTagCache(extract_list, recursive_radio_.Checked, output_db_.Checked, override_tags_.Checked, DestinationFolder, map_dir + "\\", ref progressBar1, mapName);
             /*
             progressBar1.Value = 0;
             progressBar1.Maximum = ExtractList.Count;
@@ -1072,14 +1077,14 @@ namespace Map_Handler
                             int mem_off = DATA_READ.ReadINT_LE(table_ref + 8, map_stream);
                             int size = DATA_READ.ReadINT_LE(table_ref + 0xc, map_stream);
 
-                            meta meta_obj = new meta(datum, SID_list[datum], map_stream);
+                            meta meta_obj = new meta(datum, debug_tag_names[datum], map_stream);
                             meta_obj.Rebase_meta(0x0);
 
                             if (meta_obj.Get_Total_size() != 0)
                             {
                                 byte[] meta_data = meta_obj.Generate_meta_file();
 
-                                string text_path = tags_directory + '\\' + SID_list[datum] + ".txt";
+                                string text_path = tags_directory + '\\' + debug_tag_names[datum] + ".txt";
 
                                 //lets create our directory
                                 System.IO.Directory.CreateDirectory(DATA_READ.ReadDirectory_from_file_location(text_path));
@@ -1103,8 +1108,8 @@ namespace Map_Handler
                                 string out_temp;
                                 if (stem_datum != 0 && stem_datum != -1)
                                 {
-                                    if (SID_list.TryGetValue(stem_datum, out out_temp))
-                                        sw.WriteLine(SID_list[stem_datum]);
+                                    if (debug_tag_names.TryGetValue(stem_datum, out out_temp))
+                                        sw.WriteLine(debug_tag_names[stem_datum]);
                                     else sw.WriteLine("---");
                                 }
                                 //write the material name
@@ -1145,14 +1150,14 @@ namespace Map_Handler
 
                                     if (bitm_datum != 0 && bitm_datum != -1)
                                     {
-                                        if (SID_list.TryGetValue(bitm_datum, out out_temp))
-                                            if (SID_list[bitm_datum] == "")
+                                        if (debug_tag_names.TryGetValue(bitm_datum, out out_temp))
+                                            if (debug_tag_names[bitm_datum] == "")
                                             {
                                                 sw.WriteLine(" ");
                                             }
                                             else
                                             {
-                                                sw.WriteLine(SID_list[bitm_datum]);
+                                                sw.WriteLine(debug_tag_names[bitm_datum]);
                                             }
                                         else sw.WriteLine("---");
                                     }
@@ -1206,7 +1211,7 @@ namespace Map_Handler
                                 }
                                 sw.WriteLine("### VERTEX CONSTANTS END ###");
 
-                                log.WriteLine(SID_list[datum] + ".txt");
+                                log.WriteLine(debug_tag_names[datum] + ".txt");
 
                                 sw.Close();
                             }
@@ -1236,10 +1241,10 @@ namespace Map_Handler
                 {
                     StreamWriter log = new StreamWriter(svd.FileName);
 
-                    var key_list = SID_list.Keys.ToList();
+                    var key_list = debug_tag_names.Keys.ToList();
 
                     for (int i = 0; i < key_list.Count; i++)
-                        log.WriteLine("0x" + key_list[i].ToString("X") + ',' + SID_list[key_list[i]]);
+                        log.WriteLine("0x" + key_list[i].ToString("X") + ',' + debug_tag_names[key_list[i]]);
 
                     log.Close();
                 }
@@ -1291,6 +1296,12 @@ namespace Map_Handler
 
                 }
             }
+        }
+
+        private void injectMetaToolStripMenuItem1_Click(object sender, EventArgs e)
+        {
+            MetaInjector meta_inj_obj = new MetaInjector();
+            meta_inj_obj.Show();
         }
     }
 }

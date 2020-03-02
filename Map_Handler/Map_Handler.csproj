@@ -13,6 +13,7 @@
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
     <IsWebBootstrapper>false</IsWebBootstrapper>
+    <TargetFrameworkProfile />
     <PublishUrl>publish\</PublishUrl>
     <Install>true</Install>
     <InstallFrom>Disk</InstallFrom>
@@ -90,6 +91,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="MetaInjector.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MetaInjector.Designer.cs">
+      <DependentUpon>MetaInjector.cs</DependentUpon>
+    </Compile>
     <Compile Include="ShaderEmulator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -144,6 +151,9 @@
     <EmbeddedResource Include="LogBox.resx">
       <DependentUpon>LogBox.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MetaInjector.resx">
+      <DependentUpon>MetaInjector.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -152,6 +162,7 @@
     <Compile Include="Properties\Resources.Designer.cs">
       <AutoGen>True</AutoGen>
       <DependentUpon>Resources.resx</DependentUpon>
+      <DesignTime>True</DesignTime>
     </Compile>
     <EmbeddedResource Include="Rebase_meta.resx">
       <DependentUpon>Rebase_meta.cs</DependentUpon>
@@ -162,6 +173,7 @@
     <EmbeddedResource Include="TagExtractor.resx">
       <DependentUpon>TagExtractor.cs</DependentUpon>
     </EmbeddedResource>
+    <None Include="app.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

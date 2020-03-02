@@ -277,7 +277,7 @@ namespace BlamLib.Managers
                         tm = reconstructed_tag;
                 }
 
-                if (tm is null)
+                if (tm == null)
                     tm = cache_tag;
 
                 #region read the tag from the cache

@@ -14,10 +14,7 @@ namespace Map_Handler
     public partial class TagExtractor : Form
     {
         static string MapsFolder = "";
-        static string DestinationFolder = "";
-        static bool isRecursive ;
-        static bool isOverrideOn ;
-        static bool isOutDBOn ;
+        static string DestinationFolder = "";   
 
         Dictionary<int, string> TagsList = new Dictionary<int, string>();
       
@@ -81,14 +78,10 @@ namespace Map_Handler
          }
 
         private void extract_button_Click(object sender, EventArgs e)
-        {
-            
-                isRecursive = recursive_radio_.Checked;
-                isOverrideOn = override_tags_.Checked;
-                isOutDBOn = output_db_.Checked;
+        {            
 
                 DestinationFolder = textBox1.Text;
-                MapsFolder = MainBox.map_path;
+                MapsFolder = MainBox.map_dir;
                 
                 string mapName = DATA_READ.Read_File_from_file_location(MainBox.map_name);
                 int TotalTags = TagsList.Count;
@@ -117,7 +110,7 @@ namespace Map_Handler
                 MainBox.CloseMap();
 
                 List<int> extract_list = TagsList.Keys.ToList<int>();
-                MainBox.H2Test.Halo2_ExtractTagCache(extract_list, isRecursive, isOutDBOn, isOverrideOn, DestinationFolder, MapsFolder, mapName);
+                MainBox.H2Test.Halo2_ExtractTagCache(extract_list, recursive_radio_.Checked, output_db_.Checked, override_tags_.Checked, DestinationFolder, MapsFolder, ref progressBar1, mapName);
 
                 /*
                 progressBar1.Value = 0;
@@ -149,38 +142,7 @@ namespace Map_Handler
 
 
         }
-
-        private void button1_Click(object sender, EventArgs e)
-        {
-
-
-            
-
-        }
-
-        private void TagExtractor_Load(object sender, EventArgs e)
-        {
-            
-        }
-
-      
-
-        private void richTextBox1_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox2_TextChanged(object sender, EventArgs e)
-        {
-
-        }
-
-        private void textBox1_TextChanged(object sender, EventArgs e)
-        {
-            
-        }
-
-
+       
 
         
     }

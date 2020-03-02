@@ -11,6 +11,7 @@ using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
 
+
 namespace BlamLib.Test
 {
 	partial class Halo2
@@ -177,9 +178,14 @@ namespace BlamLib.Test
 		}
 		//dont be mad,i could only come up with this
 		static List<int> extraction_indices;
+        //the progress bar -_-
+        static System.Windows.Forms.ProgressBar progress_bar;
 
-		static void H2CacheExtractionMethod(object param)
+        static void H2CacheExtractionMethod(object param)
 		{
+            progress_bar.Value = 0;
+            progress_bar.Maximum = 1;     
+            
 			var args = param as CacheFileOutputInfoArgs;
 
 			using (var handler = new CacheHandler<Blam.Halo2.CacheFile>(args.Game, args.MapPath))
@@ -206,16 +212,22 @@ namespace BlamLib.Test
 					}
 					else
 					{
+                        progress_bar.Maximum = extraction_indices.Count;
+                        
 						foreach (int i in extraction_indices)
 						{
 							var cei = ti.ExtractionBegin(i, ex_args);
 							ti.Extract(cei);
 							ti.ExtractionEnd();
+
+                            progress_bar.Value++;
 						}
 					}
 				}
 				ti.ExtractionDispose();
 			}
+            //Make sure to always complete the progress upon extraction end
+            progress_bar.Value = progress_bar.Maximum;
 
 			args.SignalFinished();
 		}
@@ -308,7 +320,7 @@ namespace BlamLib.Test
 		}
 
 		//cheap version to extract bunch of tags
-		public void Halo2_ExtractTagCache(List<int> DatumIndices, bool Recursive, bool OutputDB, bool Override, string DestinationPath, string MapPath, params string[] map_names)
+		public void Halo2_ExtractTagCache(List<int> DatumIndices, bool Recursive, bool OutputDB, bool Override, string DestinationPath, string MapPath,ref System.Windows.Forms.ProgressBar progress, params string[] map_names)
 		{
 			BlamVersion game = BlamVersion.Halo2_PC;
 
@@ -337,6 +349,7 @@ namespace BlamLib.Test
 				.VertexBufferCacheOpen(game);
 
 			extraction_indices = DatumIndices;
+            progress_bar = progress;
 			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, MapsDir, -1, Recursive, OutputDB, Override, DestinationPath, map_names);
 
 			(Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheClose(game);
@@ -363,60 +376,5 @@ namespace BlamLib.Test
 			Console.WriteLine("Halo2TestCacheExtractionXbox: Overall time: {0}", StopStopwatch());
 		}
 
-	#region lightmap_hacks
-	//Cheap hacks that korn would even regret
-	public bool sbsptoltmp_cluster_block_copy(string ltmp_loc, string sbsp_loc)
-	{
-		bool ret = false;
-
-		var bd = Program.Halo2.Manager;
-		var datum_tagindex = bd.OpenTagIndex(BlamVersion.Halo2_PC, kTestTagIndexTagsPath);
-		var ti = bd.GetTagIndex(datum_tagindex) as Managers.TagIndex;
-
-		int ti_dir_length = ti.Directory.Length;
-
-		//open lightmap tag
-		var t = ltmp_loc.Substring(ti_dir_length); // remove tags dir
-		t = t.Remove(t.Length - Blam.Halo2.TagGroups.ltmp.Name.Length - 1); // remove extension
-
-		var ltmp_index = ti.Open(t, Blam.Halo2.TagGroups.ltmp);
-
-		Assert.IsTrue(ltmp_index != Blam.DatumIndex.Null);
-
-		var tagman = ti[ltmp_index];
-		var ltmp = tagman.TagDefinition as Blam.Halo2.Tags.scenario_structure_lightmap_group;
-
-		//open sbsp tag
-		t = sbsp_loc.Substring(ti_dir_length); // remove tags dir
-		t = t.Remove(t.Length - Blam.Halo2.TagGroups.sbsp.Name.Length - 1); // remove extension
-
-		var sbsp_index = ti.Open(t, Blam.Halo2.TagGroups.sbsp);
-
-		Assert.IsTrue(sbsp_index != Blam.DatumIndex.Null);
-
-		tagman = ti[sbsp_index];
-		var sbsp = tagman.TagDefinition as Blam.Halo2.Tags.scenario_structure_bsp_group;
-
-		// sbsp[19].CopyTo(ltmp[14]);
-		ltmp.LightmapGroups[0].Clusters.DeleteAll();
-
-		foreach (var i in sbsp.Clusters)
-		{
-			var temp = new Blam.Halo2.Tags.structure_lightmap_group_block.lightmap_geometry_section_block(i);
-			ltmp.LightmapGroups[0].Clusters.Add(out temp);
-		}
-
-
-
-		ti.Save(sbsp_index);
-		ti.Save(ltmp_index);
-
-		ti.UnloadAll();
-		ti = null;
-		bd.CloseTagIndex(datum_tagindex);
-
-		return ret;
-	}
-	#endregion
 	};
 }

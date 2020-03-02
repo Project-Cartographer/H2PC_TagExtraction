@@ -366,6 +366,20 @@ class DATA_READ
         }
     }
     /// <summary>
+    /// a function to copy array into another array
+    /// </summary>
+    /// <param name="dest"></param>
+    /// <param name="src"></param>
+    /// <param name="dest_start">the starting postion from where the data is to copied to</param>
+    /// <param name="length">the length of the source array</param>
+    public static void ArrayCpy(byte[] dest, byte[] src, int dest_start, int src_start, int length)
+    {
+        for (int i = 0; i < length; i++)
+        {
+            dest[dest_start + i] = src[src_start + i];
+        }
+    }
+    /// <summary>
     /// a function which checks whether the currently opened map is a shared map or not
     /// </summary>
     /// <returns></returns>

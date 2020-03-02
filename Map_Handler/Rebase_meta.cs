@@ -15,8 +15,11 @@ using System.IO;
 
 namespace Map_Handler
 {
+    
     public partial class Rebase_meta : Form
     {
+        //size of the cache table at the starting of the file
+        const int cache_table_size = 0x56;
         //list of meta which are gonna be compiled
         List<injectRefs> compile_list;
         string directory;
@@ -101,6 +104,10 @@ namespace Map_Handler
             Queue<string> file_list = new Queue<string>();
             int file_list_size = 0x0;
 
+            Queue<byte[]> RAW_list = new Queue<byte[]>();
+            Queue<long> RAW_size_list = new Queue<long>();
+            int total_RAW_size = 0x0;
+
             byte[] tables = new byte[0x10 * compile_list.Count];
 
             foreach (injectRefs temp_ref in compile_list)
@@ -109,27 +116,45 @@ namespace Map_Handler
                 {
                     //lets open the file
                     FileStream fs = new FileStream(directory + "\\" + temp_ref.file_name, FileMode.Append);
-                    long size = fs.Position;
+                    long tag_size = fs.Position;
                     fs.Close();
 
-                    //lets load it into memory
-                    byte[] meta = new byte[size];
+                    //tag file containing both meta and RAW data
+                    byte[] t_meta = new byte[tag_size];
 
                     //Filestream imposed some probs
                     StreamReader sr = new StreamReader(directory + "\\" + temp_ref.file_name);
                     //lets read the data
-                    sr.BaseStream.Read(meta, 0, (int)size);
+                    sr.BaseStream.Read(t_meta, 0, (int)tag_size);
                     sr.Dispose();
+
+                    //retrieve RAW_data
+                    RAW_data raw_obj = new RAW_data(t_meta, temp_ref.type);
+                    raw_obj.rebase_RAW_data(cache_table_size + total_RAW_size );
+
+                    byte[] t_RAW_data = raw_obj.get_RAW_data();
+                    long raw_size = raw_obj.get_total_RAW_size();
+
+                    //lets copy the actual meta
+                    long size = tag_size - raw_size;
+                    byte[] meta = new byte[size];
+                    DATA_READ.ArrayCpy(meta, t_meta, 0, (int)(size));
 
                     //rebase the meta
                     meta obj = new meta(meta, temp_ref.type, (int)size, temp_ref.file_name);
                     log += obj.Update_datum_indexes(compile_list, type_ref_list);
                     obj.Rebase_meta(new_base + meta_size);
 
-                    meta_list.Enqueue(meta);//add to the meta list
-                    size_list.Enqueue(size);//add to the size_list
+                    //add to META listing
+                    meta_list.Enqueue(meta);
+                    size_list.Enqueue(size);
+
                     string tmp_file_name = temp_ref.file_name.Substring(0, temp_ref.file_name.IndexOf('.'));
                     file_list.Enqueue(tmp_file_name);//add to the file_list
+
+                    //add to RAW listing
+                    RAW_list.Enqueue(t_RAW_data);
+                    RAW_size_list.Enqueue(raw_size);
 
                     //tag_table_stuff
                     DATA_READ.WriteTAG_TYPE_LE(temp_ref.type, tag_index * 0x10, tables);
@@ -143,39 +168,50 @@ namespace Map_Handler
                     file_list_size += tmp_file_name.Length + 1;
                     //increase the tag_offset
                     meta_size += (int)size;
-                    //increase the tag_count                    
+                    //increase the RAW offsett
+                    total_RAW_size += (int)raw_size;                                    
                 }
                 else log += "\nFile doesnt exists : " + temp_ref.file_name;
+                //increase the tag_count    
                 tag_index++;
             }            
             StreamWriter sw = new StreamWriter(directory + "\\tags.cache");
             byte[] temp = new byte[0x4];
             byte[] lol = { 0 };
 
+            sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_raw"), 0, "tag_raw".Length);
+            sw.BaseStream.Write(lol, 0, 1);
+            DATA_READ.WriteINT_LE(cache_table_size, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
+            DATA_READ.WriteINT_LE(total_RAW_size, 0, temp);
+            sw.BaseStream.Write(temp, 0, 0x4);
             sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_table"), 0, "tag_table".Length);
             sw.BaseStream.Write(lol, 0, 1);
-            DATA_READ.WriteINT_LE(0x46, 0, temp);
+            DATA_READ.WriteINT_LE(cache_table_size + total_RAW_size, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             DATA_READ.WriteINT_LE(0x10 * compile_list.Count, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_data"), 0, "tag_data".Length);
             sw.BaseStream.Write(lol, 0, 1);
-            DATA_READ.WriteINT_LE(0x46 + 0x10 * compile_list.Count, 0, temp);
+            DATA_READ.WriteINT_LE(cache_table_size + total_RAW_size + 0x10 * compile_list.Count, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             DATA_READ.WriteINT_LE(meta_size, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_maps"), 0, "tag_maps".Length);
             sw.BaseStream.Write(lol, 0, 1);
-            DATA_READ.WriteINT_LE(0x46 + 0x10 * compile_list.Count + meta_size, 0, temp);
+            DATA_READ.WriteINT_LE(cache_table_size + total_RAW_size + 0x10 * compile_list.Count + meta_size, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             DATA_READ.WriteINT_LE(tag_scenarios[0].Length + 1, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             sw.BaseStream.Write(Encoding.ASCII.GetBytes("tag_names"), 0, "tag_names".Length);
             sw.BaseStream.Write(lol, 0, 1);
-            DATA_READ.WriteINT_LE(0x46 + 0x10 * compile_list.Count + meta_size + tag_scenarios[0].Length + 1, 0, temp);
+            DATA_READ.WriteINT_LE(cache_table_size + total_RAW_size + 0x10 * compile_list.Count + meta_size + tag_scenarios[0].Length + 1, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
             DATA_READ.WriteINT_LE(file_list_size, 0, temp);
             sw.BaseStream.Write(temp, 0, 0x4);
+
+            while (RAW_list.Count != 0)
+                sw.BaseStream.Write(RAW_list.Dequeue(), 0x0, (int)RAW_size_list.Dequeue());
 
             sw.BaseStream.Write(tables, 0, 0x10 * compile_list.Count);
             while (meta_list.Count != 0)
