@@ -10,14 +10,16 @@ using System.Windows.Forms;
 using System.Collections.Generic;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
-
-
 namespace BlamLib.Test
 {
 	partial class Halo2
 	{
-		#region ImportInfoExtraction
-		static void ExtractImportInfo(Blam.Halo2.Tags.global_tag_import_info_block tii, string out_path)
+        public static string LTMPPath;
+        public static string SBSPPath;
+        public static string MODEPath;
+
+        #region ImportInfoExtraction
+        static void ExtractImportInfo(Blam.Halo2.Tags.global_tag_import_info_block tii, string out_path)
 		{
 			if (tii != null) foreach (var b in tii.Files)
 			{
@@ -178,14 +180,14 @@ namespace BlamLib.Test
 		}
 		//dont be mad,i could only come up with this
 		static List<int> extraction_indices;
-        //the progress bar -_-
-        static System.Windows.Forms.ProgressBar progress_bar;
+		//the progress bar -_-
+		static System.Windows.Forms.ProgressBar progress_bar;
 
-        static void H2CacheExtractionMethod(object param)
+		static void H2CacheExtractionMethod(object param)
 		{
-            progress_bar.Value = 0;
-            progress_bar.Maximum = 1;     
-            
+			progress_bar.Invoke(new MethodInvoker(() => progress_bar.Value = 0));
+			progress_bar.Invoke(new MethodInvoker(() => progress_bar.Maximum = 1));     
+			
 			var args = param as CacheFileOutputInfoArgs;
 
 			using (var handler = new CacheHandler<Blam.Halo2.CacheFile>(args.Game, args.MapPath))
@@ -212,22 +214,22 @@ namespace BlamLib.Test
 					}
 					else
 					{
-                        progress_bar.Maximum = extraction_indices.Count;
-                        
+						progress_bar.Invoke(new MethodInvoker(() => progress_bar.Maximum = extraction_indices.Count));
+						
 						foreach (int i in extraction_indices)
 						{
 							var cei = ti.ExtractionBegin(i, ex_args);
 							ti.Extract(cei);
 							ti.ExtractionEnd();
 
-                            progress_bar.Value++;
+							progress_bar.Invoke(new MethodInvoker(() => progress_bar.Value++));
 						}
 					}
 				}
 				ti.ExtractionDispose();
 			}
-            //Make sure to always complete the progress upon extraction end
-            progress_bar.Value = progress_bar.Maximum;
+			//Make sure to always complete the progress upon extraction end
+			progress_bar.Invoke(new MethodInvoker(() => progress_bar.Value = progress_bar.Maximum));
 
 			args.SignalFinished();
 		}
@@ -304,6 +306,7 @@ namespace BlamLib.Test
 				MapsDir + @"mainmenu.map",
 				MapsDir + @"shared.map",
 				MapsDir + @"single_player_shared.map");
+
 			Assert.IsNotNull(Program.Halo2.PcMainmenu);
 			Assert.IsNotNull(Program.Halo2.PcShared);
 			Assert.IsNotNull(Program.Halo2.PcCampaign);
@@ -339,17 +342,17 @@ namespace BlamLib.Test
 				MapsDir + @"mainmenu.map",
 				MapsDir + @"shared.map",
 				MapsDir + @"single_player_shared.map");
+
 			Assert.IsNotNull(Program.Halo2.PcMainmenu);
 			Assert.IsNotNull(Program.Halo2.PcShared);
 			Assert.IsNotNull(Program.Halo2.PcCampaign);
-
 
 			(Program.GetManager(game) as Managers.IStringIdController).StringIdCacheOpen(game);
 			(Program.GetManager(game) as Managers.IVertexBufferController)
 				.VertexBufferCacheOpen(game);
 
 			extraction_indices = DatumIndices;
-            progress_bar = progress;
+			progress_bar = progress;
 			CacheFileOutputInfoArgs.TestThreadedMethod(TestContext, H2CacheExtractionMethod, BlamVersion.Halo2_PC, MapsDir, -1, Recursive, OutputDB, Override, DestinationPath, map_names);
 
 			(Program.GetManager(game) as Managers.IVertexBufferController).VertexBufferCacheClose(game);
