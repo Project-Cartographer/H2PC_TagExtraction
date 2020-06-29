@@ -4,6 +4,7 @@ using System.Windows.Forms;
 using DATA_STRUCTURES;
 using System.Xml;
 using System.Globalization;
+using System.Runtime.InteropServices;
 
 class DATA_READ
 {
@@ -173,6 +174,16 @@ class DATA_READ
     public static string Read_File_from_file_location(string file_loc)
     {
         return file_loc.Substring(file_loc.LastIndexOf("\\") + 1);
+    }
+    /// <summary>
+    /// Returns the file name without type
+    /// </summary>
+    /// <param name="file_loc"></param>
+    /// <returns></returns>
+    public static string Read_File_name_from_location(string file_loc)
+    {
+        int length = file_loc.LastIndexOf(".") - file_loc.LastIndexOf("\\") - 1;
+        return file_loc.Substring(file_loc.LastIndexOf("\\") + 1, length);
     }
     /// <summary>
     /// Gets the text from the tree of the specified tag_ref_addr as the key
@@ -412,5 +423,50 @@ class DATA_READ
         int t = table_index & 0xFFFF;
 
         return (l | s | table_index);
+    }
+    /// <summary>
+    /// Function to create struct from a byte array
+    /// some marshal stuff that i found online(C++ is much better)
+    /// </summary>
+    /// <typeparam name="T"></typeparam>
+    /// <param name="bytes"></param>
+    /// <returns></returns>
+    public static T BytesToStructure<T>(byte[] bytes)
+    {
+        int size = Marshal.SizeOf(typeof(T));
+        if (bytes.Length < size)
+            throw new Exception("Invalid parameter");
+
+        IntPtr ptr = Marshal.AllocHGlobal(size);
+        try
+        {
+            Marshal.Copy(bytes, 0, ptr, size);
+            return (T)Marshal.PtrToStructure(ptr, typeof(T));
+        }
+        finally
+        {
+            Marshal.FreeHGlobal(ptr);
+        }
+    }
+    /// <summary>
+    /// another function
+    /// </summary>
+    /// <param name="obj"></param>
+    /// <returns></returns>
+    public static byte[] StructureToByteArray(object obj)
+    {
+        int len = Marshal.SizeOf(obj);
+
+        byte[] arr = new byte[len];
+
+        IntPtr ptr = Marshal.AllocHGlobal(len);
+
+        Marshal.StructureToPtr(obj, ptr, true);
+
+        Marshal.Copy(ptr, arr, 0, len);
+
+        Marshal.FreeHGlobal(ptr);
+
+        return arr;
     }
 }

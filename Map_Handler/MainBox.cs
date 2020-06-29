@@ -69,7 +69,7 @@ namespace Map_Handler
                 LoadResourceMaps();
                 map_stream = new StreamReader(map_file.FileName);
 
-                debug_tag_names = new Dictionary<int, string>();//initialise our SIDs
+                debug_tag_names = new Dictionary<int, string>();
                 AllTagList = new Dictionary<int, string>();
 
                 int table_off = DATA_READ.ReadINT_LE(0x10, map_stream);

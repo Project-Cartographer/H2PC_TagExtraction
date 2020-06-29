@@ -91,12 +91,14 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Blam\Tags\Sound_structures.cs" />
     <Compile Include="MetaInjector.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MetaInjector.Designer.cs">
       <DependentUpon>MetaInjector.cs</DependentUpon>
     </Compile>
+    <Compile Include="meta_cache_writer.cs" />
     <Compile Include="ShaderEmulator.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -214,6 +216,7 @@
   <ItemGroup>
     <Content Include="icon.ico" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
     <PostBuildEvent>

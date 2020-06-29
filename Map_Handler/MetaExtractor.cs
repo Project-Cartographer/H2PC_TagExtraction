@@ -10,23 +10,20 @@ using System.Windows.Forms;
 using System.IO;
 using DATA_STRUCTURES;
 using System.Xml;
+using Map_Handler.Blam.Tags.sound;
 
 namespace Map_Handler
 {
     public partial class MetaExtractor : Form
     {
-        //StreamReader current_stream;//the map stream
-        //Dictionary<int, string> current_tag_names;//the list of string ID
-
         List<tagRef> extraction_list;//a list containing the datum indexes waiting for extraction
         List<int> extracted_list;//a list containing the datum indexes already extracted
         List<tagRef> unextracted_list;//list of datums which arent contained in the current map but in the shared map
 
         StreamReader map_stream;
+        StreamReader mainmenu_stream;
         StreamReader mp_shared_stream;
         StreamReader sp_shared_stream;
-        StreamReader mainmenu_stream;
-        //string[] non_extractable = {"stem"};//list of tags that arent to be extracted
 
 
         public MetaExtractor(int datum,string type,StreamReader map_stream, StreamReader mp_shared_stream, StreamReader sp_shared_stream, StreamReader mainmenu_stream)
@@ -68,11 +65,14 @@ namespace Map_Handler
 
             string log = "\nEXTRACTION LOG : ";//or log
 
-            string rel_path = get_debug_tag_name(extraction_list[0].datum_index, current_stream) + "." + extraction_list[0].type;
+            string xml_rel_path = get_debug_tag_name(extraction_list[0].datum_index, current_stream) + "." + extraction_list[0].type;
 
-            XmlTextWriter xw = new XmlTextWriter(textBox1.Text + "\\" + DATA_READ.Read_File_from_file_location(rel_path)+".xml", Encoding.UTF8);
+            XmlTextWriter xw = new XmlTextWriter(textBox1.Text + "\\" + DATA_READ.Read_File_from_file_location(xml_rel_path)+".xml", Encoding.UTF8);
             xw.Formatting = Formatting.Indented;
             xw.WriteStartElement("config");
+
+            //THE SOUND GESTALT
+            sound_gestalt_tag my_gestalt_tag = open_sound_gestalt_tag(ref current_stream);
 
             if (textBox1.Text.Length > 0)
             {
@@ -83,72 +83,83 @@ namespace Map_Handler
                     int datum = temp_tagref.datum_index;
                     string type = temp_tagref.type;
 
-                    if (datum!=-1 && datum!=0)
+                    if (datum != -1 && datum != 0)
                     {
-                        //few check for non_extractable types
-                        bool isnon_extractable = false;
-
-                   /*     foreach(string tempNE in non_extractable)
-                        {
-                            if(type.CompareTo(tempNE)==0)
-                            {
-                                isnon_extractable = true;
-                                break;
-                            }
-                        }
-                        */
-
-
-                        if (!extracted_list.Contains(datum)&&!isnon_extractable)
+                        if (!extracted_list.Contains(datum))
                         {
                             if (File.Exists(Application.StartupPath + "\\plugins\\" + type + ".xml"))
                             {
-                                if (!is_tag_shared(datum,current_stream))
-                                {
-                                    meta obj = new meta(datum, get_debug_tag_name(datum,current_stream), current_stream);
-                                    obj.Rebase_meta(0x0);
+                                if (!is_tag_shared(datum, current_stream))
+                                {                                    
+                                    string debug_tag_loc = get_debug_tag_name(datum, current_stream);
+                                    string debug_tag_name = DATA_READ.Read_File_from_file_location(debug_tag_loc);
+                                    string tag_path = textBox1.Text + "\\" + debug_tag_loc + "." + type;
+                                    string directory = DATA_READ.ReadDirectory_from_file_location(tag_path);
 
-                                    if (checkBox1.Checked)
-                                    {
-                                        obj.Null_StringID();
-                                    }
-
-                                    if (radioButton1.Checked == true)
-                                    {
-                                        List<tagRef> refs_temp = obj.Get_all_tag_refs();
-                                        //add recursivity
-                                        foreach (tagRef my_tempy in extraction_list)
-                                        {
-                                            refs_temp.Remove(my_tempy);
-                                        }
-
-                                        extraction_list.AddRange(refs_temp);
-                                        //to remove redundancy                              
-
-                                    }
-
-                                    byte[] data = obj.Generate_meta_file();
-
-                                    RAW_data raw_obj = new RAW_data(data, type, 0x0, current_stream, mp_shared_stream, sp_shared_stream, mainmenu_stream);
-                                    raw_obj.rebase_RAW_data(obj.Get_Total_size());
-
-                                    byte[] raw_data = raw_obj.get_RAW_data();
-
-                                    string path = textBox1.Text + "\\" + obj.Get_Path() + "." + obj.Get_Type();
-                                    string directory = DATA_READ.ReadDirectory_from_file_location(path);
-
-                                    //lets create our directory
+                                    //lets create our output directory
                                     System.IO.Directory.CreateDirectory(directory);
-                                    //create our file
-                                    StreamWriter sw = new StreamWriter(path);
-                                    sw.BaseStream.Write(data, 0, obj.Get_Total_size());
-                                    sw.BaseStream.Write(raw_data, 0, raw_obj.get_total_RAW_size());
-                                    sw.Dispose();
 
+                                    if (type != "snd!")
+                                    {
+                                        meta obj = new meta(datum, debug_tag_loc, current_stream);
+                                        obj.Rebase_meta(0x0);
+
+                                        if (checkBox1.Checked)
+                                        {
+                                            obj.Null_StringID();
+                                        }
+                                        if (radioButton1.Checked == true)
+                                        {
+                                            List<tagRef> refs_temp = obj.Get_all_tag_refs();
+                                            //add recursivity
+                                            foreach (tagRef my_tempy in extraction_list)
+                                            {
+                                                refs_temp.Remove(my_tempy);
+                                            }
+                                            //to remove redundancy  
+                                            extraction_list.AddRange(refs_temp);                                  
+                                        }
+                                        byte[] data = obj.Generate_meta_file();
+
+                                        RAW_data raw_obj = new RAW_data(data, type, 0x0, current_stream, mp_shared_stream, sp_shared_stream, mainmenu_stream);
+                                        raw_obj.rebase_RAW_data(obj.Get_Total_size());
+
+                                        byte[] raw_data = raw_obj.get_RAW_data();
+
+                                        //create our file
+                                        StreamWriter sw = new StreamWriter(tag_path);
+                                        sw.BaseStream.Write(data, 0, obj.Get_Total_size());
+                                        sw.BaseStream.Write(raw_data, 0, raw_obj.get_total_RAW_size());
+                                        sw.Dispose();
+                                    }
+                                    else
+                                    {
+                                        snd_tag my_snd_tag = snd_tag.open_sound_tag_from_map_stream(datum, ref current_stream);
+                                        sound_gestalt_tag gestalt_chunk = new sound_gestalt_tag();
+
+                                        snd_tag out_snd_tag=my_gestalt_tag.add_to_gestalt_chunk_from_snd(ref gestalt_chunk, my_snd_tag);
+                                        byte[] out_snd_tag_array = DATA_READ.StructureToByteArray(out_snd_tag.header);
+
+                                        int gestalt_size = gestalt_chunk.Get_meta_size();
+
+                                        byte[] gestalt_chunk_raw_array = gestalt_chunk.Generate_raw_data(gestalt_size);
+                                        byte[] gestalt_chunk_array = gestalt_chunk.Generate_meta_data(0x0);
+
+                                        //create our files
+                                        StreamWriter sw = new StreamWriter(tag_path);
+                                        sw.BaseStream.Write(out_snd_tag_array, 0, out_snd_tag_array.Length);
+                                        sw.Dispose();
+
+                                        string gestalt_path = directory + "\\" + debug_tag_name + ".ugh!";
+                                        sw = new StreamWriter(gestalt_path);
+                                        sw.BaseStream.Write(gestalt_chunk_array, 0, gestalt_chunk_array.Length);
+                                        sw.BaseStream.Write(gestalt_chunk_raw_array, 0, gestalt_chunk_raw_array.Length);
+                                        sw.Dispose();
+                                    }
                                     //write to configuration xml
                                     xw.WriteStartElement("tag");
                                     xw.WriteStartElement("name");
-                                    xw.WriteString(obj.Get_Path() + "." + type);//writing in the inner most level ie,name
+                                    xw.WriteString(debug_tag_loc + "." + type);//writing in the inner most level ie,name
                                     xw.WriteEndElement();//name level
                                     xw.WriteStartElement("datum");
                                     xw.WriteString(datum.ToString("X"));//writing in the inner most level ie here,datum
@@ -159,7 +170,7 @@ namespace Map_Handler
                                     xw.WriteEndElement();//tag level
 
                                     //at least mention this in the logs
-                                    log += "\nExtracted meta " + datum.ToString("X") + " to " + path;
+                                    log += "\nExtracted meta " + datum.ToString("X") + " to " + tag_path;
 
                                     //add it to the extracted list
                                     extracted_list.Add(datum);
@@ -173,7 +184,7 @@ namespace Map_Handler
                             else
                             {
                                 log += "\nCannot extract tag : " + datum.ToString("X");
-                                log += "\nPlugin " + type + ".xml doesnt exist";                                
+                                log += "\nPlugin " + type + ".xml doesnt exist";
                                 extracted_list.Add(datum);
                             }
                         }
@@ -190,6 +201,10 @@ namespace Map_Handler
                         unextracted_list.Clear();
                         //update the map stream to shared stream
                         current_stream = mp_shared_stream;
+                        //update the gestalt accordingly
+                        my_gestalt_tag = open_sound_gestalt_tag(ref current_stream);
+                                                
+                        log += "\nSwitching to shared tag extraction";
                     }
                 }
                 //close the config field and close the xml handle
@@ -236,6 +251,17 @@ namespace Map_Handler
 
             //shared referenced tags have memory offset 0
             return mem_addr==0;
+        }
+        private sound_gestalt_tag open_sound_gestalt_tag(ref StreamReader map_stream)
+        {
+            StreamReader[] sr_array = new StreamReader[0x4];
+            sr_array[0] = map_stream;
+            sr_array[1] = mainmenu_stream;
+            sr_array[2] = mp_shared_stream;
+            sr_array[3] = sp_shared_stream;
+
+            sound_gestalt_tag ret = sound_gestalt_tag.open_sound_gestalt_tag_from_map_stream(ref sr_array);
+            return ret;
         }
 
     }
