@@ -35,13 +35,14 @@
             this.radioButton1 = new System.Windows.Forms.CheckBox();
             this.checkBox1 = new System.Windows.Forms.CheckBox();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // extract_button
             // 
             this.extract_button.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.extract_button.Location = new System.Drawing.Point(353, 76);
+            this.extract_button.Location = new System.Drawing.Point(392, 76);
             this.extract_button.Margin = new System.Windows.Forms.Padding(4);
             this.extract_button.Name = "extract_button";
             this.extract_button.Size = new System.Drawing.Size(235, 49);
@@ -57,7 +58,7 @@
             this.textBox1.Margin = new System.Windows.Forms.Padding(4);
             this.textBox1.Name = "textBox1";
             this.textBox1.ReadOnly = true;
-            this.textBox1.Size = new System.Drawing.Size(287, 22);
+            this.textBox1.Size = new System.Drawing.Size(326, 22);
             this.textBox1.TabIndex = 4;
             // 
             // label2
@@ -73,7 +74,7 @@
             // button2
             // 
             this.button2.Anchor = System.Windows.Forms.AnchorStyles.Right;
-            this.button2.Location = new System.Drawing.Point(430, 26);
+            this.button2.Location = new System.Drawing.Point(469, 26);
             this.button2.Margin = new System.Windows.Forms.Padding(4);
             this.button2.Name = "button2";
             this.button2.Size = new System.Drawing.Size(147, 33);
@@ -123,7 +124,8 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.SystemColors.Menu;
-            this.ClientSize = new System.Drawing.Size(603, 153);
+            this.ClientSize = new System.Drawing.Size(642, 153);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.button2);
             this.Controls.Add(this.label2);
@@ -149,5 +151,6 @@
         private System.Windows.Forms.CheckBox radioButton1;
         private System.Windows.Forms.CheckBox checkBox1;
         private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Button button1;
     }
 }

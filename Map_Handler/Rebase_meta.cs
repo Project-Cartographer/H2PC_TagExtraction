@@ -18,8 +18,6 @@ namespace Map_Handler
     
     public partial class Rebase_meta : Form
     {
-        //size of the cache table at the starting of the file
-        const int cache_table_size = 0x56;
         //list of meta which are gonna be compiled
         List<injectRefs> compile_list;
         string directory;
@@ -38,7 +36,7 @@ namespace Map_Handler
             type_ref_list = new List<UnisonRefs>();
 
             directory = DATA_READ.ReadDirectory_from_file_location(file);
-            int new_index = 0x3BA4;//new datum_indexes starting from 0x3BA4
+            int new_index = 0x0;//new datum_indexes starting from 0x3BA4
 
             foreach (XmlNode Xn in xd.SelectNodes("config/tag"))
             {
@@ -91,6 +89,102 @@ namespace Map_Handler
             _generate_cache();
             this.Close();
         }
+        private void _generate_cache()
+        {
+            string log = "\nCOMPILATION : ";
+            meta_cache_writer my_cache_writer = new meta_cache_writer(tag_scenarios[0]);
+
+            int tag_new_base = Int32.Parse(textBox1.Text.Substring(2), NumberStyles.HexNumber);//the offset from the map_mem_base 0x1511020(lockout)
+            int total_meta_size = 0x0;
+            int total_RAW_size = 0x0;
+
+            foreach (injectRefs temp_ref in compile_list)
+            {
+                if (File.Exists(directory + "\\" + temp_ref.file_name))
+                {
+                    //lets open the file
+                    FileStream fs = new FileStream(directory + "\\" + temp_ref.file_name, FileMode.Append);
+                    long total_file_size = fs.Position;
+                    fs.Close();
+
+                    //tag file containing both meta and RAW data
+                    byte[] tag_file = new byte[total_file_size];
+
+                    //Filestream imposed some probs
+                    StreamReader sr = new StreamReader(directory + "\\" + temp_ref.file_name);
+                    //lets read the data
+                    sr.BaseStream.Read(tag_file, 0, (int)total_file_size);
+                    sr.Dispose();
+
+                    //retrieve RAW_data
+                    RAW_data raw_obj = new RAW_data(tag_file, temp_ref.type);
+                    raw_obj.rebase_RAW_data(total_RAW_size + my_cache_writer.get_header_size());
+
+                    byte[] t_RAW_data = raw_obj.get_RAW_data();
+                    long raw_size = raw_obj.get_total_RAW_size();
+
+                    //lets copy the actual meta
+                    long meta_size = total_file_size - raw_size;
+                    byte[] meta = new byte[meta_size];
+                    DATA_READ.ArrayCpy(meta, tag_file, 0, (int)(meta_size));
+
+                    //rebase the meta
+                    meta obj = new meta(meta, temp_ref.type, (int)meta_size, temp_ref.file_name);
+                    log += obj.Update_datum_indexes(compile_list, type_ref_list);
+                    obj.Rebase_meta(tag_new_base + total_meta_size);
+                    
+                    //rebase table stuff
+                    var tag_rebase_table = obj.Generate_rebase_table(total_meta_size).ToArray<int>();
+                    var tag_index_table = obj.Generate_index_rebase_table(total_meta_size).ToArray<int>();
+
+                    //file loc
+                    string tmp_file_name = temp_ref.file_name.Substring(0, temp_ref.file_name.IndexOf('.'));
+
+                    //tag_table_stuff
+                    byte[] tag_table_element = new byte[0x10];
+                    DATA_READ.WriteTAG_TYPE_LE(temp_ref.type, 0x0, tag_table_element);
+                    DATA_READ.WriteINT_LE(temp_ref.new_datum, 0x4, tag_table_element);
+                    DATA_READ.WriteINT_LE(tag_new_base + total_meta_size, 0x8, tag_table_element);
+                    DATA_READ.WriteINT_LE((int)meta_size, 0xC, tag_table_element);
+
+                    log += "\n Added tag " + temp_ref.file_name + " with new datum as " + temp_ref.new_datum.ToString("X");
+
+                    global_tag_instance t_tag_instance;
+                    t_tag_instance.tag_table_data = tag_table_element;
+                    t_tag_instance.tag_data = meta;
+                    t_tag_instance.tag_raw = t_RAW_data;
+                    t_tag_instance.rebase_data = new byte[tag_rebase_table.Length * 0x4];
+                    Buffer.BlockCopy(tag_rebase_table, 0, t_tag_instance.rebase_data, 0, tag_rebase_table.Length * 0x4);
+                    t_tag_instance.index_rebase_data = new byte[tag_index_table.Length * 0x4];
+                    Buffer.BlockCopy(tag_index_table, 0, t_tag_instance.index_rebase_data, 0, tag_index_table.Length * 0x4);
+                    t_tag_instance.file_loc = tmp_file_name;
+
+                    //add to cache write list
+                    my_cache_writer.add_tag_instance(t_tag_instance);
+
+                    //increase the tag_offset
+                    total_meta_size += (int)meta_size;
+                    //increase the RAW offsett
+                    total_RAW_size += (int)raw_size;
+                }
+                else log += "\nFile doesnt exists : " + temp_ref.file_name;
+            }
+            my_cache_writer._write(directory + "\\tags.cache");
+
+            //atleast mention the universally acclaimed tag
+            log += "\ntype referenced tags are :";
+            foreach (UnisonRefs uni_temp in type_ref_list)
+                log += "\nReffered " + uni_temp.type + " to " + uni_temp.new_datum.ToString("X") + " file : " + uni_temp.file_name;
+
+            //writing log 
+            var sw = new StreamWriter(directory + "\\compile_log.txt");
+            sw.Write(log);
+
+            //lets launch the log box
+            LogBox lb = new LogBox(log);
+            lb.Show();
+        }
+        /*
         private void _generate_cache()
         {
             string log = "\nCOMPILATION : ";
@@ -243,5 +337,6 @@ namespace Map_Handler
             LogBox lb = new LogBox(log);
             lb.Show();
         }
+        */
     }
 }

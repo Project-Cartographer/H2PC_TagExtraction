@@ -14,7 +14,7 @@ namespace DATA_STRUCTURES
     /// </summary>
     struct StringID_info
     {
-        public int  string_index_table_index;
+        public int string_index_table_index;
         public int string_table_offset;
         public int StringID;
         public string STRING;
@@ -81,7 +81,7 @@ namespace DATA_STRUCTURES
 
         List<plugins_field> reflexive;
 
-        public plugins_field(string name,int off,int entry_size)
+        public plugins_field(string name, int off, int entry_size)
         {
             //initialse some stuff
             this.name = name;
@@ -156,15 +156,15 @@ namespace DATA_STRUCTURES
         {
             TreeNode ret = new TreeNode();
 
-            ret.Text = name+":"+offset.ToString("X")+":"+entry_size.ToString("X");
-            
+            ret.Text = name + ":" + offset.ToString("X") + ":" + entry_size.ToString("X");
+
             List<int> Temp_keys;//some temp variable
 
             //let add the tag_refs
             Temp_keys = Tag_refs.Keys.ToList<int>();
-            foreach(int key in Temp_keys)
+            foreach (int key in Temp_keys)
             {
-                ret.Nodes.Add(Tag_refs[key]+":"+key.ToString("X"));
+                ret.Nodes.Add(Tag_refs[key] + ":" + key.ToString("X"));
             }
 
             //Lets add the data refs
@@ -264,7 +264,7 @@ namespace DATA_STRUCTURES
         /// </summary>
         private void Load_RAW()
         {
-            switch(type)
+            switch (type)
             {
                 case "mode":
                     int section_count = DATA_READ.ReadINT_LE(0x24, meta);
@@ -283,7 +283,7 @@ namespace DATA_STRUCTURES
                         ref_RAW_offset.Add(bitm_off + i * 0x74 + 0x1C);
                         list_RAW_size.Add(DATA_READ.ReadINT_LE((bitm_off + i * 0x74 + 0x34), meta));
                     }
-                    break;                
+                    break;
             }
 
             RAW_resource = new byte[get_total_RAW_size()];
@@ -361,7 +361,7 @@ namespace DATA_STRUCTURES
         /// </summary>
         /// <returns></returns>
         public byte[] get_RAW_data()
-        {            
+        {
             return RAW_resource;
         }
     }
@@ -400,7 +400,7 @@ namespace DATA_STRUCTURES
         /// <param name="count"></param>
         /// <param name="plugin"></param>
         /// <param name="sr"></param>
-        public extended_meta(int mem_address,int size,int count,plugins_field plugin,StreamReader sr)
+        public extended_meta(int mem_address, int size, int count, plugins_field plugin, StreamReader sr)
         {
             this.mem_off = mem_address;
             this.size = size;
@@ -465,10 +465,14 @@ namespace DATA_STRUCTURES
             foreach (int i in temp)
             {
                 int Toff = off + i;//it contains type
-                //we add this off to the list if it doesnt contain the off already
-                if (!ref_tags.Contains(Toff))
-                {
-                    ref_tags.Add(Toff);
+                //---->slight correction to remove errors in rebase table
+                int index = DATA_READ.ReadINT_LE(Toff + 4, data);
+                if (index != -1)
+                {                 //we add this off to the list if it doesnt contain the off already
+                    if (!ref_tags.Contains(Toff))
+                    {
+                        ref_tags.Add(Toff);
+                    }
                 }
             }
             //then we look for data_refs and add them
@@ -529,7 +533,7 @@ namespace DATA_STRUCTURES
                                 }
                                 //we dont need to look into them as extended meta does it for us
                             }
-                        }                        
+                        }
                     }
 
                 }
@@ -600,10 +604,15 @@ namespace DATA_STRUCTURES
             foreach (int i in temp)
             {
                 int Toff = off + i;
-                //we add this off to the list if it doesnt contain the off already
-                if (!ref_WCtags.Contains(Toff))
-                {
-                    ref_WCtags.Add(Toff);
+                //---->slight correction to remove errors in rebase table
+                int index = DATA_READ.ReadINT_LE(Toff, data);
+                if (Toff != -1)
+                {                
+                    //we add this off to the list if it doesnt contain the off already
+                    if (!ref_WCtags.Contains(Toff))
+                    {
+                        ref_WCtags.Add(Toff);
+                    }
                 }
             }
 
@@ -660,7 +669,7 @@ namespace DATA_STRUCTURES
             }
             //update the base to which meta has been compiled
             mem_off = new_base;
-                
+
         }
         /// <summary>
         /// returns the total size of the meta along with all extended meta sizes
@@ -792,14 +801,90 @@ namespace DATA_STRUCTURES
 
             return ret;
         }
+        /// <summary>
+        /// Function to generate rebase table for reflexive and data ref fields
+        /// </summary>
+        /// <param name="increment_offset">argument value use to increment field offsets in accordance with meta data offsets</param>
+        /// <returns></returns>
+        public List<int> Generate_rebase_table(int increment_offset = 0)
+        {
+            List<int> ret_table = new List<int>();
+
+            ///bounded meta table generation
+            foreach (var r_off in ref_reflexive)
+                ret_table.Add(r_off + increment_offset + 4);
+            foreach (var d_off in ref_data)
+                ret_table.Add(d_off + increment_offset + 4);
+            if (list_extended != null)
+            {
+                List<int> extend_off = ref_extended.Keys.ToList<int>();
+                foreach (var e_off in extend_off)
+                    ret_table.Add(e_off + increment_offset + 4);
+            }
+
+            increment_offset += size;
+
+            ///extended meta table generation
+            if (list_extended != null)
+            {
+                //now we go for extended meta
+                List<int> extend_keys = list_extended.Keys.ToList<int>();
+                //here we go
+                foreach (int temp_key in extend_keys)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    var t_ret = temp_meta.Generate_rebase_table(increment_offset);
+                    ret_table.AddRange(t_ret);
+
+                    increment_offset += temp_meta.Get_Total_size();
+                }
+            }
+
+            return ret_table;
+        }
+        /// <summary>
+        /// Function to generate rebase table for tag_refs
+        /// </summary>
+        /// <param name="increment_offset">argument value use to increment field offsets in accordance with meta data offsets</param>
+        /// <returns></returns>
+        public List<int> Generate_index_rebase_table(int increment_offset = 0)
+        {
+            List<int> ret_table = new List<int>();
+
+            foreach (var i in ref_tags)
+                ret_table.Add(i + increment_offset + 4);
+            foreach (var i in ref_WCtags)
+                ret_table.Add(i + increment_offset);
+
+            increment_offset += size;
+
+            ///extended meta table generation
+            if (list_extended != null)
+            {
+                //now we go for extended meta
+                List<int> extend_keys = list_extended.Keys.ToList<int>();
+                //here we go
+                foreach (int temp_key in extend_keys)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    var t_ret = temp_meta.Generate_index_rebase_table(increment_offset);
+                    ret_table.AddRange(t_ret);
+
+                    increment_offset += temp_meta.Get_Total_size();
+                }
+            }
+
+            return ret_table;
+        }
     }
+
     /// <summary>
     /// a class containing the data of the concerned meta
     /// </summary>
     class meta
     {
         string type;
-        int datum_index;       
+        int datum_index;
         int mem_off;// the memory address to which the tag is designed to be loaded at
         int size;
 
@@ -808,9 +893,9 @@ namespace DATA_STRUCTURES
         byte[] data;
         StreamReader map_stream;
         plugins_field plugin;
-       
 
-        List<int> ref_reflexive;// a list containing the offset to the location where the reflexive fields are refered in the meta
+
+        List<int> ref_reflexive;//a list containing the offset to the location where the reflexive fields are refered in the meta
         List<int> ref_tags;//a list containing the offsets to the locations where other tags (datum_indexes) are refered in the meta
         List<int> ref_data;//a list containing the offsets to the locations where data_refs are refered in the meta,data refs have similar behaviour as reflexive but it points to a data stuff in the meta
         List<int> ref_stringID;//a list containing the offsets to the locations where stringId is refered
@@ -826,7 +911,7 @@ namespace DATA_STRUCTURES
         /// <param name="datum_index">the datum index of the tag</param>
         /// <param name="sr">the path of the tag.eg: characters/elite/elite_mp</param>
         /// <param name="sr">the stream object</param>
-        public meta(int datum_index,string path,StreamReader sr)
+        public meta(int datum_index, string path, StreamReader sr)
         {
             //initialise some stuff
             this.datum_index = datum_index;
@@ -834,15 +919,15 @@ namespace DATA_STRUCTURES
             map_stream = sr;
 
             //some meta reading prologue
-            int table_off =DATA_READ.ReadINT_LE(0x10,map_stream);
-            int table_size = DATA_READ.ReadINT_LE(0x14,map_stream);
-            int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4,map_stream) + 0x20;
+            int table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
+            int table_size = DATA_READ.ReadINT_LE(0x14, map_stream);
+            int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;
             int scnr_off = table_off + table_size;
-            int scnr_memaddr = DATA_READ.ReadINT_LE(table_start + 0x8,map_stream);//scnr tag index is 0x0(mostly)
+            int scnr_memaddr = DATA_READ.ReadINT_LE(table_start + 0x8, map_stream);//scnr tag index is 0x0(mostly)
 
             //steps concerned with the specified meta
             type = DATA_READ.ReadTAG_TYPE(table_start + (0xFFFF & datum_index) * 0x10, map_stream);
-            mem_off = DATA_READ.ReadINT_LE(table_start + ((0xFFFF & datum_index) * 0x10) + 0x8, map_stream);        
+            mem_off = DATA_READ.ReadINT_LE(table_start + ((0xFFFF & datum_index) * 0x10) + 0x8, map_stream);
 
             size = DATA_READ.ReadINT_LE(table_start + ((0xFFFF & datum_index) * 0x10) + 0xC, map_stream);
 
@@ -889,7 +974,7 @@ namespace DATA_STRUCTURES
         /// <param name="type"></param>
         /// <param name="size"></param>
         /// <param name="path"></param>
-        public meta(byte[] meta, string type, int size,string path)
+        public meta(byte[] meta, string type, int size, string path)
         {
             data = meta;
             this.type = type;
@@ -910,7 +995,7 @@ namespace DATA_STRUCTURES
 
             if (size == 0)
                 return;
-            
+
             List_deps(0x0, plugin);
         }
         /// <summary>
@@ -921,7 +1006,7 @@ namespace DATA_STRUCTURES
         /// <param name="size"></param>
         /// <param name="path"></param>
         /// <param name="mem_off"></param>
-        public meta(byte[] meta, string type, int size,string path,int mem_off)
+        public meta(byte[] meta, string type, int size, string path, int mem_off)
         {
             data = meta;
             this.type = type;
@@ -949,25 +1034,30 @@ namespace DATA_STRUCTURES
         /// </summary>
         /// <param name="off">the starting offset where the stuff is being read</param>
         /// <param name="fields">the concerned field(s) in that section</param>
-        void List_deps(int off,plugins_field fields)
+        void List_deps(int off, plugins_field fields)
         {
             List<int> temp = fields.Get_tag_ref_list();
-            
+
             //first we look for tag_refs and add them
-            foreach(int i in temp)
+            foreach (int i in temp)
             {
                 int Toff = off + i;//it contains type
-                //we add this off to the list if it doesnt contain the off already
-                if (!ref_tags.Contains(Toff))
+                //---->slight correction to remove errors in rebase table
+                int index = DATA_READ.ReadINT_LE(Toff + 4, data);
+                if (index != -1)
                 {
-                    ref_tags.Add(Toff);
+                    //we add this off to the list if it doesnt contain the off already
+                    if (!ref_tags.Contains(Toff))
+                    {
+                        ref_tags.Add(Toff);
+                    }
                 }
             }
             //then we look for data_refs and add them
             //but they have some issue,some dataref refers data outside of the tag
             //so we have to be a bit carefull
             temp = fields.Get_data_ref_list();
-            foreach(int i in temp)
+            foreach (int i in temp)
             {
                 int Toff = off + i;
 
@@ -976,7 +1066,7 @@ namespace DATA_STRUCTURES
 
                 int field_off = field_memaddr - mem_off;//its the offset of the field from the starting of the meta data
 
-                if(length!=0)
+                if (length != 0)
                 {
                     //now we check whether its inside meta or a case of extended meta
                     if ((field_memaddr >= mem_off) && (field_off < size))
@@ -1035,7 +1125,7 @@ namespace DATA_STRUCTURES
             }
             //now we look into reflexive fields and extended meta and add them accordingly
             List<plugins_field> Ptemp = fields.Get_reflexive_list();
-            foreach(plugins_field i_Pfield in Ptemp)
+            foreach (plugins_field i_Pfield in Ptemp)
             {
                 int Toff = off + i_Pfield.Get_offset();//field table off contains count
 
@@ -1098,10 +1188,15 @@ namespace DATA_STRUCTURES
             foreach (int i in temp)
             {
                 int Toff = off + i;
-                //we add this off to the list if it doesnt contain the off already
-                if (!ref_WCtags.Contains(Toff))
+                //---->slight correction to remove errors in rebase table
+                int index = DATA_READ.ReadINT_LE(Toff, data);
+                if (index != -1)
                 {
-                    ref_WCtags.Add(Toff);
+                    //we add this off to the list if it doesnt contain the off already
+                    if (!ref_WCtags.Contains(Toff))
+                    {
+                        ref_WCtags.Add(Toff);
+                    }
                 }
             }
         }
@@ -1121,7 +1216,7 @@ namespace DATA_STRUCTURES
                 DATA_READ.WriteINT_LE(new_mem_addr, off + 4, data);
             }
             //then we rebase all the dataref fields
-            foreach(int off in ref_data)
+            foreach (int off in ref_data)
             {
                 int old_mem_addr = DATA_READ.ReadINT_LE(off + 4, data);
                 int new_mem_addr = new_base + (old_mem_addr - mem_off);
@@ -1231,8 +1326,8 @@ namespace DATA_STRUCTURES
         {
             //first null all my string ids
             foreach (int temp_off in ref_stringID)
-            {                
-                DATA_READ.WriteINT_LE(0x0, temp_off, data);               
+            {
+                DATA_READ.WriteINT_LE(0x0, temp_off, data);
             }
 
             if (list_extended != null)
@@ -1283,13 +1378,13 @@ namespace DATA_STRUCTURES
             }
             //listing the WCtagRefs
             //we can only do this when we are reading from a map
-            if(map_stream!=null)
+            if (map_stream != null)
             {
                 //some meta reading prologue
                 int table_off = DATA_READ.ReadINT_LE(0x10, map_stream);
-                int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;                
+                int table_start = table_off + 0xC * DATA_READ.ReadINT_LE(table_off + 4, map_stream) + 0x20;
 
-                foreach(int temp_off in ref_WCtags)
+                foreach (int temp_off in ref_WCtags)
                 {
                     int temp_datum = DATA_READ.ReadINT_LE(temp_off, data);//we read it from meta data
                     if (temp_datum != -1)
@@ -1347,7 +1442,7 @@ namespace DATA_STRUCTURES
                     //next we try to link the tags by using tag type
                     string type = DATA_READ.ReadTAG_TYPE(temp_off, data);
 
-                    foreach(UnisonRefs temp_uni in type_ref_list)
+                    foreach (UnisonRefs temp_uni in type_ref_list)
                     {
                         if (type == temp_uni.type && temp_old_datum != -1)
                         {
@@ -1359,7 +1454,7 @@ namespace DATA_STRUCTURES
                     if (!sucess)
                         log += "\nCouldnot find reference to " + temp_old_datum.ToString("X");
                 }
-                
+
             }
             //Updating WCtagRefs
             foreach (int temp_off in ref_WCtags)
@@ -1404,7 +1499,7 @@ namespace DATA_STRUCTURES
         {
             string log = "\nUPDATE StringID : " + path;
 
-            foreach(int temp_off in ref_stringID)
+            foreach (int temp_off in ref_stringID)
             {
 
                 int temp_old_SID = DATA_READ.ReadINT_LE(temp_off, data);
@@ -1438,6 +1533,83 @@ namespace DATA_STRUCTURES
             }
 
             return log;
+        }
+        /// Following two functions aims to remove the dependency on plugins for the end user
+        /// by simplifying the runtime injection process
+        /// <summary>
+        /// Function to generate rebase table for reflexive and data ref fields
+        /// </summary>
+        /// <param name="increment_offset">argument value use to increment field offsets in accordance with meta data offsets</param>
+        /// <returns></returns>
+        public List<int> Generate_rebase_table(int increment_offset = 0)
+        {
+            List<int> ret_table = new List<int>();
+
+            ///bounded meta table generation
+            foreach (var r_off in ref_reflexive)
+                ret_table.Add(r_off + increment_offset + 4);
+            foreach (var d_off in ref_data)
+                ret_table.Add(d_off + increment_offset + 4);
+            if (list_extended != null)
+            {
+                List<int> extend_off = ref_extended.Keys.ToList<int>();
+                foreach (var e_off in extend_off)
+                    ret_table.Add(e_off + increment_offset + 4);
+            }
+
+            increment_offset += size;
+
+            ///extended meta table generation
+            if (list_extended != null)
+            {
+                //now we go for extended meta
+                List<int> extend_keys = list_extended.Keys.ToList<int>();
+                //here we go
+                foreach (int temp_key in extend_keys)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    var t_ret = temp_meta.Generate_rebase_table(increment_offset);
+                    ret_table.AddRange(t_ret);
+
+                    increment_offset += temp_meta.Get_Total_size();
+                }
+            }
+
+            return ret_table;
+        }
+        /// <summary>
+        /// Function to generate rebase table for tag_refs
+        /// </summary>
+        /// <param name="increment_offset">argument value use to increment field offsets in accordance with meta data offsets</param>
+        /// <returns></returns>
+        public List<int> Generate_index_rebase_table(int increment_offset = 0)
+        {
+            List<int> ret_table = new List<int>();
+
+            foreach (var i in ref_tags)
+                ret_table.Add(i + increment_offset + 4);
+            foreach (var i in ref_WCtags)
+                ret_table.Add(i + increment_offset);
+
+            increment_offset += size;
+
+            ///extended meta table generation
+            if (list_extended != null)
+            {
+                //now we go for extended meta
+                List<int> extend_keys = list_extended.Keys.ToList<int>();
+                //here we go
+                foreach (int temp_key in extend_keys)
+                {
+                    extended_meta temp_meta = list_extended[temp_key];
+                    var t_ret = temp_meta.Generate_index_rebase_table(increment_offset);
+                    ret_table.AddRange(t_ret);
+
+                    increment_offset += temp_meta.Get_Total_size();
+                }
+            }
+
+            return ret_table;
         }
     }
 }
