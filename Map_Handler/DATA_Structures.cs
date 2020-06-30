@@ -1281,7 +1281,7 @@ namespace DATA_STRUCTURES
         /// Generates a full self dependent meta file(except tag refs)
         /// </summary>
         /// <returns></returns>
-        public byte[] Generate_meta_file()
+        public byte[] Generate_meta_data()
         {
             byte[] ret = new byte[this.Get_Total_size()];
 

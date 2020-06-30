@@ -119,7 +119,7 @@ namespace Map_Handler
                                             //to remove redundancy  
                                             extraction_list.AddRange(refs_temp);                                  
                                         }
-                                        byte[] data = obj.Generate_meta_file();
+                                        byte[] data = obj.Generate_meta_data();
 
                                         RAW_data raw_obj = new RAW_data(data, type, 0x0, current_stream, mp_shared_stream, sp_shared_stream, mainmenu_stream);
                                         raw_obj.rebase_RAW_data(obj.Get_Total_size());

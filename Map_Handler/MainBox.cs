@@ -1082,7 +1082,7 @@ namespace Map_Handler
 
                             if (meta_obj.Get_Total_size() != 0)
                             {
-                                byte[] meta_data = meta_obj.Generate_meta_file();
+                                byte[] meta_data = meta_obj.Generate_meta_data();
 
                                 string text_path = tags_directory + '\\' + debug_tag_names[datum] + ".txt";
 
