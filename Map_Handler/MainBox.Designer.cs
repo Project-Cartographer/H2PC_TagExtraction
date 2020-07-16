@@ -53,7 +53,6 @@
             this.getTagStructureToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resyncshadToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.resyncStringIDsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
-            this.sndtagFixesToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.dumpStringIDToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.shaderEmulatorToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
             this.createPluginsToolStripMenuItem = new System.Windows.Forms.ToolStripMenuItem();
@@ -259,7 +258,6 @@
             this.getTagStructureToolStripMenuItem,
             this.resyncshadToolStripMenuItem,
             this.resyncStringIDsToolStripMenuItem,
-            this.sndtagFixesToolStripMenuItem,
             this.dumpStringIDToolStripMenuItem,
             this.shaderEmulatorToolStripMenuItem,
             this.injectMetaToolStripMenuItem1});
@@ -301,13 +299,6 @@
             this.resyncStringIDsToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
             this.resyncStringIDsToolStripMenuItem.Text = "Resync StringIDs";
             this.resyncStringIDsToolStripMenuItem.Click += new System.EventHandler(this.resyncStringIDsToolStripMenuItem_Click);
-            // 
-            // sndtagFixesToolStripMenuItem
-            // 
-            this.sndtagFixesToolStripMenuItem.Name = "sndtagFixesToolStripMenuItem";
-            this.sndtagFixesToolStripMenuItem.Size = new System.Drawing.Size(197, 26);
-            this.sndtagFixesToolStripMenuItem.Text = "Sound Tag Fixes";
-            this.sndtagFixesToolStripMenuItem.Click += new System.EventHandler(this.sndtagFixesToolStripMenuItem_Click);
             // 
             // dumpStringIDToolStripMenuItem
             // 
@@ -381,7 +372,7 @@
             this.treeView1.Location = new System.Drawing.Point(4, 4);
             this.treeView1.Margin = new System.Windows.Forms.Padding(4);
             this.treeView1.Name = "treeView1";
-            this.treeView1.Size = new System.Drawing.Size(537, 762);
+            this.treeView1.Size = new System.Drawing.Size(536, 762);
             this.treeView1.TabIndex = 1;
             this.treeView1.AfterCheck += new System.Windows.Forms.TreeViewEventHandler(this.treeView1_AfterCheck);
             // 
@@ -792,7 +783,6 @@
         public System.Windows.Forms.Button clear_button;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button button6;
-        private System.Windows.Forms.ToolStripMenuItem sndtagFixesToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem shaderEmulatorToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem createPluginsToolStripMenuItem;
         private System.Windows.Forms.ToolStripMenuItem dumpShadersToolStripMenuItem;

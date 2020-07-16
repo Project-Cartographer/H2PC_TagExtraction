@@ -299,7 +299,8 @@ namespace Map_Handler.Blam.Tags.sound
             var t = DATA_READ.StructureToByteArray(other.header);
             header = DATA_READ.BytesToStructure<CustomPlaybacks>(t);
             list_filter = new List<filter_block>();
-            list_filter.AddRange(other.list_filter);
+            for (int i = 0; i < other.list_filter.Count; i++)
+                list_filter.Add(new filter_block(other.list_filter[i]));
         }
         public custom_playback_block(long file_offset, long block_memory_addr,ref StreamReader[] file_stream)
         { 
@@ -508,9 +509,11 @@ namespace Map_Handler.Blam.Tags.sound
             var t = DATA_READ.StructureToByteArray(other.header);
             header = DATA_READ.BytesToStructure<Promotions>(t);
             list_rules = new List<rules_block>();
+            for (int i = 0; i < other.list_rules.Count; i++)
+                list_rules.Add(new rules_block(other.list_rules[i]));
             list_runtime_timers = new List<runtime_timers_block>();
-            list_rules.AddRange(other.list_rules);
-            list_runtime_timers.AddRange(other.list_runtime_timers);
+            for (int i = 0; i < other.list_runtime_timers.Count; i++)
+                list_runtime_timers.Add(new runtime_timers_block(other.list_runtime_timers[i]));
         }
         public promotions_block(long file_offset, long block_memory_addr,ref StreamReader[] file_stream)
         {
@@ -620,7 +623,8 @@ namespace Map_Handler.Blam.Tags.sound
             raw_data = new byte[other.raw_data.Length];
             DATA_READ.ArrayCpy(raw_data, other.raw_data, 0x0, raw_data.Length);
             list_resources = new List<resources_block>();
-            list_resources.AddRange(other.list_resources);
+            for (int i = 0; i < other.list_resources.Count; i++)
+                list_resources.Add(new resources_block(other.list_resources[i]));
         }
         public extra_info_block(long file_offset, long block_memory_addr,ref StreamReader[] file_stream)
         {
@@ -956,6 +960,13 @@ namespace Map_Handler.Blam.Tags.sound
                 var t_pitch_range_param_block = list_pitch_range_parameters[block.header.PitchRangeParameterIndex];
                 arg0.list_pitch_range_parameters.Add(t_pitch_range_param_block);
             }
+            if (block.header.EncodedRuntimePermutationFlags != -1 && false)
+            {
+                temp_block.header.EncodedRuntimePermutationFlags = (short)arg0.list_runtime_permutation_flags.Count;
+
+                var t_runtime_perm_flag_block = list_runtime_permutation_flags[block.header.EncodedRuntimePermutationFlags];
+                arg0.list_runtime_permutation_flags.Add(t_runtime_perm_flag_block);
+            }
             if(block.header.FirstPermutation!=-1)
             {
                 temp_block.header.FirstPermutation = (short)arg0.list_permutation.Count;
@@ -1254,5 +1265,4 @@ namespace Map_Handler.Blam.Tags.sound
  * AUTHOR'S NOTE:<yeah i typed in such a thing>
  * Himanshu01:The gestalt structure implementation may not be the best and i am quite sure that something better could be achieved.
  *            But i dont want to delay sound injection stuff and had to do with this somewhat crude implementation.
- *            and i typed it all.
  */
