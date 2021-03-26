@@ -10,25 +10,31 @@ You can go to this link
 https://bitbucket.org/KornnerStudios/opensauce-release/wiki/Home
 
 ### REQUIREMENTS ###
-* __BoostSDK Libraries (boost_1_55_0)__
-* __SlimDX__
-* __[Link:](https://drive.google.com/file/d/0B2ezZImuw5cpMGQwcmpLeE53Rlk/view?usp=sharing)__
-* __Copy the boost_1_55_0 folder to C:\Program Files (x86)\boost\__
+* __[BoostSDK Libraries (boost_1_55_0)](https://www.boost.org/users/history/version_1_55_0.html)__
+* __[SlimDX SDK (January 2012)](https://code.google.com/archive/p/slimdx/downloads)__
+* __Copy the boost_1_55_0 folder to C:\Program Files (x86)\boost\\__
 
 ## COMPILATION / CONTRIBUTE ##
 
 * __Contributors are Welcome :)__
 * __Get the Requirements__
+* __Visual Studio 15 was used (will be updated in near future)__
 * __Hit Clone and Start Building__
 
 
 ## ChangeLog ##
+### V2.2 ###
+Features:
+* __Static Tag Injection Beta released__
+* __Changed Module to use Rebase Tables for relocation (much faster than plugin based)__
+* __Sound Injection Support(Both runtime and static)__
+* __More work on Undo Tag Post processing : sounds,lipsync,collision,physics,bsp and more__
 ### V2.1 ###
 Features:
-* __New UI combines Tag Extracting with Map Loading
-* __Users can select multiple tags for extracting
-* __Users must designate a maps folder on startup, directory saved to settings file in %appdata% folder
-* __If settings file exists will automatically load maps directory. 
+* __New UI combines Tag Extracting with Map Loading__
+* __Users can select multiple tags for extracting__
+* __Users must designate a maps folder on startup, directory saved to settings file in %appdata% folder__
+* __If settings file exists will automatically load maps directory.__
 
 ## ChangeLog ##
 ### V2.0 ###
